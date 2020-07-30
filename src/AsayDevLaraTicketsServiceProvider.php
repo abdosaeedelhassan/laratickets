@@ -38,8 +38,8 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
          */
         $this->publishMigration('AlterUsersTable', '2020_08_30_115514_alter_users_table');
         $this->publishMigration('CreateLaraTicketsTables', '2020_08_30_115516_create_lara_tickets_tables');
-        $this->publishMigration('AddIndexes', '2020_08_30_120557_add_indexes');
         $this->publishMigration('CreateLaraTicketsSettingsTable', '2020_08_30_123457_create_lara_tickets_settings_table');
+        $this->publishMigration('AddIndexes', '2020_08_31_120557_add_indexes');
         /**
          * step4: setup laravel User model aliases to used in package extends
          */

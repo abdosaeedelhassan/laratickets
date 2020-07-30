@@ -1,5 +1,5 @@
 <?php
 
 return [
-    // options...
+    'user_model'=>\App\Models\Auth\User::class
 ];

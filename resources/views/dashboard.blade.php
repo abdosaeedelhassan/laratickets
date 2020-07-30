@@ -2,7 +2,7 @@
         <div class="card mb-3">
             <div class="card-body">
 {{--                @include('ticketit::shared.nav')--}}
-                
+{{--                @include('laravel-livewire-tables::includes._offline')--}}
                 {{$testedValue}}
             </div>
         </div>

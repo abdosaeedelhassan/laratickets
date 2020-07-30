@@ -3,8 +3,10 @@
 namespace AsayDev\LaraTickets;
 
 use AsayDev\LaraTickets\Console\InstallLaraTicketsPackage;
+use AsayDev\LaraTickets\Livewire\LaraTicketsDashboard;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
 
 /**
  * Class AsayDevTicketsServiceProvider.
@@ -46,6 +48,10 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
         if (!class_exists('ParentUserModel')) {
             class_alias(config("laratickets.user_model"), 'AsayDev\LaraTickets\Models\ParentUserModel');
         }
+        /**
+         * step5: registering
+         */
+        Livewire::component('lara-tickets-dashboard', LaraTicketsDashboard::class);
         /**
          *
          */

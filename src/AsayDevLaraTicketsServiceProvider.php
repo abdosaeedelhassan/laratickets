@@ -30,7 +30,7 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../config/laratickets.php' => config_path('laratickets.php'),
-            ], 'config');
+            ], 'laratickets_config');
 
         }
         /**
@@ -63,9 +63,8 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
     {
         if (!class_exists($class_name)) {
             $this->publishes([
-                __DIR__ . '/../database/migrations/' . $file_name => database_path('migrations/' . $file_name . '.php'),
-                // you can add any number of migrations here
-            ], 'migrations');
+                __DIR__ . '/../database/migrations/' . $file_name.'.php' => database_path('migrations/' . $file_name . '.php'),
+            ], 'laratickets_migrations');
         }
     }
 

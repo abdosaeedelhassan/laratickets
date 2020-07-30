@@ -39,17 +39,20 @@ class CreateLaraTicketsTables extends Migration
             $table->increments('id');
             $table->string('subject');
             $table->longText('content');
+            $table->longText('html')->nullable();
             $table->integer('status_id')->unsigned();
             $table->integer('priority_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('agent_id')->unsigned();
             $table->integer('category_id')->unsigned();
+            $table->timestamp('completed_at')->nullable();
             $table->timestamps();
         });
 
         Schema::create('laratickets_comments', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('content');
+            $table->longText('content');
+            $table->longText('html')->nullable();
             $table->integer('user_id')->unsigned();
             $table->integer('ticket_id')->unsigned();
             $table->timestamps();

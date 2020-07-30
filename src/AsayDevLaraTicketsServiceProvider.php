@@ -36,13 +36,10 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
         /**
          * step3: publishing package migrations files if not exists
          */
-        $this->publishMigration('AddHtmlcontentToLaraTicketsAndComments', '2020_08_30_002617_add_htmlcontent_to_lara_tickets_and_comments');
-        $this->publishMigration('EnlargeSettingsColumns', '2020_08_30_040207_enlarge_settings_columns');
+        $this->publishMigration('AlterUsersTable', '2020_08_30_115514_alter_users_table');
         $this->publishMigration('CreateLaraTicketsTables', '2020_08_30_115516_create_lara_tickets_tables');
         $this->publishMigration('AddIndexes', '2020_08_30_120557_add_indexes');
-        $this->publishMigration('AlterUsersTable', '2020_08_30_123254_alter_users_table');
-        $this->publishMigration('AddCompletedAtColumnToLaraTicketsTable', '2020_08_30_123456_add_completed_at_column_to_lara_tickets_table');
-        $this->publishMigration('CreateLaraTicketsSettingsTable', '2020_08_30_123457_create_lara_tickets_settings_table');
+        $this->publishMigration('CreateLaraTicketsSettingsTable', '2020_08_31_123457_create_lara_tickets_settings_table');
         /**
          * step4: setup laravel User model aliases to used in package extends
          */

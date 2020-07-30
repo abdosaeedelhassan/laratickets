@@ -16,8 +16,8 @@ class CreateLaraTicketsSettingsTable extends Migration
             $table->increments('id');
             $table->string('lang')->unique()->nullable();
             $table->string('slug')->unique()->index();
-            $table->string('value');
-            $table->string('default');
+            $table->mediumText('value');
+            $table->mediumText('default');
             $table->timestamps();
         });
     }

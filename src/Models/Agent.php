@@ -2,10 +2,10 @@
 
 namespace AsayDev\LaraTickets\Models;
 
-use App\Models\Auth\User;
 use Auth;
+use ParentModel;
 
-class Agent extends User
+class Agent extends ParentUserModel
 {
     protected $table = 'users';
 
@@ -22,9 +22,9 @@ class Agent extends User
     public function scopeAgents($query, $paginate = false)
     {
         if ($paginate) {
-            return $query->where('ticketit_agent', '1')->paginate($paginate, ['*'], 'agents_page');
+            return $query->where('laratickets_agent', '1')->paginate($paginate, ['*'], 'agents_page');
         } else {
-            return $query->where('ticketit_agent', '1');
+            return $query->where('laratickets_agent', '1');
         }
     }
 
@@ -41,9 +41,9 @@ class Agent extends User
     public function scopeAdmins($query, $paginate = false)
     {
         if ($paginate) {
-            return $query->where('ticketit_admin', '1')->paginate($paginate, ['*'], 'admins_page');
+            return $query->where('laratickets_admin', '1')->paginate($paginate, ['*'], 'admins_page');
         } else {
-            return $query->where('ticketit_admin', '1')->get();
+            return $query->where('laratickets_admin', '1')->get();
         }
     }
 
@@ -60,9 +60,9 @@ class Agent extends User
     public function scopeUsers($query, $paginate = false)
     {
         if ($paginate) {
-            return $query->where('ticketit_agent', '0')->paginate($paginate, ['*'], 'users_page');
+            return $query->where('laratickets_agent', '0')->paginate($paginate, ['*'], 'users_page');
         } else {
-            return $query->where('ticketit_agent', '0')->get();
+            return $query->where('laratickets_agent', '0')->get();
         }
     }
 
@@ -78,9 +78,9 @@ class Agent extends User
     public function scopeAgentsLists($query)
     {
         if (version_compare(app()->version(), '5.2.0', '>=')) {
-            return $query->where('ticketit_agent', '1')->pluck('first_name', 'id')->toArray();
+            return $query->where('laratickets_agent', '1')->pluck('first_name', 'id')->toArray();
         } else { // if Laravel 5.1
-            return $query->where('ticketit_agent', '1')->lists('first_name', 'id')->toArray();
+            return $query->where('laratickets_agent', '1')->lists('first_name', 'id')->toArray();
         }
     }
 
@@ -92,15 +92,15 @@ class Agent extends User
     public static function isAgent($id = null)
     {
         if (isset($id)) {
-            $user = User::find($id);
-            if ($user->ticketit_agent) {
+            $user = ParentUserModel::find($id);
+            if ($user->laratickets_agent) {
                 return true;
             }
 
             return false;
         }
         if (auth()->check()) {
-            if (auth()->user()->ticketit_agent) {
+            if (auth()->user()->laratickets_agent) {
                 return true;
             }
         }
@@ -113,7 +113,7 @@ class Agent extends User
      *
      * @return bool
      */
-    public static function ticketit_isAdmin()
+    public static function laratickets_isAdmin()
     {
         return auth()->check() && auth()->user()->isAdmin();
     }
@@ -128,7 +128,7 @@ class Agent extends User
     public static function isAssignedAgent($id)
     {
         return auth()->check() &&
-        	Auth::user()->ticketit_agent &&
+        	Auth::user()->laratickets_agent &&
             Auth::user()->id == Ticket::find($id)->agent->id;
     }
 
@@ -153,7 +153,7 @@ class Agent extends User
      */
     public function categories()
     {
-        return $this->belongsToMany('Kordy\Ticketit\Models\Category', 'ticketit_categories_users', 'user_id', 'category_id');
+        return $this->belongsToMany('AsayDev\LaraTickets\Models\Category', 'laratickets_categories_users', 'user_id', 'category_id');
     }
 
     /**
@@ -162,9 +162,9 @@ class Agent extends User
     public function agentTickets($complete = false)
     {
         if ($complete) {
-            return $this->hasMany('Kordy\Ticketit\Models\Ticket', 'agent_id')->whereNotNull('completed_at');
+            return $this->hasMany('AsayDev\LaraTickets\Models\Ticket', 'agent_id')->whereNotNull('completed_at');
         } else {
-            return $this->hasMany('Kordy\Ticketit\Models\Ticket', 'agent_id')->whereNull('completed_at');
+            return $this->hasMany('AsayDev\LaraTickets\Models\Ticket', 'agent_id')->whereNull('completed_at');
         }
     }
 
@@ -176,18 +176,18 @@ class Agent extends User
     public function userTickets($complete = false)
     {
         if ($complete) {
-            return $this->hasMany('Kordy\Ticketit\Models\Ticket', 'user_id')->whereNotNull('completed_at');
+            return $this->hasMany('AsayDev\LaraTickets\Models\Ticket', 'user_id')->whereNotNull('completed_at');
         } else {
-            return $this->hasMany('Kordy\Ticketit\Models\Ticket', 'user_id')->whereNull('completed_at');
+            return $this->hasMany('AsayDev\LaraTickets\Models\Ticket', 'user_id')->whereNull('completed_at');
         }
     }
 
     public function tickets($complete = false)
     {
         if ($complete) {
-            return $this->hasMany('Kordy\Ticketit\Models\Ticket', 'user_id')->whereNotNull('completed_at');
+            return $this->hasMany('AsayDev\LaraTickets\Models\Ticket', 'user_id')->whereNotNull('completed_at');
         } else {
-            return $this->hasMany('Kordy\Ticketit\Models\Ticket', 'user_id')->whereNull('completed_at');
+            return $this->hasMany('AsayDev\LaraTickets\Models\Ticket', 'user_id')->whereNull('completed_at');
         }
     }
 
@@ -204,7 +204,7 @@ class Agent extends User
     {
         $user = self::find(auth()->user()->id);
 
-        if ($user->ticketit_isAdmin()) {
+        if ($user->laratickets_isAdmin()) {
             $tickets = $user->allTickets($complete);
         } elseif ($user->isAgent()) {
             $tickets = $user->agentTickets($complete);
@@ -220,7 +220,7 @@ class Agent extends User
      */
     public function agentTotalTickets()
     {
-        return $this->hasMany('Kordy\Ticketit\Models\Ticket', 'agent_id');
+        return $this->hasMany('AsayDev\LaraTickets\Models\Ticket', 'agent_id');
     }
 
     /**
@@ -228,7 +228,7 @@ class Agent extends User
      */
     public function agentCompleteTickets()
     {
-        return $this->hasMany('Kordy\Ticketit\Models\Ticket', 'agent_id')->whereNotNull('completed_at');
+        return $this->hasMany('AsayDev\LaraTickets\Models\Ticket', 'agent_id')->whereNotNull('completed_at');
     }
 
     /**
@@ -236,7 +236,7 @@ class Agent extends User
      */
     public function agentOpenTickets()
     {
-        return $this->hasMany('Kordy\Ticketit\Models\Ticket', 'agent_id')->whereNull('completed_at');
+        return $this->hasMany('AsayDev\LaraTickets\Models\Ticket', 'agent_id')->whereNull('completed_at');
     }
 
     /**
@@ -244,7 +244,7 @@ class Agent extends User
      */
     public function userTotalTickets()
     {
-        return $this->hasMany('Kordy\Ticketit\Models\Ticket', 'user_id');
+        return $this->hasMany('AsayDev\LaraTickets\Models\Ticket', 'user_id');
     }
 
     /**
@@ -252,7 +252,7 @@ class Agent extends User
      */
     public function userCompleteTickets()
     {
-        return $this->hasMany('Kordy\Ticketit\Models\Ticket', 'user_id')->whereNotNull('completed_at');
+        return $this->hasMany('AsayDev\LaraTickets\Models\Ticket', 'user_id')->whereNotNull('completed_at');
     }
 
     /**
@@ -260,6 +260,6 @@ class Agent extends User
      */
     public function userOpenTickets()
     {
-        return $this->hasMany('Kordy\Ticketit\Models\Ticket', 'user_id')->whereNull('completed_at');
+        return $this->hasMany('AsayDev\LaraTickets\Models\Ticket', 'user_id')->whereNull('completed_at');
     }
 }

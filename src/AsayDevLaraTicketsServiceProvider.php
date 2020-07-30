@@ -44,6 +44,10 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
         $this->publishMigration('AddCompletedAtColumnToLaraTicketsTable', '2020_08_30_123456_add_completed_at_column_to_lara_tickets_table');
         $this->publishMigration('CreateLaraTicketsSettingsTable', '2020_08_30_123457_create_lara_tickets_settings_table');
         /**
+         * step4: setup laravel User model aliases to used in package extends
+         */
+        class_alias(config("laratickets.user_model"), 'ParentUserModel');
+        /**
          *
          */
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'asaydev-lara-tickets');

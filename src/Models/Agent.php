@@ -3,7 +3,7 @@
 namespace AsayDev\LaraTickets\Models;
 
 use Auth;
-use ParentModel;
+use AsayDev\LaraTickets\Models\ParentUserModel;
 
 class Agent extends ParentUserModel
 {

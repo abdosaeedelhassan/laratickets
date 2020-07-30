@@ -17,9 +17,7 @@ class InstallLaraTicketsPackageTest extends TestCase
         }
 
         $this->assertFalse(File::exists(config_path('laratickets.php')));
-
         Artisan::call('laratickets:install');
-
         $this->assertTrue(File::exists(config_path('laratickets.php')));
     }
 

@@ -1,5 +1,4 @@
 
-<div class="container">
 
     @include('asaydev-lara-tickets::layouts.assets')
 
@@ -27,4 +26,3 @@
         </div>
     @endif
     @yield('ticketit_extra_content')
-</div>

@@ -53,9 +53,14 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
          */
         Livewire::component('lara-tickets-dashboard', LaraTicketsDashboard::class);
         /**
-         *
+         * step6: load package views
          */
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'asaydev-lara-tickets');
+        /**
+         * step7: load translations files
+         */
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'laratickets');
+
     }
 
 

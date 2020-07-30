@@ -59,17 +59,20 @@ class Setting extends Model
 
             $setting = $settings->where('slug', $slug)->first();
 
-            if ($setting->lang) {
-                return trans($setting->lang);
+            if($setting) {
+                if ($setting->lang) {
+                    return trans($setting->lang);
+                }
+                if (self::is_serialized($setting->value)) {
+                    $setting = unserialize($setting->value);
+                } else {
+                    $setting = $setting->value;
+                }
+
+                return $setting;
             }
 
-            if (self::is_serialized($setting->value)) {
-                $setting = unserialize($setting->value);
-            } else {
-                $setting = $setting->value;
-            }
 
-            return $setting;
         });
 
         return $setting;

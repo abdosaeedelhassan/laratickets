@@ -21,9 +21,8 @@ class LaraTicketsDashboard extends Component
      * dashoard vars
      */
     public $user;
+
     public $active_nav_tab;
-
-
 
 
     public function mount($user_id){
@@ -48,9 +47,11 @@ class LaraTicketsDashboard extends Component
     }
 
 
+
+
     public function setActiveNavTab($tabName){
         $this->active_nav_tab=$tabName;
-        $this->emit('active_nav_tab',$tabName);
+        $this->emit('activeNvTab',$tabName);
     }
 
 

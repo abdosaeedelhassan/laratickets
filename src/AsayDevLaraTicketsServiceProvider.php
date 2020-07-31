@@ -3,6 +3,15 @@
 namespace AsayDev\LaraTickets;
 
 use AsayDev\LaraTickets\Console\InstallLaraTicketsPackage;
+use AsayDev\LaraTickets\Livewire\Components\LaraTicketsActiveTickets;
+use AsayDev\LaraTickets\Livewire\Components\LaraTicketsAdministrator;
+use AsayDev\LaraTickets\Livewire\Components\LaraTicketsAgents;
+use AsayDev\LaraTickets\Livewire\Components\LaraTicketsCategories;
+use AsayDev\LaraTickets\Livewire\Components\LaraTicketsCompletedTickets;
+use AsayDev\LaraTickets\Livewire\Components\LaraTicketsConfiguration;
+use AsayDev\LaraTickets\Livewire\Components\LaraTicketsMain;
+use AsayDev\LaraTickets\Livewire\Components\LaraTicketsPriorities;
+use AsayDev\LaraTickets\Livewire\Components\LaraTicketsStatuses;
 use AsayDev\LaraTickets\Livewire\LaraTicketsDashboard;
 use AsayDev\LaraTickets\Livewire\Layouts\LaraTicketsContent;
 use Illuminate\Support\Facades\Schema;
@@ -54,6 +63,17 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
          */
         Livewire::component('lara-tickets-dashboard', LaraTicketsDashboard::class);
         Livewire::component('lara-tickets-content', LaraTicketsContent::class);
+        Livewire::component('lara-tickets-main', LaraTicketsMain::class);
+        Livewire::component('lara-tickets-activetickets', LaraTicketsActiveTickets::class);
+        Livewire::component('lara-tickets-completedtickets', LaraTicketsCompletedTickets::class);
+
+        Livewire::component('lara-tickets-statuses', LaraTicketsStatuses::class);
+        Livewire::component('lara-tickets-priorities', LaraTicketsPriorities::class);
+        Livewire::component('lara-tickets-agents', LaraTicketsAgents::class);
+        Livewire::component('lara-tickets-cateogries', LaraTicketsCategories::class);
+        Livewire::component('lara-tickets-configuration', LaraTicketsConfiguration::class);
+        Livewire::component('lara-tickets-administrator', LaraTicketsAdministrator::class);
+        
         /**
          * step6: load package views
          */

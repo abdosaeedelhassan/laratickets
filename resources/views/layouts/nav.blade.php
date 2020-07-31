@@ -1,8 +1,8 @@
 <ul class="nav nav-pills">
     @if($user->laratickets_isAdmin())
         <li role="presentation" class="nav-item">
-            <a class="nav-link {{$active_nav_tab=='dashboard-tab'?'active':''}}"
-               wire:click="setActiveNavTab('dashboard-tab')">
+            <a class="nav-link {{$active_nav_tab=='main-tab'?'active':''}}"
+               wire:click="setActiveNavTab('main-tab')">
                 {{ trans('laratickets::admin.nav-dashboard') }}
             </a>
         </li>
@@ -18,7 +18,7 @@
                 } elseif ($user->isAgent()) {
                     echo \AsayDev\LaraTickets\Models\Ticket::active()->agentUserTickets($user->id)->count();
                 } else {
-                    echo \AsayDev\LaraTickets\Models\Ticket::userTickets($u->id)->active()->count();
+                    echo \AsayDev\LaraTickets\Models\Ticket::userTickets($user->id)->active()->count();
                 }
                 ?>
                 </span>

@@ -4,6 +4,7 @@ namespace AsayDev\LaraTickets;
 
 use AsayDev\LaraTickets\Console\InstallLaraTicketsPackage;
 use AsayDev\LaraTickets\Livewire\LaraTicketsDashboard;
+use AsayDev\LaraTickets\Livewire\Layouts\LaraTicketsContent;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
@@ -52,6 +53,7 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
          * step5: registering
          */
         Livewire::component('lara-tickets-dashboard', LaraTicketsDashboard::class);
+        Livewire::component('lara-tickets-content', LaraTicketsContent::class);
         /**
          * step6: load package views
          */

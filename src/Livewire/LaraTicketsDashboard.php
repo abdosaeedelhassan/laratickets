@@ -24,8 +24,9 @@ class LaraTicketsDashboard extends Component
     public $active_nav_tab;
 
 
-    public function mount($user_id){
 
+
+    public function mount($user_id){
         /**
          * init assets vars
          */
@@ -37,7 +38,7 @@ class LaraTicketsDashboard extends Component
          */
         $this->user=Agent::find($user_id);
         if($this->user->laratickets_isAdmin()){
-            $this->active_nav_tab='dashboard-tab';
+            $this->setActiveNavTab('main-tab');
         }
 
     }
@@ -49,6 +50,10 @@ class LaraTicketsDashboard extends Component
 
     public function setActiveNavTab($tabName){
         $this->active_nav_tab=$tabName;
+        $this->emit('active_nav_tab',$tabName);
     }
+
+
+
 
 }

@@ -15,6 +15,8 @@ class LaraTickets extends BaseLivewire
 {
     protected $tickets_type;
 
+    public $show_new_ticket_component=false;
+
     public function mount($tickets_type)
     {
         $this->tickets_type = $tickets_type;
@@ -43,7 +45,6 @@ class LaraTickets extends BaseLivewire
                 $collection = Ticket::userTickets($user->id)->active();
             }
         }
-
         return $collection
             ->join('users', 'users.id', '=', 'laratickets.user_id')
             ->join('laratickets_statuses', 'laratickets_statuses.id', '=', 'laratickets.status_id')
@@ -63,10 +64,6 @@ class LaraTickets extends BaseLivewire
                 'laratickets.agent_id',
                 'laratickets_categories.name AS category',
             ]);
-
-
-//            $column->category="<div style='color: $column->color_category'>e($column->category)</div>";
-
     }
 
     public function query(): Builder
@@ -74,7 +71,6 @@ class LaraTickets extends BaseLivewire
         return $this->data($this->tickets_type == 'completed' ? true : false);
 
     }
-
     /**
      * @inheritDoc
      */
@@ -86,18 +82,18 @@ class LaraTickets extends BaseLivewire
                 ->searchable()
             ,
             Column::make(trans('laratickets::lang.table-subject'))
-                ->view('asaydev-lara-tickets::components.ticketscomponent.subject', 'column')
+                ->view('asaydev-lara-tickets::components.tickets.subject', 'column')
                 ->sortable()
             ,
             Column::make(trans('laratickets::lang.table-status'))
-                ->view('asaydev-lara-tickets::components.ticketscomponent.status', 'column')
+                ->view('asaydev-lara-tickets::components.tickets.status', 'column')
                 ->sortable()
             ,
             Column::make(trans('laratickets::lang.table-last-updated'))
-                ->view('asaydev-lara-tickets::components.ticketscomponent.lastupdate', 'column')
+                ->view('asaydev-lara-tickets::components.tickets.lastupdate', 'column')
                 ->sortable(),
             Column::make(trans('laratickets::lang.table-agent'))
-                ->view('asaydev-lara-tickets::components.ticketscomponent.agent', 'column')
+                ->view('asaydev-lara-tickets::components.tickets.agent', 'column')
                 ->sortable()
         ];
 
@@ -107,7 +103,7 @@ class LaraTickets extends BaseLivewire
             if ($user->isAgent() || $user->laratickets_isAdmin()) {
                 array_push($columns,
                         Column::make(trans('laratickets::lang.table-priority'))
-                            ->view('asaydev-lara-tickets::components.ticketscomponent.priority', 'column')
+                            ->view('asaydev-lara-tickets::components.tickets.priority', 'column')
                             ->sortable());
                 array_push($columns,
                         Column::make(trans('laratickets::lang.table-owner'), 'owner')
@@ -115,13 +111,18 @@ class LaraTickets extends BaseLivewire
                             ->searchable());
                 array_push($columns,
                         Column::make(trans('laratickets::lang.table-category'))
-                            ->view('asaydev-lara-tickets::components.ticketscomponent.category', 'column')
+                            ->view('asaydev-lara-tickets::components.tickets.category', 'column')
                             ->sortable()
                 );
             }
         }
 
         return $columns;
+    }
+
+
+    public function addNewTicket(){
+        $this->show_new_ticket_component=true;
     }
 
 }

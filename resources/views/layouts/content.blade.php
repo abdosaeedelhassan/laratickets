@@ -1,10 +1,11 @@
 <div>
+
     @if($active_nav_tab=='main-tab')
         @livewire('lara-tickets-main')
     @elseif($active_nav_tab=='active-tickets-tab')
-        @livewire('lara-tickets-tickets',['tickets_type'=>'active'])
+        @include('asaydev-lara-tickets::components.tickets.tickets',['tickets_type'=>'active'])
     @elseif($active_nav_tab=='completed-tickets-tab')
-        @livewire('lara-tickets-tickets',['tickets_type'=>'completed'])
+        @include('asaydev-lara-tickets::components.tickets.tickets',['tickets_type'=>'completed'])
     @elseif($active_nav_tab=='statuses-tab')
         @livewire('lara-tickets-statuses')
     @elseif($active_nav_tab=='priorities-tab')

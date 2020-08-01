@@ -2,23 +2,126 @@
 
 namespace AsayDev\LaraTickets\Livewire\Components;
 
-use AsayDev\LaraTickets\Helpers\TicketsHelper;
+use AsayDev\LaraTickets\Livewire\BaseLivewire;
+use AsayDev\LaraTickets\Models\Agent;
 use AsayDev\LaraTickets\Models\Setting;
 use AsayDev\LaraTickets\Models\Ticket;
 use Livewire\Component;
+use Illuminate\Database\Eloquent\Builder;
 
-class LaraTickets extends Component
+use Rappasoft\LaravelLivewireTables\Views\Column;
+
+class LaraTickets extends BaseLivewire
 {
     protected $tickets_type;
-    public function mount($tickets_type){
-        $this->tickets_type=$tickets_type;
-    }
-    public function render()
+
+    public function mount($tickets_type)
     {
-        $tickets_helper=new TicketsHelper();
-        return view('asaydev-lara-tickets::components.tickets',[
-            'tickets'=>$tickets_helper->data($this->tickets_type=='completed'?true:false)
-        ]);
+        $this->tickets_type = $tickets_type;
+    }
+
+    public function data($complete = false)
+    {
+        $user = Agent::find(auth()->user()->id);
+
+        if ($user->laratickets_isAdmin()) {
+            if ($complete) {
+                $collection = Ticket::complete();
+            } else {
+                $collection = Ticket::active();
+            }
+        } elseif ($user->isAgent()) {
+            if ($complete) {
+                $collection = Ticket::complete()->agentUserTickets($user->id);
+            } else {
+                $collection = Ticket::active()->agentUserTickets($user->id);
+            }
+        } else {
+            if ($complete) {
+                $collection = Ticket::userTickets($user->id)->complete();
+            } else {
+                $collection = Ticket::userTickets($user->id)->active();
+            }
+        }
+
+        return $collection
+            ->join('users', 'users.id', '=', 'laratickets.user_id')
+            ->join('laratickets_statuses', 'laratickets_statuses.id', '=', 'laratickets.status_id')
+            ->join('laratickets_priorities', 'laratickets_priorities.id', '=', 'laratickets.priority_id')
+            ->join('laratickets_categories', 'laratickets_categories.id', '=', 'laratickets.category_id')
+            ->select([
+                'laratickets.id',
+                'laratickets.subject AS subject',
+                'laratickets_statuses.name AS status',
+                'laratickets_statuses.color AS color_status',
+                'laratickets_priorities.color AS color_priority',
+                'laratickets_categories.color AS color_category',
+                'laratickets.id AS agent',
+                'laratickets.updated_at AS updated_at',
+                'laratickets_priorities.name AS priority',
+                'users.first_name AS owner',
+                'laratickets.agent_id',
+                'laratickets_categories.name AS category',
+            ]);
+
+
+//            $column->category="<div style='color: $column->color_category'>e($column->category)</div>";
+
+    }
+
+    public function query(): Builder
+    {
+        return $this->data($this->tickets_type == 'completed' ? true : false);
+
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function columns(): array
+    {
+        $columns = [
+            Column::make(trans('laratickets::lang.table-id'), 'id')
+                ->sortable()
+                ->searchable()
+            ,
+            Column::make(trans('laratickets::lang.table-subject'))
+                ->view('asaydev-lara-tickets::components.ticketscomponent.subject', 'column')
+                ->sortable()
+            ,
+            Column::make(trans('laratickets::lang.table-status'))
+                ->view('asaydev-lara-tickets::components.ticketscomponent.status', 'column')
+                ->sortable()
+            ,
+            Column::make(trans('laratickets::lang.table-last-updated'))
+                ->view('asaydev-lara-tickets::components.ticketscomponent.lastupdate', 'column')
+                ->sortable(),
+            Column::make(trans('laratickets::lang.table-agent'))
+                ->view('asaydev-lara-tickets::components.ticketscomponent.agent', 'column')
+                ->sortable()
+        ];
+
+        $user = Agent::find(auth()->user()->id);
+
+        if ($user) {
+            if ($user->isAgent() || $user->laratickets_isAdmin()) {
+                array_push($columns,
+                        Column::make(trans('laratickets::lang.table-priority'))
+                            ->view('asaydev-lara-tickets::components.ticketscomponent.priority', 'column')
+                            ->sortable());
+                array_push($columns,
+                        Column::make(trans('laratickets::lang.table-owner'), 'owner')
+                            ->sortable()
+                            ->searchable());
+                array_push($columns,
+                        Column::make(trans('laratickets::lang.table-category'))
+                            ->view('asaydev-lara-tickets::components.ticketscomponent.category', 'column')
+                            ->sortable()
+                );
+            }
+        }
+
+        return $columns;
     }
 
 }

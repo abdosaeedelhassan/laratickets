@@ -4,7 +4,7 @@
     </h5>
     <div class="card-body">
         @foreach($tickets as $ticket)
-            
+
         @endforeach
     </div>
 </div>

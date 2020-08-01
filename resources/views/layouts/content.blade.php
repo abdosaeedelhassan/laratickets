@@ -1,5 +1,4 @@
 <div>
-
     @if($active_nav_tab=='main-tab')
         @livewire('lara-tickets-main')
     @elseif($active_nav_tab=='active-tickets-tab')

@@ -1,6 +1,9 @@
 # laratickets
 real time tickets system for laravel framework
 
+
+**Important note:** this package is under development and not completed yet
+
 # installation step
 
 composer require asaydev/laratickets
@@ -11,3 +14,7 @@ php artisan vendor:publish --provider="AsayDev\LaraTickets\AsayDevLaraTicketsSer
 # publishing migrations files
 
 php artisan vendor:publish --tag=laratickets_migrations
+
+# publishing assets files
+
+php artisan vendor:publish --tag=laratickets_assets

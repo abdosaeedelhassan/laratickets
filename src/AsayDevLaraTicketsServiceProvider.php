@@ -87,6 +87,14 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
          * step7: load translations files
          */
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'laratickets');
+        /**
+         * step8: publishing assets files
+         */
+        $this->publishes([
+            __DIR__.'/../assets/css' => public_path('laratickets/css'),
+            __DIR__.'/../assets/js' => public_path('laratickets/js'),
+            __DIR__.'/../assets/icons' => public_path('laratickets/icons'),
+        ], 'laratickets_assets');
 
     }
 

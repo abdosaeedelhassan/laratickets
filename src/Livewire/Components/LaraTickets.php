@@ -17,6 +17,13 @@ class LaraTickets extends BaseLivewire
 
     public $show_new_ticket_component=false;
 
+
+    protected $listeners=['setTicketsType'];
+
+    public function setTicketsType($type){
+        $this->tickets_type=$type;
+    }
+
     public function mount($tickets_type)
     {
         $this->tickets_type = $tickets_type;

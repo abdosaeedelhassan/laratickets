@@ -2,7 +2,7 @@
     <h5 class="card-header d-flex justify-content-between align-items-baseline flex-wrap">
         <div class="col-sm-5">
             <h4 class="card-title mb-0">
-                {{$card_title}}
+                {{$active_nav_title}}
             </h4>
         </div><!--col-->
         <div class="col-sm-7 pull-right">

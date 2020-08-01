@@ -8,6 +8,12 @@ class LaraTicketsForm extends Component
 {
     public $form;
 
+    public $priorities=[];
+
+    public $categories=[];
+
+
+
     public function mount($form){
         $this->form=$form;
     }
@@ -16,8 +22,8 @@ class LaraTicketsForm extends Component
         return view('asaydev-lara-tickets::forms.ticket');
     }
 
-    public function store(){
-
+    public function goback(){
+        $this->emit('activeNvTab',$this->form['active_nav_tab']);
     }
 
 }

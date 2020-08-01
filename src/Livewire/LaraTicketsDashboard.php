@@ -25,6 +25,9 @@ class LaraTicketsDashboard extends Component
     public $active_nav_tab;
 
 
+    protected $listeners=['setActiveNavTab'];
+
+
     public function mount($user_id){
         /**
          * init assets vars

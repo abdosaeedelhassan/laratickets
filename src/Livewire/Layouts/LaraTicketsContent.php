@@ -2,6 +2,7 @@
 
 namespace AsayDev\LaraTickets\Livewire\Layouts;
 
+use AsayDev\LaraTickets\Traits\SlimNotifierJs;
 use Livewire\Component;
 
 class LaraTicketsContent extends Component

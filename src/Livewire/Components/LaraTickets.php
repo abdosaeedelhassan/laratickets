@@ -15,9 +15,6 @@ class LaraTickets extends BaseLivewire
 {
     protected $tickets_type;
 
-    public $show_new_ticket_component=false;
-
-
     protected $listeners=['setTicketsType'];
 
     public function setTicketsType($type){
@@ -125,11 +122,6 @@ class LaraTickets extends BaseLivewire
         }
 
         return $columns;
-    }
-
-
-    public function addNewTicket(){
-        $this->show_new_ticket_component=true;
     }
 
 }

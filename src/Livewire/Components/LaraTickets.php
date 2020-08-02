@@ -126,4 +126,11 @@ class LaraTickets extends BaseLivewire
         return $columns;
     }
 
+    public function viewTicket($ticket_id){
+        $this->dashboardData['active_nav_tab']='ticket-viewer';
+        $this->dashboardData['ticket_id']=$ticket_id;
+        $this->emit('activeNvTab', $this->dashboardData);
+    }
+
+
 }

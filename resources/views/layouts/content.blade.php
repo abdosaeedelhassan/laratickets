@@ -17,5 +17,7 @@
         @livewire('lara-tickets-configuration')
     @elseif($dashboardData['active_nav_tab']=='admin-tab')
         @livewire('lara-tickets-administrator')
+    @elseif($dashboardData['active_nav_tab']=='ticket-viewer')
+        @livewire('lara-tickets-viewer')
     @endif
 </div>

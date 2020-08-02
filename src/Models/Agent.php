@@ -40,6 +40,17 @@ class Agent extends ParentUserModel
      */
     public function scopeAdmins($query, $paginate = false)
     {
+        /**
+         * if no laratickets_admin set default one
+         */
+        $adminAgent = \AsayDev\LaraTickets\Models\Agent::where('laratickets_admin', 1)->first();
+        if (!$adminAgent) {
+            $adminAgent = \AsayDev\LaraTickets\Models\Agent::first();
+            if ($adminAgent) {
+                \AsayDev\LaraTickets\Models\Agent::where('id',$adminAgent->id)->update(['laratickets_admin' => 1]);
+            }
+        }
+
         if ($paginate) {
             return $query->where('laratickets_admin', '1')->paginate($paginate, ['*'], 'admins_page');
         } else {
@@ -128,7 +139,7 @@ class Agent extends ParentUserModel
     public static function isAssignedAgent($id)
     {
         return auth()->check() &&
-        	Auth::user()->laratickets_agent &&
+            Auth::user()->laratickets_agent &&
             Auth::user()->id == Ticket::find($id)->agent->id;
     }
 
@@ -141,7 +152,7 @@ class Agent extends ParentUserModel
      */
     public static function isTicketOwner($id)
     {
-    	$ticket = Ticket::find($id);
+        $ticket = Ticket::find($id);
         return $ticket && auth()->check() &&
             auth()->user()->id == $ticket->user->id;
     }

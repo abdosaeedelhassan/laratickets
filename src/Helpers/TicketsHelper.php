@@ -79,5 +79,35 @@ class TicketsHelper
     }
 
 
+    public function initDefaultStatus(){
+        $status=\AsayDev\LaraTickets\Models\Status::first();
+        if($status){
+            $setting=\AsayDev\LaraTickets\Models\Setting::where('slug','default_status_id')->first();
+            if($setting){
+                \AsayDev\LaraTickets\Models\Setting::where('slug','default_status_id')
+                    ->update(['default_status_id'=>$status->id]);
+            }else{
+                \AsayDev\LaraTickets\Models\Setting::create([
+                    'lang'=>'ar',
+                    'value'=>$status->id,
+                    'default'=>$status->id,
+                ]);
+            }
+        }else{
+            $status=\AsayDev\LaraTickets\Models\Status::create([
+                'name'=>'Default',
+                'color'=>'green'
+            ]);
+            \AsayDev\LaraTickets\Models\Setting::create([
+                'lang'=>'ar',
+                'value'=>$status->id,
+                'default'=>$status->id,
+            ]);
+        }
+
+        return $status;
+    }
+
+
 
 }

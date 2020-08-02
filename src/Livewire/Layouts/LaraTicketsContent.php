@@ -8,25 +8,13 @@ use Livewire\Component;
 class LaraTicketsContent extends Component
 {
 
-    /**
-     * @var
-     * main title
-     */
-    public $active_nav_title;
-    /**
-     * @var
-     * her in tickets: will be active-tickets-tab or completed-tickets-tab
-     */
-    public $active_nav_tab;
-
-
-    public $show_form;
+    public $dashboardData;
 
 
     protected $listeners=['activeNvTab','setActionForm'];
 
-    public function mount($active_nav_tab){
-        $this->activeNvTab($active_nav_tab);
+    public function mount($dashboardData){
+        $this->activeNvTab($dashboardData);
     }
     /**
      * @param $form_name
@@ -35,28 +23,28 @@ class LaraTicketsContent extends Component
     public function openForm($form_name){
         if($form_name=='new_ticket'){
             $this->setActionForm(['name'=>'tickets','action'=>'add']);
-            $this->active_nav_title=trans('laratickets::lang.index-my-tickets').': '.trans('laratickets::lang.create-new-ticket');
+            $this->dashboardData['active_nav_title']=trans('laratickets::lang.index-my-tickets').': '.trans('laratickets::lang.create-new-ticket');
         }
     }
     /**
-     * @param $tabName
+     * @param $dashboardData
      * for opening selected nav
      */
-    public function activeNvTab($tabName){
-        $this->active_nav_tab=$tabName;
+    public function activeNvTab($dashboardData){
+        $this->dashboardData=$dashboardData;
         // close opened form
-        $this->setActionForm(['name'=>'','action'=>'']);
-        $this->active_nav_title=trans('laratickets::lang.index-my-tickets');
+        $this->dashboardData['form']=['name'=>'','action'=>''];
+        $this->dashboardData['active_nav_title']=trans('laratickets::lang.index-my-tickets');
         // refresh tickets table data
-        $this->emit('setTicketsType',explode('-',$tabName)[0]);
+        $this->emit('setDashboardData',$dashboardData);
     }
     /**
      * @param $action
      * for displing crud form
      */
     public function setActionForm($form){
-        $this->show_form=$form;
-        $this->show_form['active_nav_tab']=$this->active_nav_tab;
+        $this->dashboardData['form']=$form;
+        $this->emit('setDashboardData',$this->dashboardData);
     }
     public function render()
     {

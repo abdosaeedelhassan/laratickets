@@ -14,16 +14,18 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 class LaraTickets extends BaseLivewire
 {
     protected $tickets_type;
+    protected $dashbordData;
 
-    protected $listeners=['setTicketsType'];
+    protected $listeners=['setDashboardData'];
 
-    public function setTicketsType($type){
-        $this->tickets_type=$type;
+    public function setDashboardData($dashboardData){
+        $this->dashbordData=$dashboardData;
+        $this->tickets_type=explode('-',$dashboardData['active_nav_tab'])[0];
     }
 
-    public function mount($tickets_type)
+    public function mount($dashboardData)
     {
-        $this->tickets_type = $tickets_type;
+        $this->setDashboardData($dashboardData);
     }
 
     public function data($complete = false)

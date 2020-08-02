@@ -44,6 +44,8 @@ class CreateLaraTicketsTables extends Migration
             $table->integer('priority_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('agent_id')->unsigned();
+            $table->string('model')->nullable();
+            $table->integer('model_id')->nullable();
             $table->integer('category_id')->unsigned();
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();

@@ -7,4 +7,4 @@
     </div>
 </div>
 
-@livewire('lara-tickets-content',['active_nav_tab'=>$active_nav_tab])
+@livewire('lara-tickets-content',['dashboardData'=>$dashboardData])

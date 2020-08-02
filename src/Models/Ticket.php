@@ -203,22 +203,25 @@ class Ticket extends Model
         $lowest_tickets = 1000000;
         // If no agent selected, select the admin
         $first_admin = Agent::admins()->first();
-        $selected_agent_id = $first_admin->id;
-        foreach ($agents as $agent) {
-            if ($count == 0) {
-                $lowest_tickets = $agent->agentOpenTickets->count();
-                $selected_agent_id = $agent->id;
-            } else {
-                $tickets_count = $agent->agentOpenTickets->count();
-                if ($tickets_count < $lowest_tickets) {
-                    $lowest_tickets = $tickets_count;
+        if($first_admin){
+            $selected_agent_id = $first_admin->id;
+            foreach ($agents as $agent) {
+                if ($count == 0) {
+                    $lowest_tickets = $agent->agentOpenTickets->count();
                     $selected_agent_id = $agent->id;
+                } else {
+                    $tickets_count = $agent->agentOpenTickets->count();
+                    if ($tickets_count < $lowest_tickets) {
+                        $lowest_tickets = $tickets_count;
+                        $selected_agent_id = $agent->id;
+                    }
                 }
+                $count++;
             }
-            $count++;
+            $this->agent_id = $selected_agent_id;
+            return $this;
+        }else{
+            return array('error'=>'No admin user selecetd for tickets, must be at least one admin selecetd');
         }
-        $this->agent_id = $selected_agent_id;
-
-        return $this;
     }
 }

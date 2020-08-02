@@ -21,31 +21,25 @@
         </div>
 
         <div class="form-row mt-5">
-            <div class="form-group offset-lg-1 col-lg-4 row">
-                <div class="col-lg-6 col-form-label">
-                    <label
+                    <label  class="col-lg-2 col-form-label"
                         for="priority">{!!  trans('laratickets::lang.priority') . trans('laratickets::lang.colon') !!}</label>
-                </div>
-                <div class="col-lg-6">
+                <div class="col-lg-10">
                     <select class="form-control" name="priority_id" id="priority_id" wire:model="priority_id">
                         @foreach($priorities as $key=>$value)
                             <option value="{{$value}}">{{$key}}</option>
                         @endforeach
                     </select>
                 </div>
-            </div>
-            <div class="form-group offset-lg-1 col-lg-4 row">
-                <div class="col-lg-6 col-form-label">
-                    <label
-                        for="category">{!!  trans('laratickets::lang.category') . trans('laratickets::lang.colon') !!}</label>
-                </div>
-                <div class="col-lg-6">
-                    <select class="form-control" name="category_id" id="category_id" wire:model="category_id">
-                        @foreach($categories as $key=>$value)
-                            <option value="{{$value}}">{{$key}}</option>
-                        @endforeach
-                    </select>
-                </div>
+        </div>
+        <div class="form-row mt-5">
+            <label class="col-lg-2 col-form-label"
+                   for="category">{!!  trans('laratickets::lang.category') . trans('laratickets::lang.colon') !!}</label>
+            <div class="col-lg-10">
+                <select class="form-control" name="category_id" id="category_id" wire:model="category_id">
+                    @foreach($categories as $key=>$value)
+                        <option value="{{$value}}">{{$key}}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
         <br>

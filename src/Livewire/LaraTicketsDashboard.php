@@ -21,14 +21,13 @@ class LaraTicketsDashboard extends Component
      * dashoard vars
      */
     public $user;
+    public $dashboardData = [];
 
-    public $active_nav_tab;
-
-
-    protected $listeners=['setActiveNavTab'];
+    protected $listeners = ['setActiveNavTab'];
 
 
-    public function mount($user_id){
+    public function mount($model = '', $model_id = '')
+    {
         /**
          * init assets vars
          */
@@ -38,26 +37,41 @@ class LaraTicketsDashboard extends Component
         /**
          * init dashbaord vars
          */
-        $this->user=Agent::find($user_id);
-        if($this->user->laratickets_isAdmin()){
-            $this->setActiveNavTab('main-tab');
+        $this->dashboardData = array(
+            'model' => $model,
+            'model_id' => $model_id,
+        );
+
+         $this->user= Agent::find(auth()->user()->id);
+
+        if ($this->user->laratickets_isAdmin()) {
+            $this->dashboardData['usertype']='admin';
+            $this->dashboardData['active_nav_tab'] = 'main-tab';
+        } else {
+            $this->dashboardData['usertype']='agent';
+            $this->dashboardData['active_nav_tab'] = 'active-tickets-tab';
         }
 
+
+        $this->setActiveNavTab($this->dashboardData['active_nav_tab']);
+
+
     }
+
     public function render()
     {
         return view('asaydev-lara-tickets::dashboard');
     }
 
 
-
-
-    public function setActiveNavTab($tabName){
-        $this->active_nav_tab=$tabName;
-        $this->emit('activeNvTab',$tabName);
+    /**
+     * for changing active nav data from outside
+     */
+    public function setActiveNavTab($active_nav_tab)
+    {
+        $this->dashboardData['active_nav_tab']=$active_nav_tab;
+        $this->emit('activeNvTab',$this->dashboardData);
     }
-
-
 
 
 }

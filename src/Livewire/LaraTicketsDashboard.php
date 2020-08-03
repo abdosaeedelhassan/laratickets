@@ -47,11 +47,14 @@ class LaraTicketsDashboard extends Component
         if ($this->user->laratickets_isAdmin()) {
             $this->dashboardData['usertype']='admin';
             $this->dashboardData['active_nav_tab'] = 'main-tab';
+            $this->dashboardData['active_nav_title']=trans('laratickets::lang.index-title');
         } else {
             $this->dashboardData['usertype']='agent';
             $this->dashboardData['active_nav_tab'] = 'active-tickets-tab';
+            $this->dashboardData['active_nav_title']=trans('laratickets::lang.index-my-tickets');
         }
 
+        $this->dashboardData['user']=Agent::find(auth()->user()->id);
 
         $this->setActiveNavTab($this->dashboardData['active_nav_tab']);
 

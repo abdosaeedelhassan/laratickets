@@ -13,14 +13,13 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 
 class LaraTickets extends BaseLivewire
 {
-    protected $tickets_type;
-    protected $dashbordData;
+    public $dashboardData;
 
     protected $listeners=['setDashboardData'];
 
-    public function setDashboardData($dashboardData){
-        $this->dashbordData=$dashboardData;
-        $this->tickets_type=explode('-',$dashboardData['active_nav_tab'])[0];
+    public function setDashboardData($dashboardData)
+    {
+        $this->dashboardData=$dashboardData;
     }
 
     public function mount($dashboardData)
@@ -74,7 +73,7 @@ class LaraTickets extends BaseLivewire
 
     public function query(): Builder
     {
-        return $this->data($this->tickets_type == 'completed' ? true : false);
+        return $this->data(explode('-',$this->dashboardData['active_nav_tab'])[0] == 'completed' ? true : false);
 
     }
     /**
@@ -128,7 +127,8 @@ class LaraTickets extends BaseLivewire
 
     public function viewTicket($ticket_id){
         $this->dashboardData['active_nav_tab']='ticket-viewer';
-        $this->dashboardData['ticket_id']=$ticket_id;
+        $this->dashboardData['ticket']=Ticket::where('id',$ticket_id)->first();
+        dd( $this->dashboardData);
         $this->emit('activeNvTab', $this->dashboardData);
     }
 

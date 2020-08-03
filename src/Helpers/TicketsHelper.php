@@ -6,6 +6,7 @@ namespace AsayDev\LaraTickets\Helpers;
 use AsayDev\LaraTickets\Models\Agent;
 use AsayDev\LaraTickets\Models\Setting;
 use AsayDev\LaraTickets\Models\Ticket;
+use Illuminate\Support\Str;
 
 class TicketsHelper
 {
@@ -79,33 +80,22 @@ class TicketsHelper
     }
 
 
-    public function initDefaultStatus(){
-        $status=\AsayDev\LaraTickets\Models\Status::first();
-        if($status){
-            $setting=\AsayDev\LaraTickets\Models\Setting::where('slug','default_status_id')->first();
-            if($setting){
-                \AsayDev\LaraTickets\Models\Setting::where('slug','default_status_id')
-                    ->update(['default_status_id'=>$status->id]);
-            }else{
-                \AsayDev\LaraTickets\Models\Setting::create([
-                    'lang'=>'ar',
-                    'value'=>$status->id,
-                    'default'=>$status->id,
-                ]);
-            }
-        }else{
+    public function initDefaultStatus($key){
+
+        $setting=\AsayDev\LaraTickets\Models\Setting::where('slug',$key)->first();
+        if(!$setting){
             $status=\AsayDev\LaraTickets\Models\Status::create([
                 'name'=>'Default',
                 'color'=>'green'
             ]);
-            \AsayDev\LaraTickets\Models\Setting::create([
-                'lang'=>'ar',
+            $setting=\AsayDev\LaraTickets\Models\Setting::create([
+                'lang'=>Str::random(5),
+                'slug'=>$key,
                 'value'=>$status->id,
                 'default'=>$status->id,
             ]);
         }
-
-        return $status;
+        return $setting;
     }
 
 

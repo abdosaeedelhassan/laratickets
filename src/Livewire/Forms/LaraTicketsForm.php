@@ -96,7 +96,7 @@ class LaraTicketsForm extends Component
             $ticket->status_id = $setting->value;
         } else {
             $helper = new TicketsHelper();
-            $default_status = $helper->initDefaultStatus();
+            $default_status = $helper->initDefaultStatus('default_status_id');
             $ticket->status_id = $default_status->value;
         }
 

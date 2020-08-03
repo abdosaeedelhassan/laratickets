@@ -127,8 +127,7 @@ class LaraTickets extends BaseLivewire
 
     public function viewTicket($ticket_id){
         $this->dashboardData['active_nav_tab']='ticket-viewer';
-        $this->dashboardData['ticket']=Ticket::where('id',$ticket_id)->first();
-        dd( $this->dashboardData);
+        $this->dashboardData['ticket_id']=$ticket_id;
         $this->emit('activeNvTab', $this->dashboardData);
     }
 

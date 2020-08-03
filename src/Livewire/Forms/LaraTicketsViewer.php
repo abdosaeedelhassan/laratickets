@@ -6,6 +6,7 @@ use AsayDev\LaraTickets\Helpers\TicketsHelper;
 use AsayDev\LaraTickets\Models\Agent;
 use AsayDev\LaraTickets\Models\Setting;
 use AsayDev\LaraTickets\Models\Ticket;
+use AsayDev\LaraTickets\Traits\SlimNotifierJs;
 use Livewire\Component;
 
 class LaraTicketsViewer extends Component
@@ -17,21 +18,25 @@ class LaraTicketsViewer extends Component
 
     public $default_close_status_id;
 
+    public $close_perm;
+    public $reopen_perm;
 
     public function mount($dashboardData)
     {
-        $this->dashboardData=$dashboardData;
-        $this->user=Agent::where('id',$dashboardData['user_id'])->first();
-        $this->ticket=Ticket::where('id',$dashboardData['ticket_id'])->first();
+        $this->dashboardData = $dashboardData;
+        $this->user = Agent::where('id', $dashboardData['user_id'])->first();
+        $this->ticket = Ticket::where('id', $dashboardData['ticket_id'])->first();
 
-        $setting=Setting::where('slug','default_close_status_id')->first();
-        if($setting){
-            $this->default_close_status_id=$setting->value;
-        }else{
-            $helper=new TicketsHelper();
-            $setting=$helper->initDefaultStatus('default_close_status_id');
-            $this->default_close_status_id=$setting->value;
+        $setting = Setting::where('slug', 'default_close_status_id')->first();
+        if ($setting) {
+            $this->default_close_status_id = $setting->value;
+        } else {
+            $setting = TicketsHelper::initDefaultStatusInSetting('default_close_status_id');
+            $this->default_close_status_id = $setting->value;
         }
+
+        $this->close_perm = TicketsHelper::permTo($dashboardData['user_id'], $dashboardData['ticket_id'], 'close');
+        $this->reopen_perm = TicketsHelper::permTo($dashboardData['user_id'], $dashboardData['ticket_id'], 'reopen');
 
     }
 
@@ -45,9 +50,24 @@ class LaraTicketsViewer extends Component
         //
     }
 
+    public function destroyTicket()
+    {
+        if ($this->user->laratickets_isAdmin()) {
+            Ticket::where('id', $this->ticket->id)->delete();
+            $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success, trans('laratickets::lang.index-my-tickets'), trans('laratickets::lang.the-ticket-has-been-deleted', ['name' => $this->ticket->subject]));
+            $this->emit('laratickets-flash-message', $msg);
+            $this->goback();
+        } else {
+            $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success, trans('laratickets::lang.index-my-tickets'), 'this operation for admin only');
+            $this->emit('laratickets-flash-message', $msg);
+        }
+    }
+
     public function goback()
     {
-        //
+        $this->dashboardData['form'] = ['name' => '', 'action' => ''];
+        $this->dashboardData['active_nav_tab'] = $this->dashboardData['prev_nav_tab'];
+        $this->emit('activeNvTab', $this->dashboardData);
     }
 
 }

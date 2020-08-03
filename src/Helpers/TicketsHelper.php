@@ -8,7 +8,7 @@ use AsayDev\LaraTickets\Models\Setting;
 use AsayDev\LaraTickets\Models\Ticket;
 use Illuminate\Support\Str;
 
-class TicketsHelper
+class  TicketsHelper
 {
 
     public function data($complete = false)
@@ -35,7 +35,7 @@ class TicketsHelper
             }
         }
 
-        $data=$collection
+        $data = $collection
             ->join('users', 'users.id', '=', 'laratickets.user_id')
             ->join('laratickets_statuses', 'laratickets_statuses.id', '=', 'laratickets.status_id')
             ->join('laratickets_priorities', 'laratickets_priorities.id', '=', 'laratickets.priority_id')
@@ -55,23 +55,12 @@ class TicketsHelper
                 'laratickets_categories.name AS category',
             ])->get();
 
-        $data->map(function ($column){
-
-            // need to add onclick wire
-
-//            $column->subject=(string) link_to_route(
-//                Setting::grab('main_route').'.show',
-//                $column->subject,
-//                $column->id
-//            );
-
-            $column->status="<div style='color: $column->color_status'>e($column->status)</div>";
-            $column->priority="<div style='color: $column->color_priority'>e($column->priority)</div>";
-            $column->category="<div style='color: $column->color_category'>e($column->category)</div>";
-
-            $ticket=Ticket::find($column->id);
-            $column->agent=e($ticket->agent->name);
-
+        $data->map(function ($column) {
+            $column->status = "<div style='color: $column->color_status'>e($column->status)</div>";
+            $column->priority = "<div style='color: $column->color_priority'>e($column->priority)</div>";
+            $column->category = "<div style='color: $column->color_category'>e($column->category)</div>";
+            $ticket = Ticket::find($column->id);
+            $column->agent = e($ticket->agent->name);
             return $column;
         });
 
@@ -80,24 +69,62 @@ class TicketsHelper
     }
 
 
-    public function initDefaultStatus($key){
-
-        $setting=\AsayDev\LaraTickets\Models\Setting::where('slug',$key)->first();
-        if(!$setting){
-            $status=\AsayDev\LaraTickets\Models\Status::create([
-                'name'=>'Default',
-                'color'=>'green'
+    public static function initDefaultStatusInSetting($key)
+    {
+        $setting = \AsayDev\LaraTickets\Models\Setting::where('slug', $key)->first();
+        if (!$setting) {
+            $status = \AsayDev\LaraTickets\Models\Status::create([
+                'name' => 'Default',
+                'color' => 'green'
             ]);
-            $setting=\AsayDev\LaraTickets\Models\Setting::create([
-                'lang'=>Str::random(5),
-                'slug'=>$key,
-                'value'=>$status->id,
-                'default'=>$status->id,
+            $setting = \AsayDev\LaraTickets\Models\Setting::create([
+                'lang' => Str::random(5),
+                'slug' => $key,
+                'value' => $status->id,
+                'default' => $status->id,
             ]);
         }
         return $setting;
     }
 
+    public static function initDefaultSetting($key, $value)
+    {
+        $setting = \AsayDev\LaraTickets\Models\Setting::where('slug', $key)->first();
+        if (!$setting) {
+            $setting = \AsayDev\LaraTickets\Models\Setting::create([
+                'lang' => Str::random(5),
+                'slug' => $key,
+                'value' => $value,
+                'default' => $value,
+            ]);
+        }
+        return $setting;
+    }
 
+    public static function permTo($user_id, $ticket_id,$type)
+    {
+
+        if($type=='close'){
+            $ticket_perm = self::initDefaultSetting('close_ticket_perm', 'a:3:{s:5:"owner";b:1;s:5:"agent";b:1;s:5:"admin";b:1;}');
+        }else if($type=='reopen'){
+            $ticket_perm = self::initDefaultSetting('reopen_ticket_perm', 'a:3:{s:5:"owner";b:1;s:5:"agent";b:1;s:5:"admin";b:1;}');
+        }else{
+            return 'no';
+        }
+
+        $agent = Agent::find($user_id);
+
+        if ($agent->laratickets_isAdmin() && $ticket_perm['admin'] == 'yes') {
+            return 'yes';
+        }
+        if ($agent->isAgent() && $ticket_perm['agent'] == 'yes') {
+            return 'yes';
+        }
+        if ($agent->isTicketOwner($ticket_id) && $ticket_perm['owner'] == 'yes') {
+            return 'yes';
+        }
+
+        return 'no';
+    }
 
 }

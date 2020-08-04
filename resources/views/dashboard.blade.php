@@ -8,3 +8,5 @@
 </div>
 
 @livewire('lara-tickets-content',['dashboardData'=>$dashboardData])
+
+@include('asaydev-lara-tickets::layouts.summernote')

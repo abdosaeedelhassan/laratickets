@@ -11,7 +11,11 @@ class Comment extends Model
     use ContentEllipse;
     use Purifiable;
 
-    protected $table = 'ticketit_comments';
+    protected $table = 'laratickets_comments';
+
+    protected $fillable = [
+        'content', 'html', 'user_id', 'ticket_id', 'created_at', 'updated_at'
+    ];
 
     /**
      * Get related ticket.

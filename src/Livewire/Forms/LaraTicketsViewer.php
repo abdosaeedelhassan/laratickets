@@ -27,16 +27,12 @@ class LaraTicketsViewer extends Component
         $this->user = Agent::where('id', $dashboardData['user_id'])->first();
         $this->ticket = Ticket::where('id', $dashboardData['ticket_id'])->first();
 
-        $setting = Setting::where('slug', 'default_close_status_id')->first();
-        if ($setting) {
-            $this->default_close_status_id = $setting->value;
-        } else {
-            $setting = TicketsHelper::initDefaultStatusInSetting('default_close_status_id');
-            $this->default_close_status_id = $setting->value;
-        }
+        $setting = TicketsHelper::getDefaultStatusInSetting('default_close_status_id');
+        $this->default_close_status_id = $setting->value;
 
         $this->close_perm = TicketsHelper::permTo($dashboardData['user_id'], $dashboardData['ticket_id'], 'close');
         $this->reopen_perm = TicketsHelper::permTo($dashboardData['user_id'], $dashboardData['ticket_id'], 'reopen');
+
 
     }
 
@@ -50,6 +46,9 @@ class LaraTicketsViewer extends Component
         //
     }
 
+    public function editTicket(){
+     //
+    }
     public function destroyTicket()
     {
         if ($this->user->laratickets_isAdmin()) {

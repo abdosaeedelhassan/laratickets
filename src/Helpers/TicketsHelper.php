@@ -69,7 +69,7 @@ class  TicketsHelper
     }
 
 
-    public static function initDefaultStatusInSetting($key)
+    public static function getDefaultStatusInSetting($key)
     {
         $setting = \AsayDev\LaraTickets\Models\Setting::where('slug', $key)->first();
         if (!$setting) {
@@ -87,15 +87,15 @@ class  TicketsHelper
         return $setting;
     }
 
-    public static function initDefaultSetting($key, $value)
+    public static function getDefaultSetting($key, $default)
     {
         $setting = \AsayDev\LaraTickets\Models\Setting::where('slug', $key)->first();
         if (!$setting) {
             $setting = \AsayDev\LaraTickets\Models\Setting::create([
                 'lang' => Str::random(5),
                 'slug' => $key,
-                'value' => $value,
-                'default' => $value,
+                'value' => $default,
+                'default' => $default,
             ]);
         }
         return $setting;
@@ -105,9 +105,9 @@ class  TicketsHelper
     {
 
         if($type=='close'){
-            $ticket_perm = self::initDefaultSetting('close_ticket_perm', 'a:3:{s:5:"owner";b:1;s:5:"agent";b:1;s:5:"admin";b:1;}');
+            $ticket_perm = self::getDefaultSetting('close_ticket_perm', 'a:3:{s:5:"owner";b:1;s:5:"agent";b:1;s:5:"admin";b:1;}');
         }else if($type=='reopen'){
-            $ticket_perm = self::initDefaultSetting('reopen_ticket_perm', 'a:3:{s:5:"owner";b:1;s:5:"agent";b:1;s:5:"admin";b:1;}');
+            $ticket_perm = self::getDefaultSetting('reopen_ticket_perm', 'a:3:{s:5:"owner";b:1;s:5:"agent";b:1;s:5:"admin";b:1;}');
         }else{
             return 'no';
         }

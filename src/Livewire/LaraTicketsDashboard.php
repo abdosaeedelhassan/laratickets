@@ -2,6 +2,7 @@
 
 namespace AsayDev\LaraTickets\Livewire;
 
+use AsayDev\LaraTickets\Helpers\TicketsHelper;
 use AsayDev\LaraTickets\Models\Agent;
 use AsayDev\LaraTickets\Models\Setting;
 use Livewire\Component;
@@ -16,6 +17,9 @@ class LaraTicketsDashboard extends Component
     public $editor_enabled;
     public $codemirror_enabled;
     public $codemirror_theme;
+    public $include_font_awesome;
+    public $editor_locale;
+    public $editor_options;
     /**
      * @var
      * dashoard vars
@@ -31,9 +35,14 @@ class LaraTicketsDashboard extends Component
         /**
          * init assets vars
          */
-        $this->editor_enabled = Setting::grab('editor_enabled');
-        $this->codemirror_enabled = Setting::grab('editor_html_highlighter');
-        $this->codemirror_theme = Setting::grab('codemirror_theme');
+        $this->editor_enabled = TicketsHelper::getDefaultSetting('editor_enabled', '1')->value;
+        $this->codemirror_enabled = TicketsHelper::getDefaultSetting('codemirror_enabled', '1')->value;
+        $this->codemirror_theme = TicketsHelper::getDefaultSetting('codemirror_theme', 'monokai')->value;
+        $this->include_font_awesome = TicketsHelper::getDefaultSetting('include_font_awesome', '1')->value;
+        $this->editor_locale = TicketsHelper::getDefaultSetting('editor_locale', 'en')->value;
+        $this->editor_options = file_get_contents(base_path(TicketsHelper::getDefaultSetting('editor_options', 'vendor/asaydev/laratickets/resources/json/summernote_init.json')->value));
+
+
         /**
          * init dashbaord vars
          */

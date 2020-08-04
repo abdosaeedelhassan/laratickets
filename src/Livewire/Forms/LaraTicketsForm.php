@@ -91,13 +91,8 @@ class LaraTicketsForm extends Component
         $ticket->priority_id = $this->priority_id;
         $ticket->category_id = $this->category_id;
 
-        $setting = Setting::where('slug', 'default_status_id')->first();
-        if ($setting) {
-            $ticket->status_id = $setting->value;
-        } else {
-            $default_status = TicketsHelper::initDefaultStatusInSetting('default_status_id');
-            $ticket->status_id = $default_status->value;
-        }
+        $default_status = TicketsHelper::getDefaultStatusInSetting('default_status_id');
+        $ticket->status_id = $default_status->value;
 
         $ticket->user_id = auth()->user()->id;
         $ticket->autoSelectAgent();

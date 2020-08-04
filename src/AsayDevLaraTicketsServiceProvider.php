@@ -8,6 +8,7 @@ use AsayDev\LaraTickets\Livewire\Components\LaraTicketsActiveTickets;
 use AsayDev\LaraTickets\Livewire\Components\LaraTicketsAdministrator;
 use AsayDev\LaraTickets\Livewire\Components\LaraTicketsAgents;
 use AsayDev\LaraTickets\Livewire\Components\LaraTicketsCategories;
+use AsayDev\LaraTickets\Livewire\Components\LaraTicketsCommentForm;
 use AsayDev\LaraTickets\Livewire\Components\LaraTicketsCompletedTickets;
 use AsayDev\LaraTickets\Livewire\Components\LaraTicketsConfiguration;
 use AsayDev\LaraTickets\Livewire\Components\LaraTicketsMain;
@@ -68,6 +69,7 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
         Livewire::component('lara-tickets-content', LaraTicketsContent::class);
         Livewire::component('lara-tickets-main', LaraTicketsMain::class);
         Livewire::component('lara-tickets-tickets', LaraTickets::class);
+        Livewire::component('lara-tickets-comment-form', LaraTicketsCommentForm::class);
 
         Livewire::component('lara-tickets-statuses', LaraTicketsStatuses::class);
         Livewire::component('lara-tickets-priorities', LaraTicketsPriorities::class);

@@ -235,8 +235,7 @@ class Ticket extends Model
                 }
                 $count++;
             }
-            $this->agent_id = $selected_agent_id;
-            return $this;
+            return $selected_agent_id;
         } else {
             return array('error' => 'No admin user selecetd for tickets, must be at least one admin selecetd');
         }

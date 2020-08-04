@@ -85,17 +85,15 @@ class LaraTicketsForm extends Component
         ]);
 
         $ticket = new Ticket();
-
         $ticket->subject = $this->subject;
-        $ticket->setPurifiedContent($this->content);
+        $ticket->content=$this->content;
+        $ticket->html=$this->content;
         $ticket->priority_id = $this->priority_id;
         $ticket->category_id = $this->category_id;
-
         $default_status = TicketsHelper::getDefaultStatusInSetting('default_status_id');
         $ticket->status_id = $default_status->value;
-
         $ticket->user_id = auth()->user()->id;
-        $ticket->autoSelectAgent();
+        $ticket->agent_id=$ticket->autoSelectAgent();
         $ticket->save();
 
         $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success, trans('laratickets::lang.btn-create-new-ticket'), trans('laratickets::lang.the-ticket-has-been-created'));

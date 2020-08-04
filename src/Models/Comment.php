@@ -13,6 +13,7 @@ class Comment extends Model
 
     protected $table = 'laratickets_comments';
 
+
     protected $fillable = [
         'content', 'html', 'user_id', 'ticket_id', 'created_at', 'updated_at'
     ];

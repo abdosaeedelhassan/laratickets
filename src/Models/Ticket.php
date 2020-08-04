@@ -15,6 +15,23 @@ class Ticket extends Model
     protected $table = 'laratickets';
     protected $dates = ['completed_at'];
 
+
+    protected $fillable = [
+        'subject',
+        'content',
+        'html',
+        'status_id',
+        'priority_id',
+        'user_id',
+        'model',
+        'model_id',
+        'updated_at',
+        'category_id',
+        'completed_at',
+        'agent_id',
+        'created_at'];
+
+
     /**
      * List of completed tickets.
      *
@@ -22,12 +39,12 @@ class Ticket extends Model
      */
     public function hasComments()
     {
-        return (bool) count($this->comments);
+        return (bool)count($this->comments);
     }
 
     public function isComplete()
     {
-        return (bool) $this->completed_at;
+        return (bool)$this->completed_at;
     }
 
     /**
@@ -203,7 +220,7 @@ class Ticket extends Model
         $lowest_tickets = 1000000;
         // If no agent selected, select the admin
         $first_admin = Agent::admins()->first();
-        if($first_admin){
+        if ($first_admin) {
             $selected_agent_id = $first_admin->id;
             foreach ($agents as $agent) {
                 if ($count == 0) {
@@ -220,8 +237,8 @@ class Ticket extends Model
             }
             $this->agent_id = $selected_agent_id;
             return $this;
-        }else{
-            return array('error'=>'No admin user selecetd for tickets, must be at least one admin selecetd');
+        } else {
+            return array('error' => 'No admin user selecetd for tickets, must be at least one admin selecetd');
         }
     }
 }

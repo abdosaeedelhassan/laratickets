@@ -57,9 +57,7 @@ class LaraTicketsCommentForm extends Component
             $comment->ticket_id =$this->ticket->id;
             $comment->user_id = auth()->user()->id;
             $comment->save();
-            $ticket = Ticket::find($comment->ticket_id);
-            $ticket->updated_at = $comment->created_at;
-            $ticket->save();
+            Ticket::where('id',$comment->ticket_id)->update(['updated_at'=>$comment->created_at]);
             $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success, trans('laratickets::lang.index-my-tickets'), trans('laratickets::lang.comment-has-been-added-ok'));
             $this->emit('laratickets-flash-message', $msg);
             $this->content='';

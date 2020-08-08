@@ -138,9 +138,9 @@ return [
     'config-index-permissions'                => 'الأذونات',
     'config-index-editor'                     => 'تعديل', //Added: 2016.01.14
     'config-index-other'                      => 'أخرى',
-    'config-create-title'                     => 'إضافة: إعداد عام',
+    'config-create-title'                     => 'إضافة إعداد عام',
     'config-create-subtitle'                  => 'إضافة إعداد',
-    'config-edit-title'                       => 'تعديل: إعدادات عامة',
+    'config-edit-title'                       => 'تعديل إعدادات عامة',
     'config-edit-subtitle'                    => 'تعديل الإعدادات',
     'config-edit-id'                          => 'ID',
     'config-edit-slug'                        => 'Slug',

@@ -3,7 +3,9 @@
 namespace AsayDev\LaraTickets;
 
 use AsayDev\LaraTickets\Console\InstallLaraTicketsPackage;
-use AsayDev\LaraTickets\Livewire\Components\LaraTickets;
+use AsayDev\LaraTickets\Livewire\Components\Admins\LaraTicketsAdminsForm;
+use AsayDev\LaraTickets\Livewire\Components\Admins\LaraTicketsAdminsTable;
+use AsayDev\LaraTickets\Livewire\Components\Configuration\LaraTicketsConfigurationForm;
 use AsayDev\LaraTickets\Livewire\Components\LaraTicketsActiveTickets;
 use AsayDev\LaraTickets\Livewire\Components\LaraTicketsAdministrator;
 use AsayDev\LaraTickets\Livewire\Components\LaraTicketsAgents;
@@ -14,10 +16,12 @@ use AsayDev\LaraTickets\Livewire\Components\LaraTicketsConfiguration;
 use AsayDev\LaraTickets\Livewire\Components\LaraTicketsMain;
 use AsayDev\LaraTickets\Livewire\Components\LaraTicketsPriorities;
 use AsayDev\LaraTickets\Livewire\Components\LaraTicketsStatuses;
-use AsayDev\LaraTickets\Livewire\Forms\LaraTicketsForm;
+use AsayDev\LaraTickets\Livewire\Components\Configuration\LaraTicketsConfigurationTable;
+use AsayDev\LaraTickets\Livewire\Components\Tickets\LaraTicketsForm;
 use AsayDev\LaraTickets\Livewire\Forms\LaraTicketsViewer;
 use AsayDev\LaraTickets\Livewire\LaraTicketsDashboard;
 use AsayDev\LaraTickets\Livewire\Layouts\LaraTicketsContent;
+use \AsayDev\LaraTickets\Livewire\Components\Tickets\LaraTicketsTable;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
@@ -67,20 +71,28 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
          */
         Livewire::component('lara-tickets-dashboard', LaraTicketsDashboard::class);
         Livewire::component('lara-tickets-content', LaraTicketsContent::class);
+
         Livewire::component('lara-tickets-main', LaraTicketsMain::class);
-        Livewire::component('lara-tickets-tickets', LaraTickets::class);
+
+        Livewire::component('lara-tickets-tickets-table', LaraTicketsTable::class);
+        Livewire::component('lara-tickets-form', LaraTicketsForm::class);
+
         Livewire::component('lara-tickets-comment-form', LaraTicketsCommentForm::class);
 
         Livewire::component('lara-tickets-statuses', LaraTicketsStatuses::class);
         Livewire::component('lara-tickets-priorities', LaraTicketsPriorities::class);
         Livewire::component('lara-tickets-agents', LaraTicketsAgents::class);
         Livewire::component('lara-tickets-cateogries', LaraTicketsCategories::class);
-        Livewire::component('lara-tickets-configuration', LaraTicketsConfiguration::class);
-        Livewire::component('lara-tickets-administrator', LaraTicketsAdministrator::class);
+
+        Livewire::component('lara-tickets-configuration-table', LaraTicketsConfigurationTable::class);
+        Livewire::component('lara-tickets-configuration-form', LaraTicketsConfigurationForm::class);
+
+        Livewire::component('lara-tickets-admins-table', LaraTicketsAdminsTable::class);
+        Livewire::component('lara-tickets-admins-form', LaraTicketsAdminsForm::class);
+
         /**
          * register forms components
          */
-        Livewire::component('lara-tickets-form', LaraTicketsForm::class);
         Livewire::component('lara-tickets-viewer', LaraTicketsViewer::class);
         /**
          * step6: load package views

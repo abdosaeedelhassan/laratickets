@@ -7,18 +7,17 @@
         </div><!--col-->
         <div class="col-sm-7 pull-right">
             <div class="btn-toolbar float-right" role="toolbar">
-                <a wire:click="openForm('new_ticket')" class="btn btn-success ml-1" data-toggle="tooltip"
-                   title="{{trans('laratickets::lang.btn-create-new-ticket')}}"><i class="fas fa-plus-circle"></i></a>
+                <a wire:click="openForm('new_admin')" class="btn btn-success ml-1" data-toggle="tooltip"
+                   title="{{trans('laratickets::admin.btn-create-new-administrator')}}"><i class="fas fa-plus-circle"></i></a>
             </div>
         </div><!--col-->
-
     </h5>
     <div class="card-body">
-        @if($dashboardData['form']['name']=='tickets')
-            @livewire('lara-tickets-form',['dashboardData'=>$dashboardData])
+        @if($dashboardData['form']['name']=='admins')
+            @livewire('lara-tickets-admins-form',['dashboardData'=>$dashboardData])
         @endif
         @if($dashboardData['form']['name']=='')
-            @livewire('lara-tickets-tickets-table',['dashboardData'=>$dashboardData])
+                @livewire('lara-tickets-admins-table',['dashboardData'=>$dashboardData])
         @endif
     </div>
 </div>

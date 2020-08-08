@@ -37,7 +37,7 @@
             }
         });
         window.livewire.on('laratickets-flash-message', data => {
-            SlimNotifierJs.notification(data.type,data.title,data.message, data.duration);
+            LaraticketsSlimNotifierJs.notification(data.type,data.title,data.message, data.duration);
         })
     </script>
 @endpush

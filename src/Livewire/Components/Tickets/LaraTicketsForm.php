@@ -1,6 +1,6 @@
 <?php
 
-namespace AsayDev\LaraTickets\Livewire\Forms;
+namespace AsayDev\LaraTickets\Livewire\Components\Tickets;
 
 use AsayDev\LaraTickets\Helpers\TicketsHelper;
 use AsayDev\LaraTickets\Models\Category;

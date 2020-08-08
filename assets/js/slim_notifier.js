@@ -5,7 +5,7 @@
  * Note: If you have improvements or additions, share your knowledge with others and merge your project :)
  */
 
-const SlimNotifierJs = {
+const LaraticketsSlimNotifierJs = {
     // Root container
     root: null,
     // Notification list

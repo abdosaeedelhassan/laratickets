@@ -1,6 +1,6 @@
 <?php
 
-namespace AsayDev\LaraTickets\Livewire\Components;
+namespace AsayDev\LaraTickets\Livewire\Components\Tickets;
 
 use AsayDev\LaraTickets\Livewire\BaseLivewire;
 use AsayDev\LaraTickets\Models\Agent;
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 use Rappasoft\LaravelLivewireTables\Views\Column;
 
-class LaraTickets extends BaseLivewire
+class LaraTicketsTable extends BaseLivewire
 {
     public $dashboardData;
 

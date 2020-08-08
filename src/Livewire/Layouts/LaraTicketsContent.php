@@ -24,6 +24,12 @@ class LaraTicketsContent extends Component
         if($form_name=='new_ticket'){
             $this->setActionForm(['name'=>'tickets','action'=>'add']);
             $this->dashboardData['active_nav_title']=trans('laratickets::lang.index-my-tickets').': '.trans('laratickets::lang.create-new-ticket');
+        }else if($form_name=='new_admin'){
+            $this->setActionForm(['name'=>'admins','action'=>'add']);
+            $this->dashboardData['active_nav_title']=trans('laratickets::admin.administrator-index-title').': '.trans('laratickets::admin.btn-create-new-administrator');
+        }else if($form_name=='new_configuration'){
+            $this->setActionForm(['name'=>'configuration','action'=>'add']);
+            $this->dashboardData['active_nav_title']=trans('laratickets::admin.nav-configuration').': '.trans('laratickets::admin.config-create-title');
         }
     }
     /**
@@ -34,7 +40,16 @@ class LaraTicketsContent extends Component
         $this->dashboardData=$dashboardData;
         // close opened form
         $this->dashboardData['form']=['name'=>'','action'=>''];
-        $this->dashboardData['active_nav_title']=trans('laratickets::lang.index-my-tickets');
+
+        if($this->dashboardData['active_nav_tab']=='active-tickets-tab'||$this->dashboardData['active_nav_tab']=='completed-tickets-tab'){
+            $this->dashboardData['active_nav_title']=trans('laratickets::lang.index-my-tickets');
+        }else if($this->dashboardData['active_nav_tab']=='admin-tab'){
+            $this->dashboardData['active_nav_title']=trans('laratickets::admin.administrator-index-title');
+        }else if($this->dashboardData['active_nav_tab']=='config-tab'){
+            $this->dashboardData['active_nav_title']=trans('laratickets::admin.nav-configuration');
+        }
+
+
         // refresh tickets table data
         $this->emit('setDashboardData',$dashboardData);
     }

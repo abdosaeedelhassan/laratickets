@@ -87,6 +87,24 @@ class  TicketsHelper
         return $setting;
     }
 
+    public static function getDefaultPriorityInSetting($key)
+    {
+        $setting = \AsayDev\LaraTickets\Models\Setting::where('slug', $key)->first();
+        if (!$setting) {
+            $priority = \AsayDev\LaraTickets\Models\Priority::create([
+                'name' => 'Default',
+                'color' => 'green'
+            ]);
+            $setting = \AsayDev\LaraTickets\Models\Setting::create([
+                'lang' => Str::random(5),
+                'slug' => $key,
+                'value' => $priority->id,
+                'default' => $priority->id,
+            ]);
+        }
+        return $setting;
+    }
+
     public static function getDefaultSetting($key, $default)
     {
         $setting = \AsayDev\LaraTickets\Models\Setting::where('slug', $key)->first();

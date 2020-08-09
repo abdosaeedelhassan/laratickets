@@ -9,6 +9,8 @@ class Agent extends ParentUserModel
 {
     protected $table = 'users';
 
+    protected $appends=['full_name'];
+
     /**
      * list of all agents and returning collection.
      *

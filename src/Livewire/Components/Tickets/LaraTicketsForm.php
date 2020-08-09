@@ -68,7 +68,6 @@ class LaraTicketsForm extends Component
 
     public function saveData()
     {
-
         $data = array(
             'subject' => $this->subject,
             'content' => $this->content,
@@ -87,6 +86,8 @@ class LaraTicketsForm extends Component
         $ticket = new Ticket();
         $ticket->subject = $this->subject;
         $ticket->content=$this->content;
+        $ticket->model=$this->dashboardData['model'];
+        $ticket->model_id=$this->dashboardData['model_id'];
         $ticket->html=$this->content;
         $ticket->code=TicketsHelper::generateCode(4);
         $ticket->priority_id = $this->priority_id;

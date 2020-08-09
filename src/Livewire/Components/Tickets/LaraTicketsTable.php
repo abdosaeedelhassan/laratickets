@@ -15,11 +15,11 @@ class LaraTicketsTable extends BaseLivewire
 {
     public $dashboardData;
 
-    protected $listeners=['setDashboardData'];
+    protected $listeners = ['setDashboardData'];
 
     public function setDashboardData($dashboardData)
     {
-        $this->dashboardData=$dashboardData;
+        $this->dashboardData = $dashboardData;
     }
 
     public function mount($dashboardData)
@@ -33,21 +33,33 @@ class LaraTicketsTable extends BaseLivewire
 
         if ($user->laratickets_isAdmin()) {
             if ($complete) {
-                $collection = Ticket::complete();
+                $collection = Ticket::where('model', $this->dashboardData['model'])
+                    ->where('model_id', $this->dashboardData['model_id'])
+                    ->complete();
             } else {
-                $collection = Ticket::active();
+                $collection = Ticket::where('model', $this->dashboardData['model'])
+                    ->where('model_id', $this->dashboardData['model_id'])
+                    ->active();
             }
         } elseif ($user->isAgent()) {
             if ($complete) {
-                $collection = Ticket::complete()->agentUserTickets($user->id);
+                $collection = Ticket::where('model', $this->dashboardData['model'])
+                    ->where('model_id', $this->dashboardData['model_id'])
+                    ->complete()->agentUserTickets($user->id);
             } else {
-                $collection = Ticket::active()->agentUserTickets($user->id);
+                $collection = Ticket::where('model', $this->dashboardData['model'])
+                    ->where('model_id', $this->dashboardData['model_id'])
+                    ->active()->agentUserTickets($user->id);
             }
         } else {
             if ($complete) {
-                $collection = Ticket::userTickets($user->id)->complete();
+                $collection = Ticket::where('model', $this->dashboardData['model'])
+                    ->where('model_id', $this->dashboardData['model_id'])
+                    ->userTickets($user->id)->complete();
             } else {
-                $collection = Ticket::userTickets($user->id)->active();
+                $collection = Ticket::where('model', $this->dashboardData['model'])
+                    ->where('model_id', $this->dashboardData['model_id'])
+                    ->userTickets($user->id)->active();
             }
         }
         return $collection
@@ -73,9 +85,10 @@ class LaraTicketsTable extends BaseLivewire
 
     public function query(): Builder
     {
-        return $this->data(explode('-',$this->dashboardData['active_nav_tab'])[0] == 'completed' ? true : false);
+        return $this->data(explode('-', $this->dashboardData['active_nav_tab'])[0] == 'completed' ? true : false);
 
     }
+
     /**
      * @inheritDoc
      */
@@ -107,17 +120,17 @@ class LaraTicketsTable extends BaseLivewire
         if ($user) {
             if ($user->isAgent() || $user->laratickets_isAdmin()) {
                 array_push($columns,
-                        Column::make(trans('laratickets::lang.table-priority'))
-                            ->view('asaydev-lara-tickets::components.tickets.priority', 'column')
-                            ->sortable());
+                    Column::make(trans('laratickets::lang.table-priority'))
+                        ->view('asaydev-lara-tickets::components.tickets.priority', 'column')
+                        ->sortable());
                 array_push($columns,
-                        Column::make(trans('laratickets::lang.table-owner'), 'owner')
-                            ->sortable()
-                            ->searchable());
+                    Column::make(trans('laratickets::lang.table-owner'), 'owner')
+                        ->sortable()
+                        ->searchable());
                 array_push($columns,
-                        Column::make(trans('laratickets::lang.table-category'))
-                            ->view('asaydev-lara-tickets::components.tickets.category', 'column')
-                            ->sortable()
+                    Column::make(trans('laratickets::lang.table-category'))
+                        ->view('asaydev-lara-tickets::components.tickets.category', 'column')
+                        ->sortable()
                 );
             }
         }
@@ -125,10 +138,11 @@ class LaraTicketsTable extends BaseLivewire
         return $columns;
     }
 
-    public function viewTicket($ticket_id){
-        $this->dashboardData['prev_nav_tab']=$this->dashboardData['active_nav_tab'];
-        $this->dashboardData['active_nav_tab']='ticket-viewer';
-        $this->dashboardData['ticket_id']=$ticket_id;
+    public function viewTicket($ticket_id)
+    {
+        $this->dashboardData['prev_nav_tab'] = $this->dashboardData['active_nav_tab'];
+        $this->dashboardData['active_nav_tab'] = 'ticket-viewer';
+        $this->dashboardData['ticket_id'] = $ticket_id;
         $this->emit('activeNvTab', $this->dashboardData);
     }
 

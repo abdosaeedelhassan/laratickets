@@ -8,7 +8,7 @@
     @elseif($dashboardData['active_nav_tab']=='statuses-tab')
         @livewire('lara-tickets-statuses')
     @elseif($dashboardData['active_nav_tab']=='priorities-tab')
-        @livewire('lara-tickets-priorities')
+        @include('asaydev-lara-tickets::components.priorities.index',['dashboardData'=>$dashboardData])
     @elseif($dashboardData['active_nav_tab']=='agents-tab')
         @include('asaydev-lara-tickets::components.agents.index',['dashboardData'=>$dashboardData])
     @elseif($dashboardData['active_nav_tab']=='category-tab')

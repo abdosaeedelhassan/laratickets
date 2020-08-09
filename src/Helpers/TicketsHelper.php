@@ -127,4 +127,16 @@ class  TicketsHelper
         return 'no';
     }
 
+    public static function generateCode($size)
+    {
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $size; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        $currentTime = time();
+        return substr($currentTime, strlen($currentTime) - 8, strlen($currentTime) - 1) . '-' . $randomString;
+    }
+
 }

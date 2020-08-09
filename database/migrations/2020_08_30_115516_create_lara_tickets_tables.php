@@ -39,6 +39,7 @@ class CreateLaraTicketsTables extends Migration
             $table->increments('id');
             $table->string('subject');
             $table->longText('content');
+            $table->string('code')->nullable();
             $table->longText('html')->nullable();
             $table->integer('status_id')->unsigned();
             $table->integer('priority_id')->unsigned();

@@ -88,6 +88,7 @@ class LaraTicketsForm extends Component
         $ticket->subject = $this->subject;
         $ticket->content=$this->content;
         $ticket->html=$this->content;
+        $ticket->code=TicketsHelper::generateCode(4);
         $ticket->priority_id = $this->priority_id;
         $ticket->category_id = $this->category_id;
         $default_status = TicketsHelper::getDefaultStatusInSetting('default_status_id');
@@ -95,7 +96,6 @@ class LaraTicketsForm extends Component
         $ticket->user_id = auth()->user()->id;
         $ticket->agent_id=$ticket->autoSelectAgent();
         $ticket->save();
-
         $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success, trans('laratickets::lang.btn-create-new-ticket'), trans('laratickets::lang.the-ticket-has-been-created'));
         $this->emit('laratickets-flash-message', $msg);
         $this->goback();

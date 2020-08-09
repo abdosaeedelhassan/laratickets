@@ -20,6 +20,7 @@ class Ticket extends Model
         'subject',
         'content',
         'html',
+        'code',
         'status_id',
         'priority_id',
         'user_id',

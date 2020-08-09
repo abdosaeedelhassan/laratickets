@@ -5,6 +5,8 @@ namespace AsayDev\LaraTickets;
 use AsayDev\LaraTickets\Console\InstallLaraTicketsPackage;
 use AsayDev\LaraTickets\Livewire\Components\Admins\LaraTicketsAdminsForm;
 use AsayDev\LaraTickets\Livewire\Components\Admins\LaraTicketsAdminsTable;
+use AsayDev\LaraTickets\Livewire\Components\Categories\LaraTicketsCategoriesForm;
+use AsayDev\LaraTickets\Livewire\Components\Categories\LaraTicketsCategoriesTable;
 use AsayDev\LaraTickets\Livewire\Components\Configuration\LaraTicketsConfigurationForm;
 use AsayDev\LaraTickets\Livewire\Components\LaraTicketsActiveTickets;
 use AsayDev\LaraTickets\Livewire\Components\LaraTicketsAdministrator;
@@ -86,6 +88,9 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
 
         Livewire::component('lara-tickets-configuration-table', LaraTicketsConfigurationTable::class);
         Livewire::component('lara-tickets-configuration-form', LaraTicketsConfigurationForm::class);
+
+        Livewire::component('lara-tickets-categories-table', LaraTicketsCategoriesTable::class);
+        Livewire::component('lara-tickets-categories-form', LaraTicketsCategoriesForm::class);
 
         Livewire::component('lara-tickets-admins-table', LaraTicketsAdminsTable::class);
         Livewire::component('lara-tickets-admins-form', LaraTicketsAdminsForm::class);

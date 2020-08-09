@@ -12,7 +12,7 @@
     @elseif($dashboardData['active_nav_tab']=='agents-tab')
         @livewire('lara-tickets-agents')
     @elseif($dashboardData['active_nav_tab']=='category-tab')
-        @livewire('lara-tickets-cateogries')
+        @include('asaydev-lara-tickets::components.categories.index',['dashboardData'=>$dashboardData])
     @elseif($dashboardData['active_nav_tab']=='config-tab')
         @include('asaydev-lara-tickets::components.configuration.index',['dashboardData'=>$dashboardData])
     @elseif($dashboardData['active_nav_tab']=='admin-tab')

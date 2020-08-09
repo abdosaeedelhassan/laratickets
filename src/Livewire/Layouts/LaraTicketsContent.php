@@ -30,6 +30,9 @@ class LaraTicketsContent extends Component
         }else if($form_name=='new_configuration'){
             $this->setActionForm(['name'=>'configuration','action'=>'add']);
             $this->dashboardData['active_nav_title']=trans('laratickets::admin.nav-configuration').': '.trans('laratickets::admin.config-create-title');
+        }else if($form_name=='new_category'){
+            $this->setActionForm(['name'=>'categories','action'=>'add']);
+            $this->dashboardData['active_nav_title']=trans('laratickets::admin.category-index-title').': '.trans('laratickets::admin.btn-create-new-category');
         }
     }
     /**
@@ -47,6 +50,8 @@ class LaraTicketsContent extends Component
             $this->dashboardData['active_nav_title']=trans('laratickets::admin.administrator-index-title');
         }else if($this->dashboardData['active_nav_tab']=='config-tab'){
             $this->dashboardData['active_nav_title']=trans('laratickets::admin.nav-configuration');
+        }else if($this->dashboardData['active_nav_tab']=='category-tab'){
+            $this->dashboardData['active_nav_title']=trans('laratickets::admin.category-index-title');
         }
 
 

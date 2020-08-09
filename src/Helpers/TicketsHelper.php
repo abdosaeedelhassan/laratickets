@@ -157,4 +157,18 @@ class  TicketsHelper
         return substr($currentTime, strlen($currentTime) - 8, strlen($currentTime) - 1) . '-' . $randomString;
     }
 
+
+    public static function general()
+    {
+        // Passing to views the master view value from the setting file
+        view()->composer('laratickets::*', function ($view) {
+            //$tools = new ToolsController();
+           // $master = Setting::grab('master_template');
+
+            $email = TicketsHelper::getDefaultSetting('email.template', 'laratickets::resources.email.templates.laratickets')->value;
+            $view->with(compact(/*'master',*/ 'email'/*, 'tools'*/));
+        });
+    }
+
+
 }

@@ -3,6 +3,8 @@
 namespace AsayDev\LaraTickets;
 
 use AsayDev\LaraTickets\Console\InstallLaraTicketsPackage;
+use AsayDev\LaraTickets\Controllers\NotificationsController;
+use AsayDev\LaraTickets\Helpers\TicketsHelper;
 use AsayDev\LaraTickets\Livewire\Components\Admins\LaraTicketsAdminsForm;
 use AsayDev\LaraTickets\Livewire\Components\Admins\LaraTicketsAdminsTable;
 use AsayDev\LaraTickets\Livewire\Components\Agents\LaraTicketsAgentsForm;
@@ -30,6 +32,8 @@ use AsayDev\LaraTickets\Livewire\Forms\LaraTicketsViewer;
 use AsayDev\LaraTickets\Livewire\LaraTicketsDashboard;
 use AsayDev\LaraTickets\Livewire\Layouts\LaraTicketsContent;
 use \AsayDev\LaraTickets\Livewire\Components\Tickets\LaraTicketsTable;
+use AsayDev\LaraTickets\Models\Comment;
+use AsayDev\LaraTickets\Models\Ticket;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
@@ -121,15 +125,28 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
         /**
          * step7: load translations files
          */
-        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'laratickets');
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'laratickets');
         /**
          * step8: publishing assets files
          */
         $this->publishes([
-            __DIR__.'/../assets/css' => public_path('laratickets/css'),
-            __DIR__.'/../assets/js' => public_path('laratickets/js'),
-            __DIR__.'/../assets/icons' => public_path('laratickets/icons'),
+            __DIR__ . '/../assets/css' => public_path('laratickets/css'),
+            __DIR__ . '/../assets/js' => public_path('laratickets/js'),
+            __DIR__ . '/../assets/icons' => public_path('laratickets/icons'),
         ], 'laratickets_assets');
+
+
+        /**
+         * step9: register package emails
+         */
+
+
+        /**
+         * next for registering mail service
+         */
+        //TicketsHelper::general();
+        //$this->registerNotifications();
+
 
     }
 
@@ -141,9 +158,64 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
     {
         if (!class_exists($class_name)) {
             $this->publishes([
-                __DIR__ . '/../database/migrations/' . $file_name.'.php' => database_path('migrations/' . $file_name . '.php'),
+                __DIR__ . '/../database/migrations/' . $file_name . '.php' => database_path('migrations/' . $file_name . '.php'),
             ], 'laratickets_migrations');
         }
+    }
+
+    private function registerNotifications()
+    {
+
+
+        $enable_package_default_mails = TicketsHelper::getDefaultSetting('enable_package_default_mails', '1')->value;
+        if ($enable_package_default_mails == 1) {
+
+            $comment_notification = TicketsHelper::getDefaultSetting('comment_notification', '1')->value;
+            $status_notification = TicketsHelper::getDefaultSetting('status_notification', '1')->value;
+            $assigned_notification = TicketsHelper::getDefaultSetting('assigned_notification', '1')->value;
+
+            // Send notification when new comment is added
+            Comment::creating(function ($comment) use ($comment_notification) {
+                if ($comment_notification) {
+                    $notification = new NotificationsController();
+                    $notification->newComment($comment);
+                }
+                return true;
+            });
+//
+//            // Send notification when ticket status is modified
+//            Ticket::updating(function ($modified_ticket)use($status_notification) {
+//                if ($status_notification) {
+//                    $original_ticket = Ticket::find($modified_ticket->id);
+//                    if ($original_ticket->status_id != $modified_ticket->status_id || $original_ticket->completed_at != $modified_ticket->completed_at) {
+//                        $notification = new NotificationsController();
+//                        $notification->ticketStatusUpdated($modified_ticket, $original_ticket);
+//                    }
+//                }
+//                if ($assigned_notification) {
+//                    $original_ticket = Ticket::find($modified_ticket->id);
+//                    if ($original_ticket->agent->id != $modified_ticket->agent->id) {
+//                        $notification = new NotificationsController();
+//                        $notification->ticketAgentUpdated($modified_ticket, $original_ticket);
+//                    }
+//                }
+//
+//                return true;
+//            });
+//
+//            // Send notification when ticket status is modified
+//            Ticket::created(function ($ticket) {
+//                if (Setting::grab('assigned_notification')) {
+//                    $notification = new NotificationsController();
+//                    $notification->newTicketNotifyAgent($ticket);
+//                }
+//
+//                return true;
+//            });
+
+
+        }
+
     }
 
 
@@ -174,48 +246,8 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
                 return $field;
             });
 
-            TicketItComposer::general();
-            TicketItComposer::codeMirror();
-            TicketItComposer::sharedAssets();
-            TicketItComposer::summerNotes();
 
-            // Send notification when new comment is added
-            Comment::creating(function ($comment) {
-                if (Setting::grab('comment_notification')) {
-                    $notification = new NotificationsController();
-                    $notification->newComment($comment);
-                }
-            });
 
-            // Send notification when ticket status is modified
-            Ticket::updating(function ($modified_ticket) {
-                if (Setting::grab('status_notification')) {
-                    $original_ticket = Ticket::find($modified_ticket->id);
-                    if ($original_ticket->status_id != $modified_ticket->status_id || $original_ticket->completed_at != $modified_ticket->completed_at) {
-                        $notification = new NotificationsController();
-                        $notification->ticketStatusUpdated($modified_ticket, $original_ticket);
-                    }
-                }
-                if (Setting::grab('assigned_notification')) {
-                    $original_ticket = Ticket::find($modified_ticket->id);
-                    if ($original_ticket->agent->id != $modified_ticket->agent->id) {
-                        $notification = new NotificationsController();
-                        $notification->ticketAgentUpdated($modified_ticket, $original_ticket);
-                    }
-                }
-
-                return true;
-            });
-
-            // Send notification when ticket status is modified
-            Ticket::created(function ($ticket) {
-                if (Setting::grab('assigned_notification')) {
-                    $notification = new NotificationsController();
-                    $notification->newTicketNotifyAgent($ticket);
-                }
-
-                return true;
-            });
 
             $this->loadTranslationsFrom(__DIR__.'/Translations', 'ticketit');
 

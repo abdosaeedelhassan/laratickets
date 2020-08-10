@@ -1,6 +1,6 @@
 <?php
 
-namespace AsayDev\LaraTickets\Livewire\Forms;
+namespace AsayDev\LaraTickets\Livewire\Components\Tickets;
 
 use AsayDev\LaraTickets\Helpers\TicketsHelper;
 use AsayDev\LaraTickets\Models\Agent;
@@ -38,12 +38,25 @@ class LaraTicketsViewer extends Component
 
     public function render()
     {
-        return view('asaydev-lara-tickets::forms.ticketviewer');
+        return view('asaydev-lara-tickets::components.tickets.ticketviewer');
     }
 
-    public function addAnswer()
+    public function makeAsComplete()
     {
-       //
+        $this->ticket->completed_at=date('Y-m-d H:i:s', time());
+        $this->ticket->save();
+        $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success,trans('laratickets::lang.index-my-tickets'), trans('laratickets::lang.table-saved-success'));
+        $this->emit('laratickets-flash-message', $msg);
+        $this->goback();
+    }
+
+    public function reOpenTicket()
+    {
+       $this->ticket->completed_at=null;
+       $this->ticket->save();
+        $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success,trans('laratickets::lang.index-my-tickets'), trans('laratickets::lang.table-saved-success'));
+        $this->emit('laratickets-flash-message', $msg);
+        $this->goback();
     }
 
     public function editTicket(){

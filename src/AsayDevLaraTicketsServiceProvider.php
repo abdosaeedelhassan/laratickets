@@ -28,7 +28,7 @@ use AsayDev\LaraTickets\Livewire\Components\Priorities\LaraTicketsPrioritiesTabl
 use AsayDev\LaraTickets\Livewire\Components\Statuses\LaraTicketsStatusesForm;
 use AsayDev\LaraTickets\Livewire\Components\Statuses\LaraTicketsStatusesTable;
 use AsayDev\LaraTickets\Livewire\Components\Tickets\LaraTicketsForm;
-use AsayDev\LaraTickets\Livewire\Forms\LaraTicketsViewer;
+use AsayDev\LaraTickets\Livewire\Components\Tickets\LaraTicketsViewer;
 use AsayDev\LaraTickets\Livewire\LaraTicketsDashboard;
 use AsayDev\LaraTickets\Livewire\Layouts\LaraTicketsContent;
 use \AsayDev\LaraTickets\Livewire\Components\Tickets\LaraTicketsTable;
@@ -88,6 +88,8 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
 
         Livewire::component('lara-tickets-tickets-table', LaraTicketsTable::class);
         Livewire::component('lara-tickets-form', LaraTicketsForm::class);
+        Livewire::component('lara-tickets-viewer', LaraTicketsViewer::class);
+
 
         Livewire::component('lara-tickets-comment-form', LaraTicketsCommentForm::class);
 
@@ -117,7 +119,6 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
         /**
          * register forms components
          */
-        Livewire::component('lara-tickets-viewer', LaraTicketsViewer::class);
         /**
          * step6: load package views
          */

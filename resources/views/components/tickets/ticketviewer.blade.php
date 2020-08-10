@@ -1,5 +1,4 @@
 <div>
-
     <div class="card">
         <div class="card-header">
             <div class="row">
@@ -74,12 +73,9 @@
             </div>
         </div>
     </div>
-
     <div class="mt-5">
         {!! $ticket->html !!}
     </div>
-
 </div>
-
 
 @livewire('lara-tickets-comment-form',['ticket_id'=>$ticket->id])

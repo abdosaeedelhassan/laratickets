@@ -123,14 +123,16 @@ class  TicketsHelper
     {
 
         if($type=='close'){
-            $ticket_perm = self::getDefaultSetting('close_ticket_perm', 'a:3:{s:5:"owner";b:1;s:5:"agent";b:1;s:5:"admin";b:1;}');
+            $ticket_perm = self::getDefaultSetting('close_ticket_perm', 'a:3:{s:5:"owner";b:1;s:5:"agent";b:1;s:5:"admin";b:1;}')->value;
         }else if($type=='reopen'){
-            $ticket_perm = self::getDefaultSetting('reopen_ticket_perm', 'a:3:{s:5:"owner";b:1;s:5:"agent";b:1;s:5:"admin";b:1;}');
+            $ticket_perm = self::getDefaultSetting('reopen_ticket_perm', 'a:3:{s:5:"owner";b:1;s:5:"agent";b:1;s:5:"admin";b:1;}')->value;
         }else{
             return 'no';
         }
 
         $agent = Agent::find($user_id);
+
+        $ticket_perm=unserialize($ticket_perm);
 
         if ($agent->laratickets_isAdmin() && $ticket_perm['admin'] == 'yes') {
             return 'yes';

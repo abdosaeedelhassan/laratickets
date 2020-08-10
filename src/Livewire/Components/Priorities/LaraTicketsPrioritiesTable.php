@@ -67,11 +67,9 @@ class LaraTicketsPrioritiesTable extends BaseLivewire
     }
 
     public function viewPriority($id){
-        dd($id);
-//        $this->dashboardData['prev_nav_tab']=$this->dashboardData['active_nav_tab'];
-//        $this->dashboardData['active_nav_tab']='priority-viewer';
-//        $this->dashboardData['priority_id']=$id;
-//        $this->emit('activeNvTab', $this->dashboardData);
+        $this->dashboardData['form']=['name'=>'priorities','action'=>'edit','id'=>$id];
+        $this->dashboardData['active_nav_title']=trans('laratickets::admin.priority-index-title').': '.trans('laratickets::lang.table-edit-title');
+        $this->emit('activeNvTab', $this->dashboardData);
     }
 
 

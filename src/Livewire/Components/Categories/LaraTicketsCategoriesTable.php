@@ -67,12 +67,9 @@ class LaraTicketsCategoriesTable extends BaseLivewire
     }
 
     public function viewCategory($id){
-
-        dd('Yes');
-//        $this->dashboardData['prev_nav_tab']=$this->dashboardData['active_nav_tab'];
-//        $this->dashboardData['active_nav_tab']='category-viewer';
-//        $this->dashboardData['category_id']=$id;
-//        $this->emit('activeNvTab', $this->dashboardData);
+        $this->dashboardData['form']=['name'=>'categories','action'=>'edit','id'=>$id];
+        $this->dashboardData['active_nav_title']=trans('laratickets::admin.category-index-title').': '.trans('laratickets::lang.table-edit-title');
+        $this->emit('activeNvTab', $this->dashboardData);
     }
 
 

@@ -37,7 +37,7 @@ class LaraTicketsContent extends Component
             $this->setActionForm(['name'=>'agents','action'=>'add']);
             $this->dashboardData['active_nav_title']=trans('laratickets::admin.agent-index-title').': '.trans('laratickets::admin.btn-create-new-agent');
         }else if($form_name=='new_priority'){
-            $this->setActionForm(['name'=>'agents','action'=>'add']);
+            $this->setActionForm(['name'=>'priorities','action'=>'add']);
             $this->dashboardData['active_nav_title']=trans('laratickets::admin.priority-index-title').': '.trans('laratickets::admin.btn-create-new-priority');
         }else if($form_name=='new_status'){
             $this->setActionForm(['name'=>'statuses','action'=>'add']);

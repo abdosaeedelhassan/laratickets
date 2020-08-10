@@ -24,6 +24,8 @@
         @endif
         @endif
     </script>
+    <link rel="stylesheet" href="{{asset('laratickets/css/select2.min.css')}}">
+    <script src="{{asset('laratickets/js/select2.min.js')}}"></script>
     <script src="{{asset('laratickets/js/slim_notifier.js')}}"></script>
     <script>
         $.notifyDefaults({

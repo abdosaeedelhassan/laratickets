@@ -21,3 +21,11 @@
         @livewire('lara-tickets-viewer',['dashboardData'=>$dashboardData])
     @endif
 </div>
+
+{{--@push('before-scripts')--}}
+{{--    <script type="text/javascript">--}}
+{{--        window.livewire.on('renderAgentsList', parm => {--}}
+{{--            $("#agents").select2();--}}
+{{--        });--}}
+{{--    </script>--}}
+{{--@endpush--}}

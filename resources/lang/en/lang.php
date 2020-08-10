@@ -2,6 +2,10 @@
 
 return [
 
+
+    'table-saved-success'    => 'Saved successfully',
+    'table-deleted-success'    => 'Deleted successfully',
+
  /*
   *  Constants
   */

@@ -8,16 +8,16 @@
         <div class="col-sm-7 pull-right">
             <div class="btn-toolbar float-right" role="toolbar">
                 <a wire:click="openForm('new_agent')" class="btn btn-success ml-1" data-toggle="tooltip"
-                   title="{{trans('laratickets::btn-create-new-agent')}}"><i class="fas fa-plus-circle"></i></a>
+                   title="{{trans('laratickets::admin.btn-create-new-agent')}}"><i class="fas fa-plus-circle"></i></a>
             </div>
         </div><!--col-->
     </h5>
     <div class="card-body">
         @if($dashboardData['form']['name']=='agents')
-            @livewire('lara-tickets-categories-form',['dashboardData'=>$dashboardData])
+            @livewire('lara-tickets-agents-form',['dashboardData'=>$dashboardData])
         @endif
         @if($dashboardData['form']['name']=='')
-                @livewire('lara-tickets-categories-table',['dashboardData'=>$dashboardData])
+                @livewire('lara-tickets-agents-table',['dashboardData'=>$dashboardData])
         @endif
     </div>
 </div>

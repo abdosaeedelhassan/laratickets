@@ -43,6 +43,7 @@ class LaraTicketsContent extends Component
             $this->setActionForm(['name'=>'statues','action'=>'add']);
             $this->dashboardData['active_nav_title']=trans('laratickets::admin.status-index-title').': '.trans('laratickets::admin.btn-create-new-status');
         }
+
     }
     /**
      * @param $dashboardData

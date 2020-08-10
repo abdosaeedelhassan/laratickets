@@ -6,6 +6,9 @@ return [
      *  Constants
      */
 
+    'table-saved-success'    => 'تم الحفظ بنجاح',
+    'table-deleted-success'    => 'تم الحذف بنجاح',
+
     'nav-active-tickets'    => 'التذاكر النشطة',
     'nav-completed-tickets' => 'التذاكر المغلقة',
 

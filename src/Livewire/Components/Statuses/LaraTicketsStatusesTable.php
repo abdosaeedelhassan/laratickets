@@ -67,7 +67,11 @@ class LaraTicketsStatusesTable extends BaseLivewire
 
     public function viewStatus($id){
 
-        dd('Yes');
+
+        $this->dashboardData['form']=['name'=>'statuses','action'=>'edit','id'=>$id];
+        $this->dashboardData['active_nav_title']=trans('laratickets::admin.status-index-title').': '.trans('laratickets::lang.table-edit-title');
+        $this->emit('activeNvTab', $this->dashboardData);
+
 //        $this->dashboardData['prev_nav_tab']=$this->dashboardData['active_nav_tab'];
 //        $this->dashboardData['active_nav_tab']='status-viewer';
 //        $this->dashboardData['status_id']=$id;

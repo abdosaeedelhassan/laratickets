@@ -8,6 +8,8 @@ return [
 
     'table-saved-success'    => 'تم الحفظ بنجاح',
     'table-deleted-success'    => 'تم الحذف بنجاح',
+    'table-edit-title' => 'تعديل',
+
 
     'nav-active-tickets'    => 'التذاكر النشطة',
     'nav-completed-tickets' => 'التذاكر المغلقة',

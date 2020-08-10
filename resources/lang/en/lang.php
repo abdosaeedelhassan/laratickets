@@ -5,6 +5,7 @@ return [
 
     'table-saved-success'    => 'Saved successfully',
     'table-deleted-success'    => 'Deleted successfully',
+    'table-edit-title' => 'Edit',
 
  /*
   *  Constants

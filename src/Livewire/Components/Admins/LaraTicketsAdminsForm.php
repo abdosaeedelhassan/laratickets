@@ -10,13 +10,15 @@ use AsayDev\LaraTickets\Models\Setting;
 use AsayDev\LaraTickets\Models\Ticket;
 use AsayDev\LaraTickets\Traits\SlimNotifierJs;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class LaraTicketsAdminsForm extends Component
 {
+    use WithPagination;
+
     public $dashboardData;
 
-    public $agent_id;
-
+    public $selectedUsers;
 
 
     public function mount($dashboardData)
@@ -27,28 +29,24 @@ class LaraTicketsAdminsForm extends Component
     public function render()
     {
         return view('asaydev-lara-tickets::components.admins.form',[
-            'admins'=>Agent::where('laratickets_admin',0)->where('laratickets_agent', '1')->get()->pluck('id', 'full_name')->toArray()
+            'users'=>Agent::where('laratickets_admin',0)->where('laratickets_agent', '1')->paginate(10)
         ]);
     }
 
     public function saveData()
     {
 
-        $data = array(
-            'agent_id' => $this->agent_id,
-        );
-
-
-        $this->validate([
-            'agent_id' => 'required|exists:laratickets_agents,id',
-        ]);
-
-
-
-        $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success, trans('laratickets::lang.btn-create-new-ticket'), trans('laratickets::lang.the-ticket-has-been-created'));
-        $this->emit('laratickets-flash-message', $msg);
-        $this->goback();
-
+        try {
+            $this->selectedUsers = array_filter( $this->selectedUsers, function($e) {
+                return ($e !== false);
+            });
+            Agent::whereIn('id',$this->selectedUsers)->update(['laratickets_admin'=>1]);
+            $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success,$this->dashboardData['active_nav_title'], trans('laratickets::lang.table-saved-success'));
+            $this->emit('laratickets-flash-message', $msg);
+            $this->goback();
+        }catch (\Exception $e){
+            //
+        }
     }
 
     public function goback()

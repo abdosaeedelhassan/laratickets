@@ -55,23 +55,9 @@ class LaraTicketsAgentsTable extends BaseLivewire
             Agent::where('id',$id)->update(['laratickets_agent'=>0]);
             $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success,$this->dashboardData['active_nav_title'], trans('laratickets::lang.table-deleted-success'));
             $this->emit('laratickets-flash-message', $msg);
-            $this->goback();
         }catch (\Exception $e){
-           dd($e->getMessage());
+           //
         }
     }
-
-    public function viewStatus($id){
-        $this->dashboardData['prev_nav_tab']=$this->dashboardData['active_nav_tab'];
-        $this->dashboardData['active_nav_tab']='agent-viewer';
-        $this->dashboardData['agent_id']=$id;
-        $this->emit('activeNvTab', $this->dashboardData);
-    }
-
-    public function goback()
-    {
-        $this->emit('activeNvTab', $this->dashboardData);
-    }
-
 
 }

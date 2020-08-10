@@ -4,6 +4,7 @@ namespace AsayDev\LaraTickets\Livewire\Components\Admins;
 
 use AsayDev\LaraTickets\Livewire\BaseLivewire;
 use AsayDev\LaraTickets\Models\Agent;
+use AsayDev\LaraTickets\Traits\SlimNotifierJs;
 use Livewire\Component;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\Views\Column;
@@ -47,7 +48,14 @@ class LaraTicketsAdminsTable extends BaseLivewire
 
 
     public function delete($id){
-        //
+        try {
+            Agent::where('id',$id)->update(['laratickets_admin'=>0]);
+            $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success,trans('laratickets::admin.administrator-index-title'), trans('laratickets::lang.table-deleted-success'));
+            $this->emit('laratickets-flash-message', $msg);
+        }catch (\Exception $e){
+           //
+        }
     }
+
 
 }

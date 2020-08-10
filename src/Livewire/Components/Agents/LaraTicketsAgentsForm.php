@@ -20,12 +20,6 @@ class LaraTicketsAgentsForm extends Component
 
     public $selectedUsers;
 
-    protected $listeners =['renderAgentsList'];
-
-    public function renderAgentsList($parm){
-        $this->emit('renderAgentsList',$parm);
-    }
-
     public function mount($dashboardData)
     {
         $this->dashboardData = $dashboardData;

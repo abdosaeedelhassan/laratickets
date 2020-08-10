@@ -5,8 +5,10 @@ namespace AsayDev\LaraTickets\Livewire\Components\Configuration;
 use AsayDev\LaraTickets\Livewire\BaseLivewire;
 use AsayDev\LaraTickets\Models\Agent;
 use AsayDev\LaraTickets\Models\Category;
+use AsayDev\LaraTickets\Models\Priority;
 use AsayDev\LaraTickets\Models\Setting;
 use AsayDev\LaraTickets\Models\Ticket;
+use AsayDev\LaraTickets\Traits\SlimNotifierJs;
 use Livewire\Component;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -14,7 +16,11 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 
 class LaraTicketsConfigurationTable extends BaseLivewire
 {
+
+
     public $dashboardData;
+    public $perPage=5;
+
 
 
     public function mount($dashboardData)
@@ -41,6 +47,10 @@ class LaraTicketsConfigurationTable extends BaseLivewire
                 ->sortable()
                 ->searchable()
             ,
+            Column::make(trans('laratickets::admin.table-value'),'value')
+                ->sortable()
+                ->searchable()
+            ,
             Column::make(trans('laratickets::admin.table-action'))
                 ->view('asaydev-lara-tickets::components.admins.actions', 'column')
                 ->sortable()
@@ -53,7 +63,13 @@ class LaraTicketsConfigurationTable extends BaseLivewire
 
 
     public function delete($id){
-        //
+        try {
+            Setting::where('id',$id)->delete();
+            $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success,$this->dashboardData['active_nav_title'], trans('laratickets::lang.table-deleted-success'));
+            $this->emit('laratickets-flash-message', $msg);
+        }catch (\Exception $e){
+            //
+        }
     }
 
     public function viewStatus($id){

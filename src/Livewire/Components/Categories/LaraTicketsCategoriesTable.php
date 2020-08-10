@@ -40,7 +40,7 @@ class LaraTicketsCategoriesTable extends BaseLivewire
                 ->searchable()
             ,
             Column::make(trans('laratickets::admin.table-name'))
-                ->view('asaydev-lara-tickets::components.admins.fullname', 'column')
+                ->view('asaydev-lara-tickets::components.categories.name', 'column')
                 ->sortable()
             ,
             Column::make(trans('laratickets::admin.category-create-color'),'color')
@@ -66,11 +66,13 @@ class LaraTicketsCategoriesTable extends BaseLivewire
         }
     }
 
-    public function viewStatus($id){
-        $this->dashboardData['prev_nav_tab']=$this->dashboardData['active_nav_tab'];
-        $this->dashboardData['active_nav_tab']='category-viewer';
-        $this->dashboardData['category_id']=$id;
-        $this->emit('activeNvTab', $this->dashboardData);
+    public function viewCategory($id){
+
+        dd('Yes');
+//        $this->dashboardData['prev_nav_tab']=$this->dashboardData['active_nav_tab'];
+//        $this->dashboardData['active_nav_tab']='category-viewer';
+//        $this->dashboardData['category_id']=$id;
+//        $this->emit('activeNvTab', $this->dashboardData);
     }
 
 

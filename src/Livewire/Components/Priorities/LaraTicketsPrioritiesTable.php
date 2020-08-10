@@ -40,7 +40,7 @@ class LaraTicketsPrioritiesTable extends BaseLivewire
                 ->searchable()
             ,
             Column::make(trans('laratickets::admin.table-name'))
-                ->view('asaydev-lara-tickets::components.admins.fullname', 'column')
+                ->view('asaydev-lara-tickets::components.priorities.name', 'column')
                 ->sortable()
             ,
             Column::make(trans('laratickets::admin.category-create-color'),'color')
@@ -66,11 +66,12 @@ class LaraTicketsPrioritiesTable extends BaseLivewire
         }
     }
 
-    public function viewStatus($id){
-        $this->dashboardData['prev_nav_tab']=$this->dashboardData['active_nav_tab'];
-        $this->dashboardData['active_nav_tab']='priority-viewer';
-        $this->dashboardData['priority_id']=$id;
-        $this->emit('activeNvTab', $this->dashboardData);
+    public function viewPriority($id){
+        dd($id);
+//        $this->dashboardData['prev_nav_tab']=$this->dashboardData['active_nav_tab'];
+//        $this->dashboardData['active_nav_tab']='priority-viewer';
+//        $this->dashboardData['priority_id']=$id;
+//        $this->emit('activeNvTab', $this->dashboardData);
     }
 
 

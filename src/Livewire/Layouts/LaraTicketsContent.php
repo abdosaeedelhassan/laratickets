@@ -50,10 +50,13 @@ class LaraTicketsContent extends Component
      * for opening selected nav
      */
     public function activeNvTab($dashboardData){
+
         $this->dashboardData=$dashboardData;
         // close opened form
-        $this->dashboardData['form']=['name'=>'','action'=>''];
 
+        if(!isset($dashboardData['form'])){
+            $this->dashboardData['form']=['name'=>'','action'=>''];
+        }
         if($this->dashboardData['active_nav_tab']=='active-tickets-tab'||$this->dashboardData['active_nav_tab']=='completed-tickets-tab'){
             $this->dashboardData['active_nav_title']=trans('laratickets::lang.index-my-tickets');
         }else if($this->dashboardData['active_nav_tab']=='admin-tab'){
@@ -82,6 +85,7 @@ class LaraTicketsContent extends Component
         $this->dashboardData['form']=$form;
         $this->emit('setDashboardData',$this->dashboardData);
     }
+
     public function render()
     {
         return view('asaydev-lara-tickets::layouts.content');

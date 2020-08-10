@@ -51,6 +51,7 @@ class LaraTicketsAdminsForm extends Component
 
     public function goback()
     {
+        $this->dashboardData['form']=['name'=>'','action'=>''];
         $this->emit('activeNvTab', $this->dashboardData);
     }
 

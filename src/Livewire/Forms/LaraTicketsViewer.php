@@ -43,11 +43,14 @@ class LaraTicketsViewer extends Component
 
     public function addAnswer()
     {
-        //
+       //
     }
 
     public function editTicket(){
-     //
+        $this->dashboardData['active_nav_tab']=$this->dashboardData['prev_nav_tab'];
+        $this->dashboardData['form']=['name'=>'tickets','action'=>'edit','id'=>$this->ticket->id];
+        $this->dashboardData['active_nav_title']=trans('laratickets::lang.index-my-tickets').': '.trans('laratickets::lang.create-new-ticket');
+        $this->emit('activeNvTab', $this->dashboardData);
     }
     public function destroyTicket()
     {

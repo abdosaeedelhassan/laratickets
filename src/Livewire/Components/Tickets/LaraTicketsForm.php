@@ -3,6 +3,7 @@
 namespace AsayDev\LaraTickets\Livewire\Components\Tickets;
 
 use AsayDev\LaraTickets\Helpers\TicketsHelper;
+use AsayDev\LaraTickets\Models\Agent;
 use AsayDev\LaraTickets\Models\Category;
 use AsayDev\LaraTickets\Models\Priority;
 use AsayDev\LaraTickets\Models\Setting;
@@ -26,6 +27,10 @@ class LaraTicketsForm extends Component
     public $priority_id;
     public $category_id;
 
+    // this for edit operation
+    public $ticket_id;
+    public $agent_id;
+
 
     public function mount($dashboardData)
     {
@@ -33,21 +38,21 @@ class LaraTicketsForm extends Component
         /**
          * step1: check if no category add default one
          */
-        $category=\AsayDev\LaraTickets\Models\Category::first();
-        if(!$category){
+        $category = \AsayDev\LaraTickets\Models\Category::first();
+        if (!$category) {
             \AsayDev\LaraTickets\Models\Category::create([
-                'name'=>'Default',
-                'color'=>'green'
+                'name' => 'Default',
+                'color' => 'green'
             ]);
         }
         /**
          * step3: check if no priorty add default one
          */
-        $priorty=\AsayDev\LaraTickets\Models\Priority::first();
-        if(!$priorty){
+        $priorty = \AsayDev\LaraTickets\Models\Priority::first();
+        if (!$priorty) {
             \AsayDev\LaraTickets\Models\Priority::create([
-                'name'=>'Default',
-                'color'=>'green'
+                'name' => 'Default',
+                'color' => 'green'
             ]);
         }
 
@@ -59,11 +64,32 @@ class LaraTicketsForm extends Component
         if (sizeof($this->categories) > 0) {
             $this->category_id = array_values($this->categories)[0];
         }
+
+        /**
+         * next fired in edit action only
+         */
+        if ($this->dashboardData['form']['action'] == 'edit') {
+            $ticket = Ticket::where('id', $this->dashboardData['form']['id'])->first();
+            if ($ticket) {
+                $this->ticket_id=$ticket->id;
+                $this->subject = $ticket->subject;
+                $this->content = $ticket->content;
+                $this->priority_id = $ticket->priority_id;
+                $this->category_id = $ticket->category_id;
+                $this->agent_id=$ticket->agent_id;
+            }
+        }
+
+
     }
 
     public function render()
     {
-        return view('asaydev-lara-tickets::forms.ticket');
+        $agents = [];
+        if ($this->dashboardData['form']['action'] == 'edit') {
+            $agents= Agent::where('laratickets_agent',1)->get()->pluck('id','full_name');
+        }
+        return view('asaydev-lara-tickets::forms.ticket', ['agents' => $agents]);
     }
 
     public function saveData()
@@ -83,20 +109,31 @@ class LaraTicketsForm extends Component
             'category_id' => 'required|exists:laratickets_categories,id',
         ]);
 
-        $ticket = new Ticket();
-        $ticket->subject = $this->subject;
-        $ticket->content=$this->content;
-        $ticket->model=$this->dashboardData['model'];
-        $ticket->model_id=$this->dashboardData['model_id'];
-        $ticket->html=$this->content;
-        $ticket->code=TicketsHelper::generateCode(4);
-        $ticket->priority_id = $this->priority_id;
-        $ticket->category_id = $this->category_id;
-        $default_status = TicketsHelper::getDefaultStatusInSetting('default_status_id');
-        $ticket->status_id = $default_status->value;
-        $ticket->user_id = auth()->user()->id;
-        $ticket->agent_id=$ticket->autoSelectAgent();
-        $ticket->save();
+        if ($this->dashboardData['form']['action'] == 'add') {
+            $ticket = new Ticket();
+            $ticket->subject = $this->subject;
+            $ticket->content = $this->content;
+            $ticket->model = $this->dashboardData['model'];
+            $ticket->model_id = $this->dashboardData['model_id'];
+            $ticket->html = $this->content;
+            $ticket->code = TicketsHelper::generateCode(4);
+            $ticket->priority_id = $this->priority_id;
+            $ticket->category_id = $this->category_id;
+            $default_status = TicketsHelper::getDefaultStatusInSetting('default_status_id');
+            $ticket->status_id = $default_status->value;
+            $ticket->user_id = auth()->user()->id;
+            $ticket->agent_id = $ticket->autoSelectAgent();
+            $ticket->save();
+        } else {
+            $data = array(
+                'subject' => $this->subject,
+                'content' => $this->content,
+                'priority_id' => $this->priority_id,
+                'category_id' => $this->category_id,
+                'agent_id' => $this->agent_id,
+            );
+            Ticket::where('id',$this->ticket_id)->update($data);
+        }
         $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success, trans('laratickets::lang.btn-create-new-ticket'), trans('laratickets::lang.the-ticket-has-been-created'));
         $this->emit('laratickets-flash-message', $msg);
         $this->goback();
@@ -105,6 +142,7 @@ class LaraTicketsForm extends Component
 
     public function goback()
     {
+        $this->dashboardData['form'] = ['name' => '', 'action' => '', 'id' => ''];
         $this->emit('activeNvTab', $this->dashboardData);
     }
 

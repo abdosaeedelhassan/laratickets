@@ -42,14 +42,27 @@
                 </select>
             </div>
         </div>
+        @if($this->dashboardData['form']['action']=='edit')
+            <div class="form-row mt-5">
+                <label class="col-lg-2 col-form-label"
+                       for="category">{!!  trans('laratickets::lang.agent') . trans('laratickets::lang.colon') !!}</label>
+                <div class="col-lg-10">
+                    <select class="form-control" name="agent_id" id="agent_id" wire:model="agent_id">
+                        @foreach($agents as $key=>$value)
+                            <option value="{{$value}}">{{$key}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        @endif
         <br>
         <div class="form-group row">
             <div class="col-lg-10 offset-lg-2">
-                <button wire:click="goback" class="btn btn-link">{{trans('laratickets::lang.btn-back')}}</button>
                 <button class="btn btn-primary">{{trans('laratickets::lang.btn-submit')}}</button>
             </div>
         </div>
     </form>
+    <button wire:click="goback" class="btn btn-link">{{trans('laratickets::lang.btn-back')}}</button>
 </div>
 
 {{--@section('footer')--}}

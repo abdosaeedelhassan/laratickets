@@ -18,7 +18,8 @@
                             {{trans('laratickets::lang.reopen-ticket')}}
                         </button>
                     @endif
-                    @if($user->isAgent() || $user->laratickets_isAdmin())
+                    {{--                        $user->isAgent() ||--}}
+                    @if($user->laratickets_isAdmin())
                         <button wire:click="editTicket" class="btn btn-info">
                             {{ trans('laratickets::lang.btn-edit')  }}
                         </button>
@@ -79,7 +80,6 @@
     </div>
 
 </div>
-
 
 
 @livewire('lara-tickets-comment-form',['ticket_id'=>$ticket->id])

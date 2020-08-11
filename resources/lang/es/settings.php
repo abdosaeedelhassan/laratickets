@@ -6,8 +6,8 @@
  * See Seeds/SettingsTableSeeder.php
  */
 
-$codemirrorVersion = Kordy\Ticketit\Helpers\Cdn::CodeMirror;
-$summernoteVersion = Kordy\Ticketit\Helpers\Cdn::Summernote;
+$codemirrorVersion = \AsayDev\LaraTickets\Helpers\Cdn::CodeMirror;
+$summernoteVersion = \AsayDev\LaraTickets\Helpers\Cdn::Summernote;
 
 return [
 
@@ -35,7 +35,7 @@ ENDHTML
 
     , 'queue_emails' => <<<'ENDHTML'
 			<p>
-		        Usar el método de Cola cuando se envían correos (Mail::queue y no Mail::send).	    
+		        Usar el método de Cola cuando se envían correos (Mail::queue y no Mail::send).
 		        Ten en cuenta que Mail::queue necesitada estar configurada primero <a target="_blank" href="http://laravel.com/docs/master/queues">http://laravel.com/docs/master/queues</a>
 			</p>
 
@@ -55,9 +55,9 @@ ENDHTML
 ENDHTML
 
     , 'agent_restrict' => <<<'ENDHTML'
-            <p><b>Restricción de agente</b>: Restringir acceso de los agentes a solo los tiquetes que tienen asignados</p>			
+            <p><b>Restricción de agente</b>: Restringir acceso de los agentes a solo los tiquetes que tienen asignados</p>
 			<p>
-			    Agente solo puedes accesar sus tiquetes asignados: <code>1</code>				
+			    Agente solo puedes accesar sus tiquetes asignados: <code>1</code>
 			</p>
 ENDHTML
 
@@ -88,7 +88,7 @@ ENDHTML
     , 'summernote_locale' => <<<"ENDHTML"
 			<p>
 			    ¿Qué lenguaje debería usar el editor de texto summernote js?<br>
-			    Si el valor es <code>laravel</code>, la locación elegida en <code>config/app.php</code> será usada 								
+			    Si el valor es <code>laravel</code>, la locación elegida en <code>config/app.php</code> será usada
 			</p>
 
 			<p>Ejemplo: <code>hu-HU</code> para Húngaro</p>
@@ -97,7 +97,7 @@ ENDHTML
 ENDHTML
 
     , 'editor_html_highlighter' => <<<'ENDHTML'
-            <p>Si incluir codemirror para resaltar la sintaxis o no</p>		
+            <p>Si incluir codemirror para resaltar la sintaxis o no</p>
 			<p><a target="_blank" href="http://summernote.org/examples/#codemirror-as-codeview">http://summernote.org/examples/#codemirror-as-codeview</a></p>
 
 			<p>
@@ -114,7 +114,7 @@ ENDHTML
 
     , 'summernote_options_json_file' => <<<'ENDHTML'
 			<p>
-			    Valores iniciales para el editor de texto summernote js en JSON<br> 	
+			    Valores iniciales para el editor de texto summernote js en JSON<br>
 			    Consulta las opciones disponibles <a target="_blank" href="http://summernote.org/deep-dive/#initialization-options">aquí</a>
 			</p>
 

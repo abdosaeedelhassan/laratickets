@@ -276,7 +276,7 @@
             }
 
             /**
-             * just for resize chart after page loadm   
+             * just for resize chart after page loadm
              */
             setTimeout(function(){ drawChart(); }, 3000);
 

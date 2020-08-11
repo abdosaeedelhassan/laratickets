@@ -32,3 +32,6 @@ this package allow using tickets for spacific model
 
 @livewire('lara-tickets-dashboard',['model'=>'modeName','model_id'=>'modelID'])
 
+# ToDo
+- adding mail notification on new ticket,update ticket, new comment
+

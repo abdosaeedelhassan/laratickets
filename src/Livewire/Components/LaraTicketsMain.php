@@ -82,7 +82,7 @@ class LaraTicketsMain extends Component
         }
 
 
-
+        $this->emit('periodChanged',$indicator_period);
 
     }
 

@@ -215,7 +215,9 @@
     @if($tickets_count)
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
-
+            window.livewire.on('periodChanged', period => {
+                drawChart();
+            });
             google.charts.load('current', {
                 callback: function () {
                     drawChart();
@@ -223,7 +225,6 @@
                 },
                 packages:['corechart']
             });
-
             // performance line chart
             function drawChart() {
                 var data = google.visualization.arrayToDataTable([
@@ -232,7 +233,6 @@
                     ["{{ $month }}", {!! implode(',', $records) !!}],
                     @endforeach
                 ]);
-
                 var options = {
                     title: '{!! addslashes(trans('laratickets::admin.index-performance-chart')) !!}',
                     curveType: 'function',
@@ -245,11 +245,8 @@
                         }
                     }
                 };
-
                 var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
                 chart.draw(data, options);
-
                 // Categories Pie Chart
                 var cat_data = google.visualization.arrayToDataTable([
                     ['{{ trans('laratickets::admin.index-category') }}', '{!! addslashes(trans('laratickets::admin.index-tickets')) !!}'],
@@ -257,16 +254,12 @@
                     ['{!! addslashes($cat_name) !!}', {{ $cat_tickets }}],
                     @endforeach
                 ]);
-
                 var cat_options = {
                     title: '{!! addslashes(trans('laratickets::admin.index-categories-chart')) !!}',
                     legend: {position: 'bottom'}
                 };
-
                 var cat_chart = new google.visualization.PieChart(document.getElementById('catpiechart'));
-
                 cat_chart.draw(cat_data, cat_options);
-
                 // Agents Pie Chart
                 var agent_data = google.visualization.arrayToDataTable([
                     ['{{ trans('laratickets::admin.index-agent') }}', '{!! addslashes(trans('laratickets::admin.index-tickets')) !!}'],
@@ -274,21 +267,20 @@
                     ['{!! addslashes($agent_name) !!}', {{ $agent_tickets }}],
                     @endforeach
                 ]);
-
                 var agent_options = {
                     title: '{!! addslashes(trans('laratickets::admin.index-agents-chart')) !!}',
                     legend: {position: 'bottom'}
                 };
-
                 var agent_chart = new google.visualization.PieChart(document.getElementById('agentspiechart'));
-
                 agent_chart.draw(agent_data, agent_options);
-
             }
 
-            $(window).resize(function(){
-                drawChart();
-            });
+            /**
+             * just for resize chart after page load
+             */
+            setTimeout(function(){ drawChart(); }, 3000);
+
+
         </script>
     @endif
 @endpush

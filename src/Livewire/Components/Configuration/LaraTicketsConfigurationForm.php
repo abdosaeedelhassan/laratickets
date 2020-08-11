@@ -12,52 +12,28 @@ use Livewire\Component;
 
 class LaraTicketsConfigurationForm extends Component
 {
+
     public $dashboardData;
 
-    public $priorities = [];
+    public $lang;
+    public $slug;
+    public $value;
+    public $default=''; // init value
 
-    public $categories = [];
-
-    /**
-     * ticket form fields
-     */
-    public $subject;
-    public $content;
-    public $priority_id;
-    public $category_id;
-
+    public $sett_id; // for edit action
 
     public function mount($dashboardData)
     {
         $this->dashboardData = $dashboardData;
-        /**
-         * step1: check if no category add default one
-         */
-        $category=\AsayDev\LaraTickets\Models\Category::first();
-        if(!$category){
-            \AsayDev\LaraTickets\Models\Category::create([
-                'name'=>'Default',
-                'color'=>'green'
-            ]);
-        }
-        /**
-         * step3: check if no priorty add default one
-         */
-        $priorty=\AsayDev\LaraTickets\Models\Priority::first();
-        if(!$priorty){
-            \AsayDev\LaraTickets\Models\Priority::create([
-                'name'=>'Default',
-                'color'=>'green'
-            ]);
-        }
-
-        $this->priorities = Priority::all()->pluck('id', 'name')->toArray();
-        $this->categories = Category::all()->pluck('id', 'name')->toArray();
-        if (sizeof($this->priorities) > 0) {
-            $this->priority_id = array_values($this->priorities)[0];
-        }
-        if (sizeof($this->categories) > 0) {
-            $this->category_id = array_values($this->categories)[0];
+        if ($this->dashboardData['form']['action'] == 'edit') {
+            $sett=Setting::where('id',$this->dashboardData['form']['id'])->first();
+            if($sett){
+                $this->sett_id=$sett->id;
+                $this->lang=$sett->lang;
+                $this->value=$sett->value;
+                $this->slug=$sett->slug;
+                $this->default=$sett->default;
+            }
         }
     }
 
@@ -70,33 +46,25 @@ class LaraTicketsConfigurationForm extends Component
     {
 
         $data = array(
-            'subject' => $this->subject,
-            'content' => $this->content,
-            'priority_id' => $this->priority_id,
-            'category_id' => $this->category_id,
+            'lang' => $this->lang,
+            'slug' => $this->slug,
+            'value' => $this->value,
+            'default' => $this->default,
         );
 
-
         $this->validate([
-            'subject' => 'required|min:3',
-            'content' => 'required|min:6',
-            'priority_id' => 'required|exists:laratickets_priorities,id',
-            'category_id' => 'required|exists:laratickets_categories,id',
+            'lang' => 'required|min:2',
+            'slug' => 'required|min:3',
+            'value' => 'required|min:1',
+            'default' => 'required|min:1',
         ]);
+        if ($this->dashboardData['form']['action'] == 'add') {
+            Setting::create($data);
+        }else{ // edit
+            Setting::where('id',$this->sett_id)->update($data);
+        }
 
-        $ticket = new Ticket();
-        $ticket->subject = $this->subject;
-        $ticket->content=$this->content;
-        $ticket->html=$this->content;
-        $ticket->priority_id = $this->priority_id;
-        $ticket->category_id = $this->category_id;
-        $default_status = TicketsHelper::getDefaultStatusInSetting('default_status_id');
-        $ticket->status_id = $default_status->value;
-        $ticket->user_id = auth()->user()->id;
-        $ticket->agent_id=$ticket->autoSelectAgent();
-        $ticket->save();
-
-        $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success, trans('laratickets::lang.btn-create-new-ticket'), trans('laratickets::lang.the-ticket-has-been-created'));
+        $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success,$this->dashboardData['active_nav_title'], trans('laratickets::lang.table-saved-success'));
         $this->emit('laratickets-flash-message', $msg);
         $this->goback();
 
@@ -104,7 +72,10 @@ class LaraTicketsConfigurationForm extends Component
 
     public function goback()
     {
+        $this->dashboardData['form']=['name'=>'','action'=>'','id'=>''];
         $this->emit('activeNvTab', $this->dashboardData);
     }
+
+
 
 }

@@ -7,8 +7,8 @@
         </div><!--col-->
         <div class="col-sm-7 pull-right">
             <div class="btn-toolbar float-right" role="toolbar">
-                <a wire:click="openForm('new_configuration')" class="btn btn-success ml-1" data-toggle="tooltip"
-                   title="{{trans('laratickets::admin.config-create-title')}}"><i class="fas fa-plus-circle"></i></a>
+{{--                <a wire:click="openForm('new_configuration')" class="btn btn-success ml-1" data-toggle="tooltip"--}}
+{{--                   title="{{trans('laratickets::admin.config-create-title')}}"><i class="fas fa-plus-circle"></i></a>--}}
             </div>
         </div><!--col-->
     </h5>

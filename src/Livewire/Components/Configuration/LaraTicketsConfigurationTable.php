@@ -47,14 +47,20 @@ class LaraTicketsConfigurationTable extends BaseLivewire
                 ->sortable()
                 ->searchable()
             ,
-            Column::make(trans('laratickets::admin.table-value'),'value')
+            Column::make(trans('laratickets::admin.table-value'))
+                ->view('asaydev-lara-tickets::components.configuration.value', 'column')
                 ->sortable()
                 ->searchable()
             ,
-            Column::make(trans('laratickets::admin.table-action'))
-                ->view('asaydev-lara-tickets::components.admins.actions', 'column')
-                ->sortable()
-            ,
+
+            /**
+             * curently no need for delete action in configurations
+             */
+
+//            Column::make(trans('laratickets::admin.table-action'))
+//                ->view('asaydev-lara-tickets::components.configuration.actions', 'column')
+//                ->sortable()
+//            ,
         ];
 
 
@@ -72,10 +78,9 @@ class LaraTicketsConfigurationTable extends BaseLivewire
         }
     }
 
-    public function viewStatus($id){
-        $this->dashboardData['prev_nav_tab']=$this->dashboardData['active_nav_tab'];
-        $this->dashboardData['active_nav_tab']='configuration-viewer';
-        $this->dashboardData['configuration_id']=$id;
+    public function viewConfig($id){
+        $this->dashboardData['form']=['name'=>'configuration','action'=>'edit','id'=>$id];
+        $this->dashboardData['active_nav_title']=trans('laratickets::admin.configuration-index-title').': '.trans('laratickets::lang.table-edit-title');
         $this->emit('activeNvTab', $this->dashboardData);
     }
 

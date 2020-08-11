@@ -1,5 +1,5 @@
 # laratickets
-real time tickets system for laravel framework
+real time tickets system for laravel framework, this package is transformation from (https://github.com/thekordy/ticketit) using livewire concept
 
 **Important note:** this package is under development and not completed yet
 
@@ -25,3 +25,10 @@ php artisan vendor:publish --tag=laratickets_migrations
 # publishing assets files:
 
 php artisan vendor:publish --tag=laratickets_assets
+
+# Basic usage
+
+this package allow using tickets for spacific model
+
+@livewire('lara-tickets-dashboard',['model'=>'modeName','model_id'=>'modelID'])
+

@@ -65,7 +65,7 @@
                             </div>
                         </div>
                         <div class="panel-body">
-                            <div id="curve_chart" style="width: 100%; height: 350px"></div>
+                                <div id="curve_chart" style="width: 100%; height: 350px;"></div>
                         </div>
                     </div>
                     <div class="card-deck mt-3">
@@ -213,16 +213,17 @@
 </div>
 @push('before-scripts')
     @if($tickets_count)
-        <script type="text/javascript"
-                src="https://www.google.com/jsapi?autoload={
-            'modules':[{
-              'name':'visualization',
-              'version':'1',
-              'packages':['corechart']
-            }]
-          }"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
-            google.setOnLoadCallback(drawChart);
+
+            google.charts.load('current', {
+                callback: function () {
+                    drawChart();
+                    $(window).resize(drawChart);
+                },
+                packages:['corechart']
+            });
+
             // performance line chart
             function drawChart() {
                 var data = google.visualization.arrayToDataTable([
@@ -284,6 +285,10 @@
                 agent_chart.draw(agent_data, agent_options);
 
             }
+
+            $(window).resize(function(){
+                drawChart();
+            });
         </script>
     @endif
 @endpush

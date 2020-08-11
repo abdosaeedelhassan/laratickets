@@ -76,7 +76,7 @@ class LaraTicketsMain extends Component
             $to->subMonth($m);
             $to->endOfMonth();
             $this->monthly_performance['interval'][$from->format('F Y')] = [];
-            foreach ($categories as $cat) {
+            foreach ($categories_all as $cat) {
                 $this->monthly_performance['interval'][$from->format('F Y')][] = round($this->intervalPerformance($from, $to, $cat->id), 1);
             }
         }
@@ -86,6 +86,28 @@ class LaraTicketsMain extends Component
 
     }
 
+    public function intervalPerformance($from, $to, $cat_id = false)
+    {
+        if ($cat_id) {
+            $tickets = Ticket::where('category_id', $cat_id)->whereBetween('completed_at', [$from, $to])->get();
+        } else {
+            $tickets = Ticket::whereBetween('completed_at', [$from, $to])->get();
+        }
+
+        if (empty($tickets->first())) {
+            return false;
+        }
+
+        $performance_count = 0;
+        $counter = 0;
+        foreach ($tickets as $ticket) {
+            $performance_count += $this->ticketPerformance($ticket);
+            $counter++;
+        }
+        $performance_average = $performance_count / $counter;
+
+        return $performance_average;
+    }
 
 
     public function render()

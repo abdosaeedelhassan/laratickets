@@ -76,7 +76,12 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
          * step4: setup laravel User model aliases to used in package extends
          */
         if (!class_exists('AsayDev\LaraTickets\Models\ParentUserModel')) {
-            class_alias(config("laratickets.user_model"), 'AsayDev\LaraTickets\Models\ParentUserModel');
+            if(config("laratickets.user_model")){
+                class_alias(config("laratickets.user_model"), 'AsayDev\LaraTickets\Models\ParentUserModel');
+            }else{
+                class_alias('App\User', 'AsayDev\LaraTickets\Models\ParentUserModel');
+            }
+
         }
         /**
          * step5: registering

@@ -41,8 +41,9 @@ class LaraTicketsMain extends Component
 
     public function initData($indicator_period){
 
-        $this->tickets_count = Ticket::count();
-        $this->open_tickets_count = Ticket::whereNull('completed_at')->count();
+
+        $this->tickets_count = Ticket::where('model',$this->dashboardData['model'])->where('model_id',$this->dashboardData['model_id'])->count();
+        $this->open_tickets_count = Ticket::where('model',$this->dashboardData['model'])->where('model_id',$this->dashboardData['model_id'])->whereNull('completed_at')->count();
         $this->closed_tickets_count = $this->tickets_count - $this->open_tickets_count;
         $this->setActiveTab('cat');
 
@@ -51,16 +52,20 @@ class LaraTicketsMain extends Component
         $categories_all = Category::all();
         $this->categories_share = [];
         foreach ($categories_all as $cat) {
-            $this->categories_share[$cat->name] = $cat->tickets()->count();
+            $this->categories_share[$cat->name] = $cat->tickets()->where('model',$this->dashboardData['model'])->where('model_id',$this->dashboardData['model_id'])->count();
         }
         // Total tickets counter per agent for google pie chart
-        $agents_share_obj = Agent::agents()->with(['agentTotalTickets' => function ($query) {
+       $model=$this->dashboardData['model'];
+        $model_id=$this->dashboardData['model_id'];
+        $agents_share_obj = Agent::agents()->with(['agentTotalTickets' => function ($query)use($model,$model_id) {
+            $query->where('model',$model);
+            $query->where('model_id',$model_id);
             $query->addSelect(['id', 'agent_id']);
         }])->get();
 
         $this->agents_share = [];
         foreach ($agents_share_obj as $agent_share) {
-            $this->agents_share[$agent_share->name] = $agent_share->agentTotalTickets->count();
+            $this->agents_share[$agent_share->name] = $agent_share->agentTotalTickets->where('model',$this->dashboardData['model'])->where('model_id',$this->dashboardData['model_id'])->count();
         }
 
         foreach ($categories_all as $cat) {
@@ -89,9 +94,9 @@ class LaraTicketsMain extends Component
     public function intervalPerformance($from, $to, $cat_id = false)
     {
         if ($cat_id) {
-            $tickets = Ticket::where('category_id', $cat_id)->whereBetween('completed_at', [$from, $to])->get();
+            $tickets = Ticket::where('model',$this->dashboardData['model'])->where('model_id',$this->dashboardData['model_id'])->where('category_id', $cat_id)->whereBetween('completed_at', [$from, $to])->get();
         } else {
-            $tickets = Ticket::whereBetween('completed_at', [$from, $to])->get();
+            $tickets = Ticket::where('model',$this->dashboardData['model'])->where('model_id',$this->dashboardData['model_id'])->whereBetween('completed_at', [$from, $to])->get();
         }
 
         if (empty($tickets->first())) {

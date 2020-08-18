@@ -1,31 +1,46 @@
 <div>
     <div wire:init="renderContentEditor">
-       <div class="row">
-          <div class="col-12">
-              <h2 class="mt-5">{{ trans('laratickets::lang.comments') }}</h2>
-              @foreach($comments as $comment)
-                  <div class="card mb-3 {!! $comment->user->tickets_role ? "border-info" : "" !!}">
-                      <div
-                          class="card-header d-flex justify-content-between align-items-baseline flex-wrap {!! $comment->user->tickets_role ? "bg-info text-white" : "" !!}">
-                          <div>{!! $comment->user->name !!}</div>
-                          <div>{!! $comment->created_at->diffForHumans() !!}</div>
-                      </div>
-                      <div class="card-body pb-0">
-                          {!! $comment->html !!}
-                      </div>
-                  </div>
-              @endforeach
-              {{ $comments->links() }}
-          </div>
-       </div>
         <div class="row">
-            <div class="col-sm-11" wire:ignore>
-            <textarea rows="5" id="content" class="form-control" name="content" wire:model="content"
-                      autocomplete="off">{{ $content }}</textarea>
-                <button wire:click="addComment" class="btn btn-outline-primary pull-right mt-3 mb-3">
-                    {{trans('laratickets::lang.reply')}}
-                </button>
+            <div class="col-12">
+                <h2 class="mt-5">{{ trans('laratickets::lang.comments') }}</h2>
+                <?php
+                $comment_order = 0;
+                ?>
+                @foreach($comments as $comment)
+
+                    <div style="padding: 10px;background-color: {{$comment_order%2==0?'#e1f0ff':'white'}}">
+                        <div class="row">
+                            <div class="col" style="text-align: {{app()->getLocale()=='ar'?'right':'left'}}">
+                                <strong>{!! $comment->user->name !!}</strong>
+                            </div>
+                            <div class="col" style="text-align: {{app()->getLocale()=='ar'?'left':'right'}}">
+                                <small class="text-muted"><span class="glyphicon glyphicon-time"></span>
+                                    {!! $comment->created_at->format(app()->getLocale()=='ar'?'h:m Y-m-d':'Y-m-d m:h') !!}
+                                </small>
+                            </div>
+                        </div>
+                        <p>
+                            {!! $comment->html !!}
+                        </p>
+                    </div>
+                    <?php
+                    $comment_order++;
+                    ?>
+                    {{--                    {!! $comment->user->tickets_role ? "border-info" : "" !!}--}}
+                @endforeach
+                {{ $comments->links() }}
             </div>
         </div>
+        @if(!$ticket->completed_at)
+            <div class="row mt-3">
+                <div class="col-sm-11" wire:ignore>
+            <textarea rows="5" id="content" class="form-control" name="content" wire:model="content"
+                      autocomplete="off">{{ $content }}</textarea>
+                    <button wire:click="addComment" class="btn btn-outline-primary pull-right mt-3 mb-3">
+                        {{trans('laratickets::lang.reply')}}
+                    </button>
+                </div>
+            </div>
+        @endif
     </div>
 </div>

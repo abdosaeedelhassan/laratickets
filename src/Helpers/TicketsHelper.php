@@ -11,6 +11,20 @@ use Illuminate\Support\Str;
 class  TicketsHelper
 {
 
+    public static function getTicketsCollection($model,$model_id)
+    {
+        $user = Agent::find(auth()->user()->id);
+        if ($user->laratickets_isAdmin()) {
+            return  Ticket::where('model', $model)
+                ->where('model_id',$model_id)
+                ->where('agent_id', auth()->user()->id);
+        }else{
+           return Ticket::where('model',$model)
+                ->where('model_id', $model_id)
+                ->where('user_id', auth()->user()->id);
+        }
+    }
+
     public function data($complete = false)
     {
         $user = Agent::find(auth()->user()->id);
@@ -119,6 +133,9 @@ class  TicketsHelper
         return $setting;
     }
 
+    /**
+     * next function to be removed
+     */
     public static function permTo($user_id, $ticket_id,$type)
     {
 

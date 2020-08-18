@@ -18,8 +18,6 @@ class LaraTicketsViewer extends Component
 
     public $default_close_status_id;
 
-    public $close_perm;
-    public $reopen_perm;
 
     public function mount($dashboardData)
     {
@@ -29,9 +27,6 @@ class LaraTicketsViewer extends Component
 
         $setting = TicketsHelper::getDefaultStatusInSetting('default_close_status_id');
         $this->default_close_status_id = $setting->value;
-
-        $this->close_perm = TicketsHelper::permTo($dashboardData['user_id'], $dashboardData['ticket_id'], 'close');
-        $this->reopen_perm = TicketsHelper::permTo($dashboardData['user_id'], $dashboardData['ticket_id'], 'reopen');
 
 
     }

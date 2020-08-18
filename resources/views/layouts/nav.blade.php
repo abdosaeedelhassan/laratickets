@@ -12,18 +12,9 @@
            wire:click="setActiveNavTab('active-tickets-tab')">
             {{ trans('laratickets::lang.nav-active-tickets') }}
             <span class="badge badge-pill badge-secondary ">
-                     <?php
-                if ($user->laratickets_isAdmin()) {
-                    echo \AsayDev\LaraTickets\Models\Ticket::where('model',$dashboardData['model'])
-                        ->where('model_id',$dashboardData['model_id'])
-                        ->active()->count();
-                } elseif ($user->isAgent()) {
-                    echo \AsayDev\LaraTickets\Models\Ticket::where('model',$dashboardData['model'])
-                        ->where('model_id',$dashboardData['model_id'])
-                        ->active()->agentUserTickets($user->id)->count();
-                } else {
-                    echo \AsayDev\LaraTickets\Models\Ticket::userTickets($user->id)->active()->count();
-                }
+                <?php
+                $collection = \AsayDev\LaraTickets\Helpers\TicketsHelper::getTicketsCollection($dashboardData['model'], $dashboardData['model_id']);
+                echo $collection->whereNull('completed_at')->count();
                 ?>
                 </span>
         </a>
@@ -34,19 +25,8 @@
             {{ trans('laratickets::lang.nav-completed-tickets') }}
             <span class="badge badge-pill badge-secondary">
                     <?php
-                if ($user->laratickets_isAdmin()) {
-                    echo \AsayDev\LaraTickets\Models\Ticket::where('model',$dashboardData['model'])
-                        ->where('model_id',$dashboardData['model_id'])
-                        ->complete()->count();
-                } elseif ($user->isAgent()) {
-                    echo \AsayDev\LaraTickets\Models\Ticket::where('model',$dashboardData['model'])
-                        ->where('model_id',$dashboardData['model_id'])
-                        ->complete()->agentUserTickets($user->id)->count();
-                } else {
-                    echo \AsayDev\LaraTickets\Models\Ticket::where('model',$dashboardData['model'])
-                        ->where('model_id',$dashboardData['model_id'])
-                        ->userTickets($user->id)->complete()->count();
-                }
+                $collection = \AsayDev\LaraTickets\Helpers\TicketsHelper::getTicketsCollection($dashboardData['model'], $dashboardData['model_id']);
+                echo $collection->whereNotNull('completed_at')->count();
                 ?>
                 </span>
         </a>

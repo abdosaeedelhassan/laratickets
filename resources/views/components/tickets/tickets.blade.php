@@ -7,8 +7,17 @@
         </div><!--col-->
         <div class="col-sm-7 pull-right">
             <div class="btn-toolbar float-right" role="toolbar">
-                <a wire:click="openForm('new_ticket')" class="btn btn-success ml-1" data-toggle="tooltip"
-                   title="{{trans('laratickets::lang.btn-create-new-ticket')}}"><i class="fas fa-plus-circle"></i></a>
+                @if(isset($dashboardData['options']['can_create_ticket']))
+                    @if($dashboardData['options']['can_create_ticket']==true)
+                        <a wire:click="openForm('new_ticket')" class="btn btn-success ml-1" data-toggle="tooltip"
+                           title="{{trans('laratickets::lang.btn-create-new-ticket')}}"><i
+                                class="fas fa-plus-circle"></i></a>
+                    @endif
+                @else
+                    <a wire:click="openForm('new_ticket')" class="btn btn-success ml-1" data-toggle="tooltip"
+                       title="{{trans('laratickets::lang.btn-create-new-ticket')}}"><i
+                            class="fas fa-plus-circle"></i></a>
+                @endif
             </div>
         </div><!--col-->
 

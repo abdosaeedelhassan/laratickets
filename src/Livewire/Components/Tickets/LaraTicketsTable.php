@@ -2,6 +2,7 @@
 
 namespace AsayDev\LaraTickets\Livewire\Components\Tickets;
 
+use AsayDev\LaraTickets\Helpers\TicketsHelper;
 use AsayDev\LaraTickets\Livewire\BaseLivewire;
 use AsayDev\LaraTickets\Models\Agent;
 use AsayDev\LaraTickets\Models\Setting;
@@ -29,39 +30,15 @@ class LaraTicketsTable extends BaseLivewire
 
     public function data($complete = false)
     {
-        $user = Agent::find(auth()->user()->id);
 
-        if ($user->laratickets_isAdmin()) {
-            if ($complete) {
-                $collection = Ticket::where('model', $this->dashboardData['model'])
-                    ->where('model_id', $this->dashboardData['model_id'])
-                    ->complete();
-            } else {
-                $collection = Ticket::where('model', $this->dashboardData['model'])
-                    ->where('model_id', $this->dashboardData['model_id'])
-                    ->active();
-            }
-        } elseif ($user->isAgent()) {
-            if ($complete) {
-                $collection = Ticket::where('model', $this->dashboardData['model'])
-                    ->where('model_id', $this->dashboardData['model_id'])
-                    ->complete()->agentUserTickets($user->id);
-            } else {
-                $collection = Ticket::where('model', $this->dashboardData['model'])
-                    ->where('model_id', $this->dashboardData['model_id'])
-                    ->active()->agentUserTickets($user->id);
-            }
+        $collection = TicketsHelper::getTicketsCollection($this->dashboardData['model'], $this->dashboardData['model_id']);
+
+        if ($complete) {
+            $collection = $collection->whereNotNull('completed_at');
         } else {
-            if ($complete) {
-                $collection = Ticket::where('model', $this->dashboardData['model'])
-                    ->where('model_id', $this->dashboardData['model_id'])
-                    ->userTickets($user->id)->complete();
-            } else {
-                $collection = Ticket::where('model', $this->dashboardData['model'])
-                    ->where('model_id', $this->dashboardData['model_id'])
-                    ->userTickets($user->id)->active();
-            }
+            $collection = $collection->whereNull('completed_at');
         }
+
         return $collection
             ->join('users', 'users.id', '=', 'laratickets.user_id')
             ->join('laratickets_statuses', 'laratickets_statuses.id', '=', 'laratickets.status_id')

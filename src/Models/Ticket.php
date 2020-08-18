@@ -48,6 +48,11 @@ class Ticket extends Model
         return (bool)$this->completed_at;
     }
 
+    public function isAgent()
+    {
+        return $this->agent_id == auth()->user()->id;
+    }
+
     /**
      * List of completed tickets.
      *

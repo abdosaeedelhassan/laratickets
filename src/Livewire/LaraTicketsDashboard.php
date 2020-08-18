@@ -30,7 +30,7 @@ class LaraTicketsDashboard extends Component
     protected $listeners = ['setActiveNavTab'];
 
 
-    public function mount($model = '', $model_id = '')
+    public function mount($model = '', $model_id = '',$options=[])
     {
         /**
          * init assets vars
@@ -43,12 +43,14 @@ class LaraTicketsDashboard extends Component
         $this->editor_options = file_get_contents(base_path(TicketsHelper::getDefaultSetting('editor_options', 'vendor/asaydev/laratickets/resources/json/summernote_init.json')->value));
 
 
+
         /**
          * init dashbaord vars
          */
         $this->dashboardData = array(
             'model' => $model,
             'model_id' => $model_id,
+            'options' => $options
         );
 
          $this->user= Agent::find(auth()->user()->id);

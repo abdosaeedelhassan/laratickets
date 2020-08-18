@@ -8,17 +8,16 @@
                     </h4>
                 </div><!--col-->
                 <div class="col-sm-5 pull-left">
-                    @if(! $ticket->completed_at && $close_perm == 'yes')
-                        <button wire:click="makeAsComplete({{$ticket->id}})" class="btn btn-success">
-                            {{trans('laratickets::lang.btn-mark-complete')}}
-                        </button>
-                    @elseif($ticket->completed_at && $reopen_perm == 'yes')
-                        <button wire:click="reOpenTicket({{$ticket->id}})" class="btn btn-success">
-                            {{trans('laratickets::lang.reopen-ticket')}}
-                        </button>
-                    @endif
-                    {{--                        $user->isAgent() ||--}}
-                    @if($user->laratickets_isAdmin())
+                    @if($user->laratickets_isAdmin()|| $ticket->isAgent())
+                        @if(! $ticket->completed_at)
+                            <button wire:click="makeAsComplete({{$ticket->id}})" class="btn btn-success">
+                                {{trans('laratickets::lang.btn-mark-complete')}}
+                            </button>
+                        @elseif($ticket->completed_at)
+                            <button wire:click="reOpenTicket({{$ticket->id}})" class="btn btn-success">
+                                {{trans('laratickets::lang.reopen-ticket')}}
+                            </button>
+                        @endif
                         <button wire:click="editTicket" class="btn btn-info">
                             {{ trans('laratickets::lang.btn-edit')  }}
                         </button>

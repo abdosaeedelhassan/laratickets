@@ -35,3 +35,7 @@ this package allow using tickets for spacific model
 # ToDo
 - adding mail notification on new ticket,update ticket, new comment
 
+# ToBe explain
+- options array parm
+    - can_create_ticket
+    

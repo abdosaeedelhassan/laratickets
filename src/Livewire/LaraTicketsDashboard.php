@@ -36,7 +36,7 @@ class LaraTicketsDashboard extends Component
          * init assets vars
          */
         $this->editor_enabled = TicketsHelper::getDefaultSetting('editor_enabled', '1')->value;
-        $this->codemirror_enabled = TicketsHelper::getDefaultSetting('codemirror_enabled', '1')->value;
+            $this->codemirror_enabled = TicketsHelper::getDefaultSetting('codemirror_enabled', '1')->value;
         $this->codemirror_theme = TicketsHelper::getDefaultSetting('codemirror_theme', 'monokai')->value;
         $this->include_font_awesome = TicketsHelper::getDefaultSetting('include_font_awesome', '1')->value;
         $this->editor_locale = TicketsHelper::getDefaultSetting('editor_locale', 'en')->value;

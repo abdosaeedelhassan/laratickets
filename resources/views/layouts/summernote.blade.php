@@ -1,42 +1,47 @@
-@if($editor_enabled)
-@if($codemirror_enabled)
-    @push('after-scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/{{\AsayDev\LaraTickets\Helpers\Cdn::CodeMirror}}/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/{{\AsayDev\LaraTickets\Helpers\Cdn::CodeMirror}}/mode/xml/xml.min.js"></script>
-    @endpush
-@endif
-@push('after-scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/{{\AsayDev\LaraTickets\Helpers\Cdn::Summernote}}/summernote-bs4.min.js"></script>
+@push('after-styles')
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+    <style>
+        .modal-backdrop {
+            position: static;
+        }
+    </style>
 @endpush
-@if($editor_locale)
-    @push('after-scripts')
-{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/{{\AsayDev\LaraTickets\Helpers\Cdn::Summernote}}/lang/summernote-{{$editor_locale}}.min.js"></script>--}}
-    @endpush
-@endif
 @push('after-scripts')
-<script>
-    $(function() {
-        $(function() {
+    @if(app()->getLocale()=='ar')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ar-AR.min.js"></script>
+    @else
+        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    @endif
+    <script>
+        $(function () {
+
             window.livewire.on('cleartext', parm => {
                 $("#content").summernote("code", "");
-                $('#content').value='';
+                $('#content').value = '';
             });
-        });
-        window.livewire.on('renderContentEditor', parm => {
-            $('#content').summernote({
-                codemirror: {
-                    theme: 'monokai'
-                },
-                callbacks: {
-                    onChange: function(contents, $editable) {
-                        window.livewire.emit('setContent',contents)
+            window.livewire.on('renderContentEditor', parm => {
+                $('#content').summernote({
+                    dialogsInBody: true,
+                    lang:'ar-AR',
+                    codemirror: {
+                        theme: 'monokai'
+                    },
+                    popover: {
+                        image: [
+                            ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                            ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                            ['remove', ['removeMedia']]
+                        ]
+                    },
+                    callbacks: {
+                        onChange: function (contents, $editable) {
+                            window.livewire.emit('setContent', contents)
+                        }
                     }
-                }
+                });
+                {{--var options = $.extend(true, {lang: '{{$editor_locale}}' {!! $codemirror_enabled ? ", codemirror: {theme: '{$codemirror_theme}', mode: 'text/html', htmlMode: true, lineWrapping: true}" : ''  !!} } , {!! $editor_options !!});--}}
+                {{--$("textarea.summernote-editor").summernote(options);--}}
             });
-            {{--var options = $.extend(true, {lang: '{{$editor_locale}}' {!! $codemirror_enabled ? ", codemirror: {theme: '{$codemirror_theme}', mode: 'text/html', htmlMode: true, lineWrapping: true}" : ''  !!} } , {!! $editor_options !!});--}}
-            {{--$("textarea.summernote-editor").summernote(options);--}}
         });
-    });
-</script>
+    </script>
 @endpush
-@endif

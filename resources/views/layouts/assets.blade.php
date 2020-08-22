@@ -1,4 +1,4 @@
-{{-- Load the css file to the header --}}
+@push('after-styles')
 @push('after-scripts')
     <script type="text/javascript">
         function loadCSS(filename) {

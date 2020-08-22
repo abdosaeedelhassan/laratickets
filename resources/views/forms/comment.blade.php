@@ -23,7 +23,8 @@
                             <?php
                             //$content = preg_replace('/<img style="[^"]*"/', '<img ', $comment->html);
                             //$content= str_replace('<img','<img style="width:100px;height:100px" ',$content);
-                            $content= preg_replace('/<img.*src="(.*?)".*?>/', '<a href="\1" target="_blank"><img style="width:100px;height:100px" src="\1"/></a>',  $comment->html);
+                            $time=time();
+                            $content= preg_replace('/<img.*src="(.*?)".*?>/', '<a download="'.time().'-img.jpg"  href="\1"  target="_blank"><img id="img-'.$comment->id.'" style="width:100px;height:100px" src="\1"/></a>',  $comment->html);
                             echo $content;
                             ?>
                         </p>
@@ -48,4 +49,5 @@
             </div>
         @endif
     </div>
+
 </div>

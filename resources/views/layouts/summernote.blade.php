@@ -24,7 +24,7 @@
             window.livewire.on('renderContentEditor', parm => {
                 $('#content').summernote({
                     dialogsInBody: true,
-                    maximumImageFileSize: 1048576,
+                   // maximumImageFileSize: 1048576,
                     disableDragAndDrop: true,
                     lang: 'ar-AR',
                     codemirror: {

@@ -53,7 +53,7 @@ class LaraTicketsCommentForm extends Component
         if(strlen($this->content)>0){
             $comment = new Comment();
             $comment->html=$this->content;
-            $comment->content=$this->content;
+            $comment->content=strip_tags(html_entity_decode($this->content));
             $comment->ticket_id =$this->ticket->id;
             $comment->user_id = auth()->user()->id;
             $comment->save();

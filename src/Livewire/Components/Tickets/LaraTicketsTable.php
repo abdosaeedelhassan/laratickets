@@ -33,10 +33,12 @@ class LaraTicketsTable extends BaseLivewire
 
         $collection = TicketsHelper::getTicketsCollection($this->dashboardData['model'], $this->dashboardData['model_id']);
 
-        if ($complete) {
-            $collection = $collection->whereNotNull('completed_at');
-        } else {
-            $collection = $collection->whereNull('completed_at');
+        if($this->dashboardData['model']=='all'){
+            if ($complete) {
+                $collection = $collection->whereNotNull('completed_at');
+            } else {
+                $collection = $collection->whereNull('completed_at');
+            }
         }
 
         return $collection
@@ -47,6 +49,7 @@ class LaraTicketsTable extends BaseLivewire
             ->select([
                 'laratickets.id',
                 'laratickets.subject AS subject',
+                'laratickets.completed_at',
                 'laratickets_statuses.name AS status',
                 'laratickets_statuses.color AS color_status',
                 'laratickets_priorities.color AS color_priority',
@@ -71,6 +74,7 @@ class LaraTicketsTable extends BaseLivewire
      */
     public function columns(): array
     {
+
         $columns = [
             Column::make(trans('laratickets::lang.table-id'), 'id')
                 ->sortable()
@@ -79,18 +83,24 @@ class LaraTicketsTable extends BaseLivewire
             Column::make(trans('laratickets::lang.table-subject'))
                 ->view('asaydev-lara-tickets::components.tickets.subject', 'column')
                 ->sortable()
-            ,
-            Column::make(trans('laratickets::lang.table-status'))
-                ->view('asaydev-lara-tickets::components.tickets.status', 'column')
-                ->sortable()
-            ,
-            Column::make(trans('laratickets::lang.table-last-updated'))
-                ->view('asaydev-lara-tickets::components.tickets.lastupdate', 'column')
-                ->sortable(),
-            Column::make(trans('laratickets::lang.table-agent'))
-                ->view('asaydev-lara-tickets::components.tickets.agent', 'column')
-                ->sortable()
-        ];
+            ];
+
+
+        if($this->dashboardData['model']!='all'){
+            array_push($columns,Column::make(trans('laratickets::lang.table-type'))
+                ->view('asaydev-lara-tickets::components.tickets.type', 'column')
+                ->sortable());
+        }
+
+        array_push($columns, Column::make(trans('laratickets::lang.table-status'))
+            ->view('asaydev-lara-tickets::components.tickets.status', 'column')
+            ->sortable());
+        array_push($columns,  Column::make(trans('laratickets::lang.table-last-updated'))
+            ->view('asaydev-lara-tickets::components.tickets.lastupdate', 'column')
+            ->sortable());
+        array_push($columns, Column::make(trans('laratickets::lang.table-agent'))
+            ->view('asaydev-lara-tickets::components.tickets.agent', 'column')
+            ->sortable());
 
         $user = Agent::find(auth()->user()->id);
 

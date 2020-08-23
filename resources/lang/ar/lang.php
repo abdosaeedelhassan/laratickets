@@ -20,7 +20,8 @@ return [
     'table-owner'           => 'المالك',
     'table-status'          => 'الحالة',
     'table-last-updated'    => 'آخر تحديث',
-    'table-priority'        => 'الحالة',
+    'table-priority'        => 'الأولوية',
+    'table-type'        => 'النوع',
     'table-agent'           => 'الوكيل',
     'table-category'        => 'التصنيف',
 

@@ -13,6 +13,10 @@ class  TicketsHelper
 
     public static function getTicketsCollection($model,$model_id)
     {
+        if($model=='all'){
+            return new Ticket();
+        }
+
         $user = Agent::find(auth()->user()->id);
         if ($user->laratickets_isAdmin()) {
             return  Ticket::where('model', $model)

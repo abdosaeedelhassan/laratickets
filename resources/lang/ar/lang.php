@@ -69,7 +69,8 @@ return [
     'responsible'             => 'المسؤول',
     'status'                  => 'الحالة',
     'subject'                 => 'الموضوع',
-
+    'title'=>'العنوان',
+    'agent-name'=>'إسم العميل',
     /*
      *  Page specific
      */
@@ -88,7 +89,7 @@ return [
 
     'create-ticket-title'          => 'نموذج تذكرة جديدة',
     'create-new-ticket'            => 'تذكرة جديدة',
-    'create-ticket-brief-issue'    => 'نبذة عن مشكلتك',
+    'create-ticket-brief-issue'    => 'تفاصيل التذكرة',
     'create-ticket-describe-issue' => 'وصف مشكلتك في التفاصيل',
 
     'show-ticket-title'                          => 'التذكرة',

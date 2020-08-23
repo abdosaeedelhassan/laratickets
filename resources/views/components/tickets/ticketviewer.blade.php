@@ -72,9 +72,31 @@
             </div>
         </div>
     </div>
-    <div class="mt-5">
-        {!! $ticket->html !!}
+
+    <div class="card mt-5">
+        <div class="card-header">
+            <div class="row">
+                <label for="" class="col-md-4"><strong>{{trans('laratickets::lang.title') }}</strong></label>
+                <div class="col-md-8">
+                    {!! $ticket->subject !!}
+                </div>
+            </div>
+            <div class="row">
+                <label for="" class="col-md-4"><strong>{{trans('laratickets::lang.agent-name') }}</strong></label>
+                <div class="col-md-8">
+                    {!! $ticket->agent->name !!}
+                </div>
+            </div>
+
+            {!! $ticket->content !!}
+
+        </div>
     </div>
+    <div class="card mt-5">
+        <div class="card-header">
+                @livewire('lara-tickets-comment-form',['ticket_id'=>$ticket->id])
+        </div>
+    </div>
+    <button wire:click="goback" class="btn btn-link">{{trans('laratickets::lang.btn-back')}}</button>
 </div>
 
-@livewire('lara-tickets-comment-form',['ticket_id'=>$ticket->id])

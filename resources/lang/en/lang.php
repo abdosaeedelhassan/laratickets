@@ -53,6 +53,8 @@ return [
     'btn-mark-complete' => 'Mark Complete',
     'btn-submit' => 'Submit',
 
+    'title'=>'Title',
+    'agent-name'=>'Agent name',
     'agent' => 'Agent',
     'category' => 'Category',
     'colon' => ': ',
@@ -88,7 +90,7 @@ return [
 
     'create-ticket-title' => 'New Ticket Form',
     'create-new-ticket' => 'Create New Ticket',
-    'create-ticket-brief-issue' => 'A brief of your issue ticket',
+    'create-ticket-brief-issue' => 'Ticket details',
     'create-ticket-describe-issue' => 'Describe your issue here in details',
 
     'show-ticket-title' => 'Ticket',

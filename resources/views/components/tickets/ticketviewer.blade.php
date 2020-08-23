@@ -77,8 +77,11 @@
         <div class="card-header">
             <div class="row">
                 <label for="" class="col-md-4"><strong>{{trans('laratickets::lang.title') }}</strong></label>
-                <div class="col-md-8">
+                <div class="col-md-4">
                     {!! $ticket->subject !!}
+                </div>
+                <div class="col-md-4 text-muted" style="text-align: {{app()->getLocale()=='ar'?'left':'right'}}">
+                    {!! $ticket->created_at->format('h:s Y-m-d') !!}
                 </div>
             </div>
             <div class="row">

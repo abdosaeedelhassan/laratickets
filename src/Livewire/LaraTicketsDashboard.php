@@ -55,13 +55,19 @@ class LaraTicketsDashboard extends Component
 
          $this->user= Agent::find(auth()->user()->id);
 
-        if ($this->user->laratickets_isAdmin()) {
-            $this->dashboardData['usertype']='admin';
-            $this->dashboardData['active_nav_tab'] = 'main-tab';
-        } else {
-            $this->dashboardData['usertype']='agent';
-            $this->dashboardData['active_nav_tab'] = 'active-tickets-tab';
-        }
+         if($this->dashboardData['model']=='all'){
+             if ($this->user->laratickets_isAdmin()) {
+                 $this->dashboardData['usertype']='admin';
+                 $this->dashboardData['active_nav_tab'] = 'main-tab';
+             } else {
+                 $this->dashboardData['usertype']='agent';
+                 $this->dashboardData['active_nav_tab'] = 'active-tickets-tab';
+             }
+         }else{
+             $this->dashboardData['usertype']='agent';
+             $this->dashboardData['active_nav_tab'] = 'active-tickets-tab';
+         }
+
 
         $this->dashboardData['user_id']=$this->user->id;
 

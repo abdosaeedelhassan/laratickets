@@ -7,30 +7,32 @@
             </a>
         </li>
     @endif
-    <li role="presentation" class="nav-item">
-        <a class="nav-link {{$dashboardData['active_nav_tab']=='active-tickets-tab'?'active':''}}"
-           wire:click="setActiveNavTab('active-tickets-tab')">
-            {{ trans('laratickets::lang.nav-active-tickets') }}
-            <span class="badge badge-pill badge-secondary ">
+    @if($dashboardData['model']=='all')
+        <li role="presentation" class="nav-item">
+            <a class="nav-link {{$dashboardData['active_nav_tab']=='active-tickets-tab'?'active':''}}"
+               wire:click="setActiveNavTab('active-tickets-tab')">
+                {{ trans('laratickets::lang.nav-active-tickets') }}
+                <span class="badge badge-pill badge-secondary ">
                 <?php
-                $collection = \AsayDev\LaraTickets\Helpers\TicketsHelper::getTicketsCollection($dashboardData['model'], $dashboardData['model_id']);
-                echo $collection->whereNull('completed_at')->count();
-                ?>
+                    $collection = \AsayDev\LaraTickets\Helpers\TicketsHelper::getTicketsCollection($dashboardData['model'], $dashboardData['model_id']);
+                    echo $collection->whereNull('completed_at')->count();
+                    ?>
                 </span>
-        </a>
-    </li>
-    <li role="presentation" class="nav-item">
-        <a class="nav-link {{$dashboardData['active_nav_tab']=='completed-tickets-tab'?'active':''}}"
-           wire:click="setActiveNavTab('completed-tickets-tab')">
-            {{ trans('laratickets::lang.nav-completed-tickets') }}
-            <span class="badge badge-pill badge-secondary">
+            </a>
+        </li>
+        <li role="presentation" class="nav-item">
+            <a class="nav-link {{$dashboardData['active_nav_tab']=='completed-tickets-tab'?'active':''}}"
+               wire:click="setActiveNavTab('completed-tickets-tab')">
+                {{ trans('laratickets::lang.nav-completed-tickets') }}
+                <span class="badge badge-pill badge-secondary">
                     <?php
-                $collection = \AsayDev\LaraTickets\Helpers\TicketsHelper::getTicketsCollection($dashboardData['model'], $dashboardData['model_id']);
-                echo $collection->whereNotNull('completed_at')->count();
-                ?>
+                    $collection = \AsayDev\LaraTickets\Helpers\TicketsHelper::getTicketsCollection($dashboardData['model'], $dashboardData['model_id']);
+                    echo $collection->whereNotNull('completed_at')->count();
+                    ?>
                 </span>
-        </a>
-    </li>
+            </a>
+        </li>
+    @endif
     @if($dashboardData['usertype']=='admin')
         <li role="presentation" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle {{in_array($dashboardData['active_nav_tab'],['statuses-tab','priorities-tab','agents-tab','config-tab','category-tab','admin-tab'])?'active':''}}"

@@ -23,10 +23,17 @@
                             <?php
                             //$content = preg_replace('/<img style="[^"]*"/', '<img ', $comment->html);
                             //$content= str_replace('<img','<img style="width:100px;height:100px" ',$content);
-                            $time=time();
-                            $content= preg_replace('/<img.*src="(.*?)".*?>/', '<a download="'.time().'-img.jpg"  href="\1"  target="_blank"><img id="img-'.$comment->id.'" style="width:100px;height:100px" src="\1"/></a>',  $comment->html);
+                            $time = time();
+                            $content = preg_replace('/<img.*src="(.*?)".*?>/', '<a download="' . time() . '-img.jpg"  href="\1"  target="_blank"><img id="img-' . $comment->id . '" style="width:100px;height:100px" src="\1"/></a>', $comment->html);
                             echo $content;
                             ?>
+                        </p>
+                        <p>
+                            @if($comment->attachments)
+                                @foreach(json_decode($comment->attachments) as $attachment)
+                                    <a href="{{asset('storage/'.$attachment)}}" target="_blank"><i class="fas fa-paperclip"></i></a>
+                                @endforeach
+                            @endif
                         </p>
                     </div>
                     <?php

@@ -15,7 +15,7 @@ class Comment extends Model
 
 
     protected $fillable = [
-        'content', 'html', 'user_id', 'ticket_id', 'created_at', 'updated_at'
+        'content', 'html', 'user_id', 'ticket_id','attachments', 'created_at', 'updated_at'
     ];
 
     /**

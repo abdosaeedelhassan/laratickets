@@ -8,7 +8,7 @@
                 <div class="col-lg-10">
                     <select class="form-control" name="user_id" id="usersList">
                         @foreach($users as $key=>$value)
-                            <option value="{{$key}}">{{$value}}</option>
+                            <option value="{{$key}}" {{$key==$user_id?'selected':''}}>{{$value}}</option>
                         @endforeach
                     </select>
                     @error('user_id') <span class="text-danger">{{ $message }}</span> @enderror

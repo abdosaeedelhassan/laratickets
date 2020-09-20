@@ -21,12 +21,12 @@
                 window.livewire.emit('selectedUser',$('#usersList').val());
             })
 
-            // setInterval(function () {
-            //     if (!$('#usersList').hasClass('select2-hidden-accessible'))
-            //     {
-            //         $('#usersList').select2();
-            //     }
-            // },1000);
+            setInterval(function () {
+                if (!$('#usersList').hasClass('select2-hidden-accessible'))
+                {
+                    $('#usersList').select2();
+                }
+            },1000);
 
         </script>
     @endpush

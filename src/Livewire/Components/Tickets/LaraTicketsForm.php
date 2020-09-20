@@ -73,7 +73,7 @@ class LaraTicketsForm extends Component
 
         if ($this->dashboardData['model'] == 'all') {
             if (Schema::hasColumn('users', 'first_name')) {
-                $this->users = Agent::all()->pluck('first_name', 'id')->toArray();
+                $this->users = Agent::all()->pluck('name', 'id')->toArray();
             } else {
                 $this->users = Agent::all()->pluck('name', 'id')->toArray();
             }

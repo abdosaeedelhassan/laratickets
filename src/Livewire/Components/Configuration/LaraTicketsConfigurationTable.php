@@ -48,7 +48,9 @@ class LaraTicketsConfigurationTable extends BaseLivewire
                 ->searchable()
             ,
             Column::make(trans('laratickets::admin.table-value'))
-                ->view('asaydev-lara-tickets::components.configuration.value', 'column')
+                ->format(function(Setting $model) {
+                    return view('asaydev-lara-tickets::components.configuration.value', ['column' => $model]);
+                })
                 ->sortable()
                 ->searchable()
             ,

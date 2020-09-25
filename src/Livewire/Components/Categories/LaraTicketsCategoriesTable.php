@@ -40,13 +40,17 @@ class LaraTicketsCategoriesTable extends BaseLivewire
                 ->searchable()
             ,
             Column::make(trans('laratickets::admin.table-name'))
-                ->view('asaydev-lara-tickets::components.categories.name', 'column')
+                ->format(function(Category $model) {
+                    return view('asaydev-lara-tickets::components.categories.name', ['column' => $model]);
+                })
                 ->sortable()
             ,
             Column::make(trans('laratickets::admin.category-create-color'),'color')
                 ->sortable(),
             Column::make(trans('laratickets::admin.table-action'))
-                ->view('asaydev-lara-tickets::components.admins.actions', 'column')
+                ->format(function(Category $model) {
+                    return view('asaydev-lara-tickets::components.admins.actions', ['column' => $model]);
+                })
                 ->sortable()
             ,
         ];

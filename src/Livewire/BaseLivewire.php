@@ -13,15 +13,6 @@ class BaseLivewire extends TableComponent
     public $loadingMessage;
     public $searchEnabled;
 
-    /**
-     * next props added by abdosaeed
-     */
-    //private $isLoading=false;
-
-    public function setIsLoading($status){
-        $this->isLoading= $status;
-        $this->emit('isLoading',$status);
-    }
 
 
 

@@ -4,9 +4,11 @@ namespace AsayDev\LaraTickets\Livewire\Layouts;
 
 use AsayDev\LaraTickets\Traits\SlimNotifierJs;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class LaraTicketsContent extends Component
 {
+    use WithPagination;
 
     public $dashboardData;
 

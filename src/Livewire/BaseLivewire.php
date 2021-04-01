@@ -3,36 +3,16 @@
 namespace AsayDev\LaraTickets\Livewire;
 
 use Illuminate\Database\Eloquent\Builder;
-use Livewire\Component;
 use Rappasoft\LaravelLivewireTables\TableComponent;
 
 class BaseLivewire extends TableComponent
 {
 
-    public $loadingIndicator;
-    public $loadingMessage;
-    public $searchEnabled;
 
-
-
-
-    public function setTranslationStrings()
-    {
-        $this->loadingIndicator=true;
-        $this->loadingMessage = __('labels.general.loading_message');
-        $this->searchEnabled=true;
-
-        $this->offlineMessage = __('labels.ggeneral.offline_message');
-        $this->noResultsMessage = __('labels.general.no_results');
-        $this->perPageLabel = __('labels.general.per_page');
-        $this->searchLabel = __('labels.general.search_her');
-        $this->shownLabel= __('labels.general.shown_label');
-        $this->resultsLable= __('labels.general.result_label');
-        $this->outOfLabel= __('labels.general.outof_label');
-        $this->toLabel= __('labels.general.to_label');
-        $this->searchDebounce=400;
-        $this->searchType='lazy';
-    }
+    public $loadingIndicator=true;
+    public $searchEnabled=true;
+    public $paginationTheme='bootstrap';
+    public $searchDebounce=400;
 
     /**
      * @inheritDoc
@@ -49,6 +29,5 @@ class BaseLivewire extends TableComponent
     {
         // TODO: Implement columns() method.
     }
-
 
 }

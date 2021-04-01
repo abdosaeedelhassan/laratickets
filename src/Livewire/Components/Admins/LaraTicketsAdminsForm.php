@@ -2,12 +2,7 @@
 
 namespace AsayDev\LaraTickets\Livewire\Components\Admins;
 
-use AsayDev\LaraTickets\Helpers\TicketsHelper;
 use AsayDev\LaraTickets\Models\Agent;
-use AsayDev\LaraTickets\Models\Category;
-use AsayDev\LaraTickets\Models\Priority;
-use AsayDev\LaraTickets\Models\Setting;
-use AsayDev\LaraTickets\Models\Ticket;
 use AsayDev\LaraTickets\Traits\SlimNotifierJs;
 use Livewire\Component;
 use Livewire\WithPagination;

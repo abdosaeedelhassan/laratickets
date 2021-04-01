@@ -1,6 +1,6 @@
-<ul class="nav nav-pills">
+<ul class="nav nav-tabs nav-fill p-0">
     @if($dashboardData['usertype']=='admin')
-        <li role="presentation" class="nav-item">
+        <li  class="nav-item" style="cursor: pointer">
             <a class="nav-link {{$dashboardData['active_nav_tab']=='main-tab'?'active':''}}"
                wire:click="setActiveNavTab('main-tab')">
                 {{ trans('laratickets::admin.nav-dashboard') }}
@@ -8,7 +8,7 @@
         </li>
     @endif
     @if($dashboardData['model']=='all')
-        <li role="presentation" class="nav-item">
+        <li  class="nav-item" style="cursor: pointer">
             <a class="nav-link {{$dashboardData['active_nav_tab']=='active-tickets-tab'?'active':''}}"
                wire:click="setActiveNavTab('active-tickets-tab')">
                 {{ trans('laratickets::lang.nav-active-tickets') }}
@@ -20,7 +20,7 @@
                 </span>
             </a>
         </li>
-        <li role="presentation" class="nav-item">
+        <li  class="nav-item" style="cursor: pointer">
             <a class="nav-link {{$dashboardData['active_nav_tab']=='completed-tickets-tab'?'active':''}}"
                wire:click="setActiveNavTab('completed-tickets-tab')">
                 {{ trans('laratickets::lang.nav-completed-tickets') }}
@@ -34,7 +34,7 @@
         </li>
     @endif
     @if($dashboardData['usertype']=='admin')
-        <li role="presentation" class="nav-item dropdown">
+        <li  class="nav-item dropdown">
             <a class="nav-link dropdown-toggle {{in_array($dashboardData['active_nav_tab'],['statuses-tab','priorities-tab','agents-tab','config-tab','category-tab','admin-tab'])?'active':''}}"
                data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                 {{ trans('laratickets::admin.nav-settings') }}

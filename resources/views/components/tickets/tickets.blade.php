@@ -1,10 +1,10 @@
-<div class="card">
-    <h5 class="card-header d-flex justify-content-between align-items-baseline flex-wrap">
+<div>
+    <div class="row">
         <div class="col-sm-5">
             <h4 class="card-title mb-0">
                 {{$dashboardData['active_nav_title']}}
             </h4>
-        </div><!--col-->
+        </div>
         <div class="col-sm-7 pull-right">
             <div class="btn-toolbar float-right" role="toolbar">
                 @if(isset($dashboardData['options']['can_create_ticket']))
@@ -19,15 +19,17 @@
                             class="fas fa-plus-circle"></i></a>
                 @endif
             </div>
-        </div><!--col-->
-
-    </h5>
-    <div class="card-body">
-        @if($dashboardData['form']['name']=='tickets')
-            @livewire('lara-tickets-form',['dashboardData'=>$dashboardData])
-        @endif
-        @if($dashboardData['form']['name']=='')
-            @livewire('lara-tickets-tickets-table',['dashboardData'=>$dashboardData])
-        @endif
+        </div>
+    </div>
+    <div class="row mt-6">
+        <div class="col-md-12">
+            @if($dashboardData['form']['name']=='tickets')
+                <livewire:lara-tickets-form :dashboardData="$dashboardData"/>
+            @endif
+            @if($dashboardData['form']['name']=='')
+                            <livewire:lara-tickets-tickets-table :dashboardData="$dashboardData"/>
+                {{--            @livewire('lara-tickets-tickets-table',['dashboardData'=>$dashboardData])--}}
+            @endif
+        </div>
     </div>
 </div>

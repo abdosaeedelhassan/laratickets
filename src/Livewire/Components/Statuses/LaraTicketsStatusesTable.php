@@ -11,10 +11,12 @@ use AsayDev\LaraTickets\Traits\SlimNotifierJs;
 use Livewire\Component;
 use Illuminate\Database\Eloquent\Builder;
 
+use Livewire\WithPagination;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 
 class LaraTicketsStatusesTable extends BaseLivewire
 {
+
     public $dashboardData;
 
 

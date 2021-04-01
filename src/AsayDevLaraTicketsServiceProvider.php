@@ -7,6 +7,7 @@ use AsayDev\LaraTickets\Controllers\NotificationsController;
 use AsayDev\LaraTickets\Helpers\TicketsHelper;
 use AsayDev\LaraTickets\Livewire\Components\Admins\LaraTicketsAdminsForm;
 use AsayDev\LaraTickets\Livewire\Components\Admins\LaraTicketsAdminsTable;
+use AsayDev\LaraTickets\Livewire\Components\Admins\LaraTicketsAdminsTabs;
 use AsayDev\LaraTickets\Livewire\Components\Agents\LaraTicketsAgentsForm;
 use AsayDev\LaraTickets\Livewire\Components\Agents\LaraTicketsAgentsTable;
 use AsayDev\LaraTickets\Livewire\Components\Categories\LaraTicketsCategoriesForm;
@@ -118,6 +119,7 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
         Livewire::component('lara-tickets-statuses-table', LaraTicketsStatusesTable::class);
         Livewire::component('lara-tickets-statuses-form', LaraTicketsStatusesForm::class);
 
+        Livewire::component('lara-tickets-admins-tabs', LaraTicketsAdminsTabs::class);
         Livewire::component('lara-tickets-admins-table', LaraTicketsAdminsTable::class);
         Livewire::component('lara-tickets-admins-form', LaraTicketsAdminsForm::class);
 

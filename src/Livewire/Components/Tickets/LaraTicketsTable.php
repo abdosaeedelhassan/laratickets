@@ -5,16 +5,18 @@ namespace AsayDev\LaraTickets\Livewire\Components\Tickets;
 use AsayDev\LaraTickets\Helpers\TicketsHelper;
 use AsayDev\LaraTickets\Livewire\BaseLivewire;
 use AsayDev\LaraTickets\Models\Agent;
-use AsayDev\LaraTickets\Models\Setting;
 use AsayDev\LaraTickets\Models\Ticket;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Livewire\Component;
 use Illuminate\Database\Eloquent\Builder;
 
+use Livewire\WithPagination;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 
 class LaraTicketsTable extends BaseLivewire
 {
+    use WithPagination;
+
     public $dashboardData;
 
     protected $listeners = ['setDashboardData'];
@@ -42,9 +44,9 @@ class LaraTicketsTable extends BaseLivewire
             }
         }
 
-        $username = 'name';
+        $username = 'users.name AS owner';
         if (Schema::hasColumn('users', 'first_name')) {
-            $username = 'first_name';
+            $username = DB::raw('CONCAT(first_name," ", last_name) AS owner');
         }
 
         return $collection
@@ -63,7 +65,7 @@ class LaraTicketsTable extends BaseLivewire
                 'laratickets.id AS agent',
                 'laratickets.updated_at AS updated_at',
                 'laratickets_priorities.name AS priority',
-                'users.'.$username.' AS owner',
+                 $username,
                 'laratickets.agent_id',
                 'laratickets.created_by',
                 'laratickets_categories.name AS category',

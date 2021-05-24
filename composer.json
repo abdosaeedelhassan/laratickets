@@ -1,0 +1,47 @@
+{
+    "name": "asaydev/laratickets",
+    "description": "real time tickets system for laravel framework",
+    "keywords": [
+        "asaydev",
+        "tickets",
+        "livewire",
+        "laravel"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Abdelrahman Saeed Elhassan",
+            "email": "abdosaeedelhassan@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2.5",
+        "jenssegers/date": "^4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.2",
+        "orchestra/testbench": "^6.17"
+    },
+    "autoload": {
+        "psr-4": {
+            "AsayDev\\LaraTickets\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AsayDev\\LaraTickets\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "AsayDev\\LaraTickets\\AsayDevLaraTicketsServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-f": "vendor/bin/phpunit --filter"
+    }
+}

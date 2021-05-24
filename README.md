@@ -4,7 +4,10 @@ real time tickets system for laravel framework, this package is transformation f
 **Important note:** this package is under development and not completed yet
 
 # Requirements:
-- user model must have **isAdmin()** property 
+- Laravel Livewire installed and configured in your project.
+- Laravel Alpine.js installed and configured in your project.
+- Laravel rappasoft/laravel-livewire-tables installed and configured in your project.
+- user model must have **isAdmin()** property .
 
 
 # Package Basics:

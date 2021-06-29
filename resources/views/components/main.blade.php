@@ -1,63 +1,76 @@
 <div>
     @if($tickets_count)
-        <div class="card-deck mb-3">
-            <div class="card bg-light">
-                <div class="card-body row d-flex align-items-center">
-                    <div class="col-3" style="font-size: 5em;">
-                        <i class="fas fa-th"></i>
-                    </div>
-                    <div class="col-9 text-right">
-                        <h1>{{ $tickets_count }}</h1>
-                        <div>{{ trans('laratickets::admin.index-total-tickets') }}</div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card bg-light">
+                    <div class="card-body row d-flex align-items-center">
+                        <div class="col-3" style="font-size: 5em;">
+                            <i class="fas fa-th"></i>
+                        </div>
+                        <div class="col-9 text-right">
+                            <h1>{{ $tickets_count }}</h1>
+                            <div>{{ trans('laratickets::admin.index-total-tickets') }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="card bg-danger">
-                <div class="card-body row d-flex align-items-center">
-                    <div class="col-3" style="font-size: 5em;">
-                        <i class="fas fa-wrench"></i>
-                    </div>
-                    <div class="col-9 text-right">
-                        <h1>{{ $open_tickets_count }}</h1>
-                        <div>{{ trans('laratickets::admin.index-open-tickets') }}</div>
+            <div class="col-md-4">
+                <div class="card bg-danger">
+                    <div class="card-body row d-flex align-items-center">
+                        <div class="col-3" style="font-size: 5em;">
+                            <i class="fas fa-wrench"></i>
+                        </div>
+                        <div class="col-9 text-right">
+                            <h1>{{ $open_tickets_count }}</h1>
+                            <div>{{ trans('laratickets::admin.index-open-tickets') }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="card bg-success">
-                <div class="card-body row d-flex align-items-center">
-                    <div class="col-3" style="font-size: 5em;">
-                        <i class="fas fa-thumbs-up"></i>
-                    </div>
-                    <div class="col-9 text-right">
-                        <h1>{{ $closed_tickets_count }}</h1>
-                        <span>{{ trans('laratickets::admin.index-closed-tickets') }}</span>
+            <div class="col-md-4">
+                <div class="card bg-success">
+                    <div class="card-body row d-flex align-items-center">
+                        <div class="col-3" style="font-size: 5em;">
+                            <i class="fas fa-thumbs-up"></i>
+                        </div>
+                        <div class="col-9 text-right">
+                            <h1>{{ $closed_tickets_count }}</h1>
+                            <span>{{ trans('laratickets::admin.index-closed-tickets') }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
         <div class="row mb-3">
             <div class="col-lg-8 mt-3">
-                <div class="card ">
+                <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-baseline flex-wrap">
                         <div><i class="fas fa-chart-bar fa-fw"></i> {{ trans('laratickets::admin.index-performance-indicator') }}</div>
                         <div class="btn-group">
-                            <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">
+
+                            <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 {{ trans('laratickets::admin.index-periods') }}
-                                <span class="caret"></span>
-                            </button>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" wire:click="initData(2)">
-                                    {{ trans('laratickets::admin.index-3-months') }}
-                                </a>
-                                <a class="dropdown-item"  wire:click="initData(5)">
-                                    {{ trans('laratickets::admin.index-6-months') }}
-                                </a>
-                                <a class="dropdown-item"  wire:click="initData(11)">
-                                    {{ trans('laratickets::admin.index-12-months') }}
-                                </a>
-                            </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink1">
+                                <li>
+                                    <a class="dropdown-item" wire:click="initData(2)">
+                                        {{ trans('laratickets::admin.index-3-months') }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item"  wire:click="initData(5)">
+                                        {{ trans('laratickets::admin.index-6-months') }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item"  wire:click="initData(11)">
+                                        {{ trans('laratickets::admin.index-12-months') }}
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     <div class="panel-body">
@@ -65,7 +78,7 @@
                     </div>
                 </div>
                 <div class="card-deck mt-3">
-                    <div class="card ">
+                    <div class="card">
                         <div class="card-header">
                             {{ trans('laratickets::admin.index-tickets-share-per-category') }}
                         </div>
@@ -73,7 +86,7 @@
                             <div id="catpiechart" style="width: auto; height: 350;"></div>
                         </div>
                     </div>
-                    <div class="card ">
+                    <div class="card">
                         <div class="card-header">
                             {{ trans('laratickets::admin.index-tickets-share-per-agent') }}
                         </div>
@@ -206,10 +219,10 @@
         </div>
     @endif
 </div>
-@push('before-scripts')
+@push('after-scripts')
     @if($tickets_count)
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <script type="text/javascript">
+        <script src="https://www.gstatic.com/charts/loader.js"></script>
+        <script>
             window.livewire.on('periodChanged', period => {
                 drawChart();
             });

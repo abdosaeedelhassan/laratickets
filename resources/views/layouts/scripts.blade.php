@@ -30,16 +30,6 @@
     <script src="{{asset('laratickets/js/select2.min.js')}}"></script>
     <script src="{{asset('laratickets/js/slim_notifier.js')}}"></script>
     <script>
-        $.notifyDefaults({
-            placement: {
-                from: "top",
-                align: "center"
-            },
-            animate:{
-                enter: "animated fadeInUp",
-                exit: "animated fadeOutDown"
-            }
-        });
         window.livewire.on('laratickets-flash-message', data => {
             LaraticketsSlimNotifierJs.notification(data.type,data.title,data.message, data.duration);
         })

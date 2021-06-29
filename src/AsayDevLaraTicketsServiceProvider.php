@@ -140,8 +140,11 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../assets/css' => public_path('laratickets/css'),
             __DIR__ . '/../assets/js' => public_path('laratickets/js'),
-            __DIR__ . '/../assets/icons' => public_path('laratickets/icons'),
         ], 'laratickets_assets');
+
+        $this->publishes([
+            __DIR__.'/../resources/views' => resource_path('views/vendor/laratickets'),
+        ]);
 
 
         /**

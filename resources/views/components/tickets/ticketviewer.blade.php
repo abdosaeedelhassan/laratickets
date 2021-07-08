@@ -36,7 +36,7 @@
             <div class="col-md-6">
                 <p>
                     <strong>{{ trans('laratickets::lang.owner') }}</strong>
-                    <a target="_blank" href="{{str_replace('{id}',$user->id,config('laratickets.user_profile_path'))}}">
+                    <a target="_blank" href="{{str_replace('{id}',$ticket->user->id,config('laratickets.user_profile_path'))}}">
                         {{ trans('laratickets::lang.colon') }}{{ $ticket->user_id == $user->id ? $user->name : ($ticket->user?$ticket->user->name:"") }}
                     </a>
                 </p>

@@ -34,12 +34,14 @@
         </div><!--row-->
         <div class="card-body row">
             <div class="col-md-6">
+                @if($ticket->user)
                 <p>
                     <strong>{{ trans('laratickets::lang.owner') }}</strong>
                     <a target="_blank" href="{{str_replace('{id}',$ticket->user->id,config('laratickets.user_profile_path'))}}">
                         {{ trans('laratickets::lang.colon') }}{{ $ticket->user_id == $user->id ? $user->name : ($ticket->user?$ticket->user->name:"") }}
                     </a>
                 </p>
+                @endif
                 <p>
                     <strong>{{ trans('laratickets::lang.status') }}</strong>{{ trans('laratickets::lang.colon') }}
                     <span>{{ \AsayDev\LaraTickets\Helpers\TicketsHelper::getTicketStatusLabel($ticket->status) }}</span>

@@ -154,8 +154,7 @@ class LaraTicketsForm extends Component
             $ticket->code = TicketsHelper::generateCode(4);
             $ticket->priority_id = $this->priority_id;
             $ticket->category_id = $this->category_id;
-            $default_status = TicketsHelper::$tickets_new_status;
-            $ticket->status_id = $default_status->value;
+            $ticket->status = TicketsHelper::$tickets_new_status;
             $ticket->user_id = $this->dashboardData['model'] == 'all' ? $this->user_id : auth()->user()->id;
             $ticket->agent_id = $ticket->autoSelectAgent();
             $ticket->created_by = auth()->user()->id;

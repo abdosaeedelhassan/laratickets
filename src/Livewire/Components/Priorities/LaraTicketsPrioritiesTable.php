@@ -41,16 +41,16 @@ class LaraTicketsPrioritiesTable extends BaseLivewire
                 ->searchable()
             ,
             Column::make(trans('laratickets::admin.table-name'))
-                ->format(function(Priority $model) {
-                    return view('asaydev-lara-tickets::components.priorities.name', ['column' => $model]);
+                ->format(function ($value, $column, $row) {
+                    return view('asaydev-lara-tickets::components.priorities.name', ['column' => $row]);
                 })
                 ->sortable()
             ,
             Column::make(trans('laratickets::admin.category-create-color'),'color')
                 ->sortable(),
             Column::make(trans('laratickets::admin.table-action'))
-                ->format(function(Priority $model) {
-                    return view('asaydev-lara-tickets::components.admins.actions', ['column' => $model]);
+                ->format(function ($value, $column, $row) {
+                    return view('asaydev-lara-tickets::components.admins.actions', ['column' => $row]);
                 })
                 ->sortable()
             ,

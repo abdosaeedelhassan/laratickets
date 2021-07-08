@@ -41,16 +41,16 @@ class LaraTicketsStatusesTable extends BaseLivewire
                 ->searchable()
             ,
             Column::make(trans('laratickets::admin.table-name'))
-                ->format(function(Status $model) {
-                    return view('asaydev-lara-tickets::components.statuses.name', ['column' => $model]);
+                ->format(function ($value, $column, $row) {
+                    return view('asaydev-lara-tickets::components.statuses.name', ['column' => $row]);
                 })
                 ->sortable()
             ,
             Column::make(trans('laratickets::admin.category-create-color'),'color')
                 ->sortable(),
             Column::make(trans('laratickets::admin.table-action'))
-                ->format(function(Status $model) {
-                    return view('asaydev-lara-tickets::components.admins.actions', ['column' => $model]);
+                ->format(function ($value, $column, $row) {
+                    return view('asaydev-lara-tickets::components.admins.actions', ['column' => $row]);
                 })
                 ->sortable()
             ,

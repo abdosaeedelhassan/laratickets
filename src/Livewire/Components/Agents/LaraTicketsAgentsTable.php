@@ -36,14 +36,14 @@ class LaraTicketsAgentsTable extends BaseLivewire
                 ->searchable()
             ,
             Column::make(trans('laratickets::admin.table-name'))
-                ->format(function(Agent $model) {
-                    return view('asaydev-lara-tickets::components.admins.fullname', ['column' => $model]);
+                ->format(function ($value, $column, $row) {
+                    return view('asaydev-lara-tickets::components.admins.fullname', ['column' => $row]);
                 })
                 ->sortable()
             ,
             Column::make(trans('laratickets::admin.table-action'))
-                ->format(function(Agent $model) {
-                    return view('asaydev-lara-tickets::components.admins.actions', ['column' => $model]);
+                ->format(function ($value, $column, $row) {
+                    return view('asaydev-lara-tickets::components.admins.actions', ['column' => $row]);
                 })
                 ->sortable()
             ,

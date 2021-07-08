@@ -23,11 +23,25 @@ class LaraTicketsTable extends BaseLivewire
     public function setDashboardData($dashboardData)
     {
         $this->dashboardData = $dashboardData;
+
+    }
+
+    public function closeSelected()
+    {
+        if ($this->selectedRowsQuery->count() > 0) {
+            Ticket::whereIn('id',$this->selectedKeys())->update([
+                'status' => TicketsHelper::$tickets_closed_status,
+                'completed_at' => date('Y-m-d H:i:s')
+            ]);
+            $this->emit('setDashboardData',$this->dashboardData);
+            $this->resetAll();
+        }
     }
 
     public function mount($dashboardData)
     {
         $this->setDashboardData($dashboardData);
+
     }
 
     public function data($complete = false)
@@ -46,6 +60,12 @@ class LaraTicketsTable extends BaseLivewire
 
     public function query(): Builder
     {
+        if (($this->dashboardData['active_nav_tab'])[0] != 'completed') {
+            $this->bulkActions = [
+                'closeSelected' => __('Close'),
+            ];
+        }
+
         return $this->data(explode('-', $this->dashboardData['active_nav_tab'])[0] == 'completed' ? true : false);
     }
 
@@ -125,7 +145,7 @@ class LaraTicketsTable extends BaseLivewire
 
         array_push($columns, Column::make(trans('laratickets::lang.created_at'), 'created_at')
             ->format(function ($value, $column, $row) {
-              return $row->created_at->format('Y-m-d');
+                return $row->created_at->format('Y-m-d');
             })->sortable()
 
         );

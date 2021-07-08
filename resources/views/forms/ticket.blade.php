@@ -5,7 +5,7 @@
             <div class="form-group row">
                 <label class="col-lg-2 col-form-label"
                        for="subject">{{trans('laratickets::lang.user') . trans('laratickets::lang.colon')}}</label>
-                <div class="col-lg-10">
+                <div class="col-lg-10" wire:ignore>
                     <select class="form-control" name="user_id" id="usersList">
                         @foreach($users as $key=>$value)
                             <option value="{{$key}}">{{$value}}</option>

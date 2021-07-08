@@ -46,7 +46,9 @@
     </script>
     <script>
         window.livewire.on('usersList', parm => {
-            $('#usersList').select2();
+            $('#usersList').select2({
+                dropdownAutoWidth: true,
+            });
             $('#usersList').on('change', function () {
                 window.livewire.emit('selectedUser', $('#usersList').val());
             })

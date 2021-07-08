@@ -32,9 +32,7 @@ class LaraTicketsTable extends BaseLivewire
 
     public function data($complete = false)
     {
-
         $collection = TicketsHelper::getTicketsCollection($this->dashboardData['model'], $this->dashboardData['model_id']);
-
         if ($this->dashboardData['model'] == 'all') {
             if ($complete) {
                 $collection = $collection->whereNotNull('completed_at');
@@ -43,38 +41,12 @@ class LaraTicketsTable extends BaseLivewire
             }
         }
 
-        $username = 'users.name AS owner';
-        if (Schema::hasColumn('users', 'first_name')) {
-            $username = DB::raw('CONCAT(first_name," ", last_name) AS owner');
-        }
-
-        return $collection
-            ->join('users', 'users.id', '=', 'laratickets.user_id')
-            ->join('laratickets_statuses', 'laratickets_statuses.id', '=', 'laratickets.status_id')
-            ->join('laratickets_priorities', 'laratickets_priorities.id', '=', 'laratickets.priority_id')
-            ->join('laratickets_categories', 'laratickets_categories.id', '=', 'laratickets.category_id')
-            ->select([
-                'laratickets.id',
-                'laratickets.subject AS subject',
-                'laratickets.completed_at',
-                'laratickets_statuses.name AS status',
-                'laratickets_statuses.color AS color_status',
-                'laratickets_priorities.color AS color_priority',
-                'laratickets_categories.color AS color_category',
-                'laratickets.id AS agent',
-                'laratickets.updated_at AS updated_at',
-                'laratickets_priorities.name AS priority',
-                 $username,
-                'laratickets.agent_id',
-                'laratickets.created_by',
-                'laratickets_categories.name AS category',
-            ]);
+        return $collection;
     }
 
     public function query(): Builder
     {
         return $this->data(explode('-', $this->dashboardData['active_nav_tab'])[0] == 'completed' ? true : false);
-
     }
 
     /**
@@ -84,11 +56,10 @@ class LaraTicketsTable extends BaseLivewire
     {
 
         $columns = [
-            Column::make(trans('laratickets::lang.table-id'), 'id')
-            ,
             Column::make(trans('laratickets::lang.table-subject'))
                 ->format(function ($value, $column, $row) {
-                    return view('asaydev-lara-tickets::components.tickets.subject', ['column' => $row]);
+                    $html = '<a class="btn btn-link" wire:click="viewTicket(' . $row->id . ')">' . $row->subject . '</a>';
+                    return $html;
                 })->asHtml()
         ];
 
@@ -107,7 +78,8 @@ class LaraTicketsTable extends BaseLivewire
 
         array_push($columns, Column::make(trans('laratickets::lang.table-status'))
             ->format(function ($value, $column, $row) {
-                return view('asaydev-lara-tickets::components.tickets.status', ['column' => $row]);
+                $html = '<div>' . TicketsHelper::getTicketStatusLabel($row->status) . '</div>';
+                return $html;
             })->asHtml()
         );
         array_push($columns, Column::make(trans('laratickets::lang.table-last-updated'))
@@ -129,26 +101,34 @@ class LaraTicketsTable extends BaseLivewire
                 array_push($columns,
                     Column::make(trans('laratickets::lang.table-priority'))
                         ->format(function ($value, $column, $row) {
-                            return view('asaydev-lara-tickets::components.tickets.priority', ['column' => $row]);
+                            $html = '<div style="color: ' . $row->priority->color . '">' . e($row->priority->name) . '</div>';
+                            return $html;
                         })->asHtml()
-                );
-                array_push($columns,
-                    Column::make(trans('laratickets::lang.table-owner'), 'owner')
                 );
                 array_push($columns,
                     Column::make(trans('laratickets::lang.table-category'))
                         ->format(function ($value, $column, $row) {
-                            return view('asaydev-lara-tickets::components.tickets.category', ['column' => $row]);
+                            $html = '<div style="color: ' . $row->priority->color . '">' . e($row->category->name) . '</div>';
+                            return $html;
                         })->asHtml()
                 );
                 array_push($columns,
                     Column::make(trans('laratickets::lang.createdby'))
                         ->format(function ($value, $column, $row) {
-                            return $row->createdby->name;
+                            if ($row->createdby) {
+                                return $row->createdby->name;
+                            }
                         })->asHtml()
                 );
             }
         }
+
+        array_push($columns, Column::make(trans('laratickets::lang.created_at'), 'created_at')
+            ->format(function ($value, $column, $row) {
+              return $row->created_at->format('Y-m-d');
+            })->sortable()
+
+        );
 
         return $columns;
     }

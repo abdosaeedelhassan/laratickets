@@ -66,4 +66,8 @@ class LaraTicketsCommentForm extends Component
         }
     }
 
+    public function delete($id){
+        Comment::where('id',$id)->delete();
+    }
+
 }

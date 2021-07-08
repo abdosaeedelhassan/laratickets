@@ -15,6 +15,10 @@
                             </div>
                             <div class="col" style="text-align: {{app()->getLocale()=='ar'?'left':'right'}}">
                                 <small class="text-muted"><span class="glyphicon glyphicon-time"></span>
+                                    @if(auth()->user()->isAdmin())
+                                        <i style="color: red" class="fa fa-trash"
+                                           wire:click="delete({{$comment->id}})"></i>
+                                    @endif
                                     {!! $comment->created_at->format(app()->getLocale()=='ar'?'h:m Y-m-d':'Y-m-d m:h') !!}
                                 </small>
                             </div>
@@ -31,7 +35,8 @@
                         <p>
                             @if($comment->attachments)
                                 @foreach(json_decode($comment->attachments) as $attachment)
-                                    <a href="{{asset('storage/'.$attachment)}}" target="_blank"><i class="fas fa-paperclip"></i></a>
+                                    <a href="{{asset('storage/'.$attachment)}}" target="_blank"><i
+                                            class="fas fa-paperclip"></i></a>
                                 @endforeach
                             @endif
                         </p>

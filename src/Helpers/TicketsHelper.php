@@ -11,19 +11,46 @@ use Illuminate\Support\Str;
 class  TicketsHelper
 {
 
-    public static function getTicketsCollection($model,$model_id)
+    public static $tickets_new_status = 1;
+    public static $tickets_opened_status = 2;
+    public static $tickets_closed_status = 3;
+
+    public static function getTicketsStatues($status)
     {
-        if($model=='all'){
+        return [
+            self::$tickets_new_status => __('New'),
+            self::$tickets_opened_status => __('Opened'),
+            self::$tickets_closed_status => __('Closed')
+        ];
+    }
+
+    public static function getTicketStatusLabel($status)
+    {
+        if ($status == 1) {
+            return trans('laratickets::lang.new');
+        } elseif ($status == 2) {
+            return trans('laratickets::lang.opened');
+        } elseif ($status == 3) {
+            return trans('laratickets::lang.closed');
+        } else {
+            return '';
+        }
+    }
+
+
+    public static function getTicketsCollection($model, $model_id)
+    {
+        if ($model == 'all') {
             return new Ticket();
         }
 
         $user = Agent::find(auth()->user()->id);
         if ($user->laratickets_isAdmin()) {
-            return  Ticket::where('model', $model)
-                ->where('model_id',$model_id)
+            return Ticket::with(['createdby', 'priority', 'status'])->where('model', $model)
+                ->where('model_id', $model_id)
                 ->where('agent_id', auth()->user()->id);
-        }else{
-           return Ticket::where('model',$model)
+        } else {
+            return Ticket::with(['createdby', 'priority', 'status'])->where('model', $model)
                 ->where('model_id', $model_id)
                 ->where('user_id', auth()->user()->id);
         }
@@ -74,7 +101,7 @@ class  TicketsHelper
             ])->get();
 
         $data->map(function ($column) {
-            $column->status = "<div style='color: $column->color_status'>e($column->status)</div>";
+            $column->status = TicketsHelper::getTicketStatusLabel($column->status);
             $column->priority = "<div style='color: $column->color_priority'>e($column->priority)</div>";
             $column->category = "<div style='color: $column->color_category'>e($column->category)</div>";
             $ticket = Ticket::find($column->id);
@@ -140,20 +167,20 @@ class  TicketsHelper
     /**
      * next function to be removed
      */
-    public static function permTo($user_id, $ticket_id,$type)
+    public static function permTo($user_id, $ticket_id, $type)
     {
 
-        if($type=='close'){
+        if ($type == 'close') {
             $ticket_perm = self::getDefaultSetting('close_ticket_perm', 'a:3:{s:5:"owner";b:1;s:5:"agent";b:1;s:5:"admin";b:1;}')->value;
-        }else if($type=='reopen'){
+        } else if ($type == 'reopen') {
             $ticket_perm = self::getDefaultSetting('reopen_ticket_perm', 'a:3:{s:5:"owner";b:1;s:5:"agent";b:1;s:5:"admin";b:1;}')->value;
-        }else{
+        } else {
             return 'no';
         }
 
         $agent = Agent::find($user_id);
 
-        $ticket_perm=unserialize($ticket_perm);
+        $ticket_perm = unserialize($ticket_perm);
 
         if ($agent->laratickets_isAdmin() && $ticket_perm['admin'] == 'yes') {
             return 'yes';
@@ -186,7 +213,7 @@ class  TicketsHelper
         // Passing to views the master view value from the setting file
         view()->composer('laratickets::*', function ($view) {
             //$tools = new ToolsController();
-           // $master = Setting::grab('master_template');
+            // $master = Setting::grab('master_template');
 
             $email = TicketsHelper::getDefaultSetting('email.template', 'laratickets::resources.email.templates.laratickets')->value;
             $view->with(compact(/*'master',*/ 'email'/*, 'tools'*/));

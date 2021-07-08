@@ -21,7 +21,7 @@ class Ticket extends Model
         'content',
         'html',
         'code',
-        'status_id',
+        'status',
         'priority_id',
         'user_id',
         'model',
@@ -79,15 +79,6 @@ class Ticket extends Model
         return $query->whereNull('completed_at');
     }
 
-    /**
-     * Get Ticket status.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function status()
-    {
-        return $this->belongsTo('AsayDev\LaraTickets\Models\Status', 'status_id');
-    }
 
     /**
      * Get Ticket priority.
@@ -252,4 +243,5 @@ class Ticket extends Model
             return array('error' => 'No admin user selecetd for tickets, must be at least one admin selecetd');
         }
     }
+
 }

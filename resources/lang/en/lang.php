@@ -28,6 +28,12 @@ return [
     'user' => 'User',
     'createdby'=>'Created by',
 
+    'new'=>'New',
+    'opened'=>'Opened',
+    'closed'=>'Closed',
+    'created_at'=>'Created at',
+
+
     // Datatables
     'table-decimal' => '',
     'table-empty' => 'No data available in table',

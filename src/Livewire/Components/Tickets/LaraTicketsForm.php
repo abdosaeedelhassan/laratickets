@@ -73,7 +73,7 @@ class LaraTicketsForm extends Component
         }
 
         if ($this->dashboardData['model'] == 'all') {
-                $this->users = Agent::all()->pluck(GlobalHelper::getUsersNameField(), 'id')->toArray();
+            $this->users = Agent::all()->pluck(GlobalHelper::getUsersNameField(), 'id')->toArray();
         }
 
         /**
@@ -154,12 +154,11 @@ class LaraTicketsForm extends Component
             $ticket->code = TicketsHelper::generateCode(4);
             $ticket->priority_id = $this->priority_id;
             $ticket->category_id = $this->category_id;
-            $default_status = TicketsHelper::getDefaultStatusInSetting('default_status_id');
+            $default_status = TicketsHelper::$tickets_new_status;
             $ticket->status_id = $default_status->value;
             $ticket->user_id = $this->dashboardData['model'] == 'all' ? $this->user_id : auth()->user()->id;
             $ticket->agent_id = $ticket->autoSelectAgent();
             $ticket->created_by = auth()->user()->id;
-
             $ticket->save();
         } else {
             $data = array(
@@ -168,6 +167,7 @@ class LaraTicketsForm extends Component
                 'priority_id' => $this->priority_id,
                 'category_id' => $this->category_id,
                 'agent_id' => $this->agent_id,
+                'status' => TicketsHelper::$tickets_opened_status
             );
             Ticket::where('id', $this->ticket_id)->update($data);
         }

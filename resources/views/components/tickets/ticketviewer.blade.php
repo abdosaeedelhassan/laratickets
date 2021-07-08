@@ -35,16 +35,14 @@
         <div class="card-body row">
             <div class="col-md-6">
                 <p>
-                    <strong>{{ trans('laratickets::lang.owner') }}</strong>{{ trans('laratickets::lang.colon') }}{{ $ticket->user_id == $user->id ? $user->name : $ticket->user->name }}
+                    <strong>{{ trans('laratickets::lang.owner') }}</strong>
+                    <a target="_blank" href="{{str_replace('{id}',$user->id,config('laratickets.user_profile_path'))}}">
+                        {{ trans('laratickets::lang.colon') }}{{ $ticket->user_id == $user->id ? $user->name : $ticket->user->name }}
+                    </a>
                 </p>
                 <p>
                     <strong>{{ trans('laratickets::lang.status') }}</strong>{{ trans('laratickets::lang.colon') }}
-                    @if( $ticket->isComplete() && ! $default_close_status_id )
-                        <span style="color: blue">Complete</span>
-                    @else
-                        <span style="color: {{ $ticket->status->color }}">{{ $ticket->status->name }}</span>
-                    @endif
-
+                    <span>{{ \AsayDev\LaraTickets\Helpers\TicketsHelper::getTicketStatusLabel($ticket->status) }}</span>
                 </p>
                 <p>
                     <strong>{{ trans('laratickets::lang.priority') }}</strong>{{ trans('laratickets::lang.colon') }}
@@ -97,7 +95,7 @@
     </div>
     <div class="card mt-5">
         <div class="card-header">
-                @livewire('lara-tickets-comment-form',['ticket_id'=>$ticket->id])
+            @livewire('lara-tickets-comment-form',['ticket_id'=>$ticket->id])
         </div>
     </div>
     <button wire:click="goback" class="btn btn-link">{{trans('laratickets::lang.btn-back')}}</button>

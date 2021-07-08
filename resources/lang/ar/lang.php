@@ -55,6 +55,12 @@ return [
 
     'createdby' => 'أنشئ بواسطة',
 
+    'new'=>'جديدة',
+    'opened'=>'مفتوحة',
+    'closed'=>'مغلغة',
+    'created_at'=>'أنشئ في',
+
+
     'user' => 'مستخدم',
     'agent' => 'وكيل',
     'category' => 'تصنيف',

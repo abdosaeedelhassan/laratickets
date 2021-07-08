@@ -12,11 +12,6 @@ class CreateLaraTicketsTables extends Migration
      */
     public function up()
     {
-        Schema::create('laratickets_statuses', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('color');
-        });
 
         Schema::create('laratickets_priorities', function (Blueprint $table) {
             $table->increments('id');
@@ -41,7 +36,7 @@ class CreateLaraTicketsTables extends Migration
             $table->longText('content');
             $table->string('code')->nullable();
             $table->longText('html')->nullable();
-            $table->integer('status_id')->unsigned();
+            $table->integer('status');
             $table->integer('priority_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('agent_id')->unsigned();

@@ -37,7 +37,7 @@ class NotificationsController extends Controller
                 $notification_owner->name.trans('laratickets::lang.notify-updated').$ticket->subject.trans('laratickets::lang.notify-status-to-complete'), 'status');
         } else {
             $this->sendNotification($template, $data, $ticket, $notification_owner,
-                $notification_owner->name.trans('laratickets::lang.notify-updated').$ticket->subject.trans('laratickets::lang.notify-status-to').$ticket->status->name, 'status');
+                $notification_owner->name.trans('laratickets::lang.notify-updated').$ticket->subject.trans('laratickets::lang.notify-status-to').$ticket->status, 'status');
         }
     }
 

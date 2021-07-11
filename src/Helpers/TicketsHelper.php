@@ -46,11 +46,11 @@ class  TicketsHelper
 
         $user = Agent::find(auth()->user()->id);
         if ($user->laratickets_isAdmin()) {
-            return Ticket::with(['createdby', 'priority', 'status'])->where('model', $model)
+            return Ticket::with(['createdby', 'priority'])->where('model', $model)
                 ->where('model_id', $model_id)
                 ->where('agent_id', auth()->user()->id);
         } else {
-            return Ticket::with(['createdby', 'priority', 'status'])->where('model', $model)
+            return Ticket::with(['createdby', 'priority'])->where('model', $model)
                 ->where('model_id', $model_id)
                 ->where('user_id', auth()->user()->id);
         }

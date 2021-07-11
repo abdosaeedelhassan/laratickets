@@ -17,7 +17,7 @@
 	{!! trans('ticketit::email/comment.data', [
 	    'name'      =>  $comment->user->name,
 	    'subject'   =>  $ticket->subject,
-	    'status'    =>  $ticket->status->name,
+	    'status'    =>  $ticket->status,
 	    'category'  =>  $ticket->category->name,
 	    'comment'   =>  $comment->getShortContent()
 	]) !!}

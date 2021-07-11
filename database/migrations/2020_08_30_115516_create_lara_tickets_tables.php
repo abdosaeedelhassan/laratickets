@@ -79,6 +79,5 @@ class CreateLaraTicketsTables extends Migration
         Schema::drop('laratickets_categories_users');
         Schema::drop('laratickets_categories');
         Schema::drop('laratickets_priorities');
-        Schema::drop('laratickets_statuses');
     }
 }

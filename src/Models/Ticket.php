@@ -39,11 +39,6 @@ class Ticket extends Model
         return $this->belongsTo(config('laratickets.user_model'), 'created_by');
     }
 
-    /**
-     * List of completed tickets.
-     *
-     * @return bool
-     */
     public function hasComments()
     {
         return (bool)count($this->comments);
@@ -59,99 +54,48 @@ class Ticket extends Model
         return $this->agent_id == auth()->user()->id;
     }
 
-    /**
-     * List of completed tickets.
-     *
-     * @return Collection
-     */
     public function scopeComplete($query)
     {
         return $query->whereNotNull('completed_at');
     }
 
-    /**
-     * List of active tickets.
-     *
-     * @return Collection
-     */
     public function scopeActive($query)
     {
         return $query->whereNull('completed_at');
     }
 
-
-    /**
-     * Get Ticket priority.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function priority()
     {
         return $this->belongsTo('AsayDev\LaraTickets\Models\Priority', 'priority_id');
     }
 
-    /**
-     * Get Ticket category.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function category()
     {
         return $this->belongsTo('AsayDev\LaraTickets\Models\Category', 'category_id');
     }
 
-    /**
-     * Get Ticket owner.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function user()
     {
         return $this->belongsTo(config('laratickets.user_model'), 'user_id');
     }
 
-    /**
-     * Get Ticket agent.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function agent()
     {
         return $this->belongsTo('AsayDev\LaraTickets\Models\Agent', 'agent_id');
     }
 
-    /**
-     * Get Ticket comments.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function comments()
     {
         return $this->hasMany('AsayDev\LaraTickets\Models\Comment', 'ticket_id');
     }
 
-//    /**
-    //     * Get Ticket audits
-    //     *
-    //     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    //     */
-    //    public function audits()
-    //    {
-    //        return $this->hasMany('Kordy\Ticketit\Models\Audit', 'ticket_id');
-    //    }
-    //
 
-    /**
-     * @see Illuminate/Database/Eloquent/Model::asDateTime
-     */
     public function freshTimestamp()
     {
         return new Date();
     }
 
-    /**
-     * @see Illuminate/Database/Eloquent/Model::asDateTime
-     */
+
     protected function asDateTime($value)
     {
         if (is_numeric($value)) {
@@ -167,40 +111,17 @@ class Ticket extends Model
         return Date::instance($value);
     }
 
-    /**
-     * Get all user tickets.
-     *
-     * @param $query
-     * @param $id
-     *
-     * @return mixed
-     */
     public function scopeUserTickets($query, $id)
     {
         return $query->where('user_id', $id);
     }
 
-    /**
-     * Get all agent tickets.
-     *
-     * @param $query
-     * @param $id
-     *
-     * @return mixed
-     */
+
     public function scopeAgentTickets($query, $id)
     {
         return $query->where('agent_id', $id);
     }
 
-    /**
-     * Get all agent tickets.
-     *
-     * @param $query
-     * @param $id
-     *
-     * @return mixed
-     */
     public function scopeAgentUserTickets($query, $id)
     {
         return $query->where(function ($subquery) use ($id) {
@@ -208,11 +129,6 @@ class Ticket extends Model
         });
     }
 
-    /**
-     * Sets the agent with the lowest tickets assigned in specific category.
-     *
-     * @return Ticket
-     */
     public function autoSelectAgent()
     {
         $cat_id = $this->category_id;

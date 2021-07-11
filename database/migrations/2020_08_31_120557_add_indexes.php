@@ -47,7 +47,6 @@ class AddIndexes extends Migration
     {
         Schema::table('laratickets', function (Blueprint $table) {
             $table->dropIndex('laratickets_subject_index');
-            $table->dropIndex('laratickets_status_id_index');
             $table->dropIndex('laratickets_priority_id_index');
             $table->dropIndex('laratickets_user_id_index');
             $table->dropIndex('laratickets_agent_id_index');

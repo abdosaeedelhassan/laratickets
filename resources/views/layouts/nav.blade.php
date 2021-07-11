@@ -38,9 +38,7 @@
             <a class="nav-link dropdown-toggle {{in_array($dashboardData['active_nav_tab'],['statuses-tab','priorities-tab','agents-tab','config-tab','category-tab','admin-tab'])?'active':''}}"
                data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                 {{ trans('laratickets::admin.nav-settings') }}
-                @if($dashboardData['active_nav_tab']=='statuses-tab')
-                    : {{ trans('laratickets::admin.nav-statuses') }}
-                @elseif($dashboardData['active_nav_tab']=='priorities-tab')
+                @if($dashboardData['active_nav_tab']=='priorities-tab')
                     {{ trans('laratickets::admin.nav-priorities') }}
                 @elseif($dashboardData['active_nav_tab']=='agents-tab')
                     {{ trans('laratickets::admin.nav-agents') }}
@@ -53,8 +51,6 @@
                 @endif
             </a>
             <div class="dropdown-menu">
-                <a class="dropdown-item {!! $dashboardData['active_nav_tab']=='statuses-tab' ? "active" : "" !!}"
-                   wire:click="setActiveNavTab('statuses-tab')">{{ trans('laratickets::admin.nav-statuses') }}</a>
                 <a class="dropdown-item {!! $dashboardData['active_nav_tab']=='priorities-tab' ? "active" : "" !!}"
                    wire:click="setActiveNavTab('priorities-tab')">{{ trans('laratickets::admin.nav-priorities') }}</a>
                 <a class="dropdown-item {!! $dashboardData['active_nav_tab']=='agents-tab' ? "active" : "" !!}"

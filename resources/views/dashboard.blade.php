@@ -12,8 +12,6 @@
                 @include('asaydev-lara-tickets::components.tickets.tickets',['tickets_type'=>'active','dashboardData'=>$dashboardData])
             @elseif($dashboardData['active_nav_tab']=='completed-tickets-tab')
                 @include('asaydev-lara-tickets::components.tickets.tickets',['tickets_type'=>'completed','dashboardData'=>$dashboardData])
-            @elseif($dashboardData['active_nav_tab']=='statuses-tab')
-                @include('asaydev-lara-tickets::components.statuses.index',['dashboardData'=>$dashboardData])
             @elseif($dashboardData['active_nav_tab']=='priorities-tab')
                 @include('asaydev-lara-tickets::components.priorities.index',['dashboardData'=>$dashboardData])
             @elseif($dashboardData['active_nav_tab']=='agents-tab')

@@ -36,8 +36,14 @@ class LaraTicketsForm extends Component
     public $users;
     public $user_id;
 
-    protected $listeners = ['selectedUser'];
+    protected $listeners = ['selectedUser','setContent'];
 
+
+
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
 
     public function mount($dashboardData)
     {
@@ -94,10 +100,12 @@ class LaraTicketsForm extends Component
 
     }
 
+
+
     public function initData()
     {
         $this->emit('usersList', '');
-
+        $this->emit('renderContentEditor', '');
     }
 
     public function selectedUser($id)

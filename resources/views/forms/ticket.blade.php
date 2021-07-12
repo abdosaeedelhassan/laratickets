@@ -29,8 +29,8 @@
         <div class="form-group row">
             <label class="col-lg-2 col-form-label"
                    for="content">{{trans('laratickets::lang.description') . trans('laratickets::lang.colon')}}</label>
-            <div class="col-lg-10">
-                <textarea rows="5" class="form-control summernote-editor" id="content" wire:model="content"></textarea>
+            <div class="col-lg-10" wire:ignore>
+                <textarea rows="5" class="form-control" id="content" wire:model="content"></textarea>
                 <small class="form-text text-muted">{!! trans('laratickets::lang.create-ticket-brief-issue') !!}</small>
                 @error('content') <span class="text-danger">{{ $message }}</span> @enderror
             </div>

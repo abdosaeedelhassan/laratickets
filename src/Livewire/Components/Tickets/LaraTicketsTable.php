@@ -76,6 +76,8 @@ class LaraTicketsTable extends BaseLivewire
     {
 
         $columns = [
+            Column::make(trans('laratickets::lang.table-id'), 'id')
+            ,
             Column::make(trans('laratickets::lang.table-subject'))
                 ->format(function ($value, $column, $row) {
                     $html = '<a class="btn btn-link" wire:click="viewTicket(' . $row->id . ')">' . $row->subject . '</a>';

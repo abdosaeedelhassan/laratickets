@@ -80,7 +80,7 @@ class AsayDevLaraTicketsServiceProvider extends ServiceProvider
             if(config("laratickets.user_model")){
                 class_alias(config("laratickets.user_model"), 'AsayDev\LaraTickets\Models\ParentUserModel');
             }else{
-                class_alias('App\User', 'AsayDev\LaraTickets\Models\ParentUserModel');
+                class_alias('App\Models\User', 'AsayDev\LaraTickets\Models\ParentUserModel');
             }
 
         }

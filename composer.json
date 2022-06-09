@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": "^7.2.5",
+        "php": ">=7.4",
         "jenssegers/date": "^4.0"
     },
     "require-dev": {

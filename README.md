@@ -25,7 +25,7 @@ when next command executed will ask you for administartor user id to setup there
 
 ### publishing config file:
 
-`php artisan vendor:publish --provider="AsayDev\LaraTickets\InftyLaraTicketsServiceProvider" --tag="config"`
+`php artisan vendor:publish --provider="AsayDev\LaraTickets\AsayDevLaraTicketsServiceProvider" --tag="config"`
 
 ### publishing migrations files:
 

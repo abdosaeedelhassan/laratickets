@@ -15,7 +15,7 @@ trait ContentEllipse
     {
         $content = $this->{$attr};
         if (strlen($content) > $maxlength) {
-            return substr($content, 0, $maxlength).'...';
+            return substr($content, 0, $maxlength) . '...';
         }
 
         return $content;

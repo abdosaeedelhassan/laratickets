@@ -24,11 +24,11 @@ class LaraTicketsCategoriesForm extends Component
     {
         $this->dashboardData = $dashboardData;
         if ($this->dashboardData['form']['action'] == 'edit') {
-            $status=Category::where('id',$this->dashboardData['form']['id'])->first();
-            if($status){
-                $this->status_id=$status->id;
-                $this->name=$status->name;
-                $this->color=$status->color;
+            $status = Category::where('id', $this->dashboardData['form']['id'])->first();
+            if ($status) {
+                $this->status_id = $status->id;
+                $this->name = $status->name;
+                $this->color = $status->color;
             }
         }
     }
@@ -52,21 +52,18 @@ class LaraTicketsCategoriesForm extends Component
         ]);
         if ($this->dashboardData['form']['action'] == 'add') {
             Category::create($data);
-        }else{ // edit
-            Category::where('id',$this->status_id)->update($data);
+        } else { // edit
+            Category::where('id', $this->status_id)->update($data);
         }
 
-        $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success,$this->dashboardData['active_nav_title'], trans('laratickets::lang.table-saved-success'));
+        $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success, $this->dashboardData['active_nav_title'], trans('laratickets::lang.table-saved-success'));
         $this->emit('laratickets-flash-message', $msg);
         $this->goback();
-
     }
 
     public function goback()
     {
-        $this->dashboardData['form']=['name'=>'','action'=>'','id'=>''];
+        $this->dashboardData['form'] = ['name' => '', 'action' => '', 'id' => ''];
         $this->emit('activeNvTab', $this->dashboardData);
     }
-
-
 }

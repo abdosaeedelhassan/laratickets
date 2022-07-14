@@ -21,28 +21,34 @@ class LaraTicketsMain extends Component
 
     public $active_tab;
 
-    public $monthly_performance=[];
-    public $categories_share=[];
-    public $agents_share=[];
+    public $monthly_performance = [];
+    public $categories_share = [];
+    public $agents_share = [];
+
+    public $paginationTheme = 'bootstrap-4';
 
 
 
-    public function mount($dashboardData){
-        $dashboardData['active_nav_title']=trans('laratickets::lang.index-title');
-        $this->dashboardData=$dashboardData;
+    public function mount($dashboardData)
+    {
+        config(['livewire-tables.theme' => 'bootstrap-4']);
+        $dashboardData['active_nav_title'] = trans('laratickets::lang.index-title');
+        $this->dashboardData = $dashboardData;
         $this->initData(2);
     }
 
 
 
-    public function setActiveTab($tab){
-        $this->active_tab=$tab;
+    public function setActiveTab($tab)
+    {
+        $this->active_tab = $tab;
     }
 
 
-    public function initData($indicator_period){
+    public function initData($indicator_period)
+    {
 
-        $collection=TicketsHelper::getTicketsCollection($this->dashboardData['model'],$this->dashboardData['model_id']);
+        $collection = TicketsHelper::getTicketsCollection($this->dashboardData['model'], $this->dashboardData['model_id']);
         $this->tickets_count = $collection->count();
         $this->open_tickets_count = $collection->whereNull('completed_at')->count();
         $this->closed_tickets_count = $this->tickets_count - $this->open_tickets_count;
@@ -53,14 +59,14 @@ class LaraTicketsMain extends Component
         $categories_all = Category::all();
         $this->categories_share = [];
         foreach ($categories_all as $cat) {
-            $this->categories_share[$cat->name] = $collection->where('category_id',$cat->id)->count();
+            $this->categories_share[$cat->name] = $collection->where('category_id', $cat->id)->count();
         }
         // Total tickets counter per agent for google pie chart
-       $model=$this->dashboardData['model'];
-        $model_id=$this->dashboardData['model_id'];
-        $agents_share_obj = Agent::agents()->with(['agentTotalTickets' => function ($query)use($model,$model_id) {
-            $query->where('model',$model);
-            $query->where('model_id',$model_id);
+        $model = $this->dashboardData['model'];
+        $model_id = $this->dashboardData['model_id'];
+        $agents_share_obj = Agent::agents()->with(['agentTotalTickets' => function ($query) use ($model, $model_id) {
+            $query->where('model', $model);
+            $query->where('model_id', $model_id);
             $query->addSelect(['id', 'agent_id']);
         }])->get();
 
@@ -88,14 +94,13 @@ class LaraTicketsMain extends Component
         }
 
 
-        $this->emit('periodChanged',$indicator_period);
-
+        $this->emit('periodChanged', $indicator_period);
     }
 
     public function intervalPerformance($from, $to, $cat_id = false)
     {
 
-        $collection=TicketsHelper::getTicketsCollection($this->dashboardData['model'],$this->dashboardData['model_id']);
+        $collection = TicketsHelper::getTicketsCollection($this->dashboardData['model'], $this->dashboardData['model_id']);
 
         if ($cat_id) {
             $tickets = $collection->where('category_id', $cat_id)->whereBetween('completed_at', [$from, $to])->get();
@@ -134,11 +139,6 @@ class LaraTicketsMain extends Component
 
     public function render()
     {
-        return view('asaydev-lara-tickets::components.main',[
-        'categories' => Category::paginate(10, ['*'], 'cat_page'),
-        'agents' => Agent::agents(10),
-        'users' => Agent::where('laratickets_agent', '0')->paginate(10, ['*'], 'users_page')
-        ]);
+        return view('asaydev-lara-tickets::components.main');
     }
-
 }

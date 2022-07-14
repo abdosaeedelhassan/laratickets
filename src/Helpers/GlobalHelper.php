@@ -16,8 +16,5 @@ class GlobalHelper
         } else {
             return 'name';
         }
-
     }
-
-
 }

@@ -4,20 +4,22 @@
             <h4 class="card-title mb-0">
                 {{$dashboardData['active_nav_title']}}
             </h4>
-        </div><!--col-->
+        </div>
+        <!--col-->
         <div class="col-sm-7 pull-right">
             <div class="btn-toolbar float-right" role="toolbar">
                 <a wire:click="openForm('new_category')" class="btn btn-success ml-1" data-toggle="tooltip"
-                   title="{{trans('laratickets::btn-create-new-category')}}"><i class="fas fa-plus-circle"></i></a>
+                    title="{{trans('laratickets::btn-create-new-category')}}"><i class="bi bi-plus-circle"></i></a>
             </div>
-        </div><!--col-->
+        </div>
+        <!--col-->
     </h5>
     <div class="card-body">
         @if($dashboardData['form']['name']=='categories')
-            @livewire('lara-tickets-categories-form',['dashboardData'=>$dashboardData])
+        @livewire('lara-tickets-categories-form',['dashboardData'=>$dashboardData])
         @endif
         @if($dashboardData['form']['name']=='')
-                @livewire('lara-tickets-categories-table',['dashboardData'=>$dashboardData])
+        @livewire('lara-tickets-categories-table',['dashboardData'=>$dashboardData])
         @endif
     </div>
 </div>

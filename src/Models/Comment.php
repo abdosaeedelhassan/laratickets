@@ -15,24 +15,16 @@ class Comment extends Model
 
 
     protected $fillable = [
-        'content', 'html', 'user_id', 'ticket_id','attachments', 'created_at', 'updated_at'
+        'content', 'html', 'user_id', 'ticket_id', 'attachments', 'created_at', 'updated_at'
     ];
 
-    /**
-     * Get related ticket.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
+
     public function ticket()
     {
         return $this->belongsTo('AsayDev\LaraTickets\Models\Ticket', 'ticket_id');
     }
 
-    /**
-     * Get comment owner.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
+
     public function user()
     {
         return $this->belongsTo(config('laratickets.user_model'), 'user_id');

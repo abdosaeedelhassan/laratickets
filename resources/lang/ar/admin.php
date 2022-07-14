@@ -5,19 +5,21 @@ return [
     /*
      *  Constants
      */
+    'nav-managing'      => 'الإدارة',
     'nav-settings'      => 'الإعدادات',
     'nav-agents'        => 'الوكلاء',
     'nav-dashboard'     => 'الرئيسية',
     'nav-categories'    => 'التصنيفات',
-    'nav-priorities'    => 'الخصائص',
+    'nav-priorities'    => 'الأولويات',
     'nav-statuses'      => 'الحالات',
     'nav-configuration' => 'الإعدادات',
-    'nav-administrator' => 'المدراء',  //new
+    'nav-administrator' => 'المدراء',
+    'nav-ticket-replies' => 'ردود التذاكر',
 
     'table-hash'                 => '#',
     'table-id'                   => 'ID',
     'table-name'                 => 'الاسم',
-    'table-action'               => 'الحدث',
+    'table-action'               => 'الإجراءات',
     'table-categories'           => 'التصنيفات',
     'table-join-category'        => 'التصنيفات المرتبطة',
     'table-remove-agent'         => 'حذف من الوكلاء',
@@ -44,7 +46,7 @@ return [
      *  Page specific
      */
 
-// tickets-admin/____
+    // tickets-admin/____
     'index-title'                             => 'نظام التذاكر',
     'index-empty-records'                     => 'لا توجد تذاكر',
     'index-total-tickets'                     => 'إجمالي التذاكر',
@@ -74,7 +76,7 @@ return [
     'index-categories-chart'                  => 'توزيع التذاكر حسب التصنيف',
     'index-agents-chart'                      => 'توزيع التذاكر حسب العميل',
 
-// tickets-admin/agent/____
+    // tickets-admin/agent/____
     'agent-index-title'                       => 'إدارة الوكلاء',
     'btn-create-new-agent'                    => 'إضافة وكيل',
     'agent-index-no-agents'                   => 'لا يوجد وكلاء، ',
@@ -84,7 +86,7 @@ return [
     'agent-create-no-users'                   => 'لا توجد حسابات مستخدمين، قم بإنشائها أولاً.',
     'agent-create-select-user'                => 'اختر حسابات مستخدمين لإضافتهم كوكلاء',
 
-// tickets-admin/administrators/____
+    // tickets-admin/administrators/____
     'administrator-index-title'               => 'إدارة المدراء',  //new
     'btn-create-new-administrator'            => 'إضافة مدير',  //new
     'administrator-index-no-administrators'   => 'لا يوجد مدراء, ',  //new
@@ -94,7 +96,7 @@ return [
     'administrator-create-no-users'           => 'لا توجد حسابات مستخدمين، أنشئ حساب مستخدم أولاً.',  //new
     'administrator-create-select-user'        => 'اختر حساب مستخدم لإضافته كمدير',  //new
 
-// tickets-admin/category/____
+    // tickets-admin/category/____
     'category-index-title'                    => 'إدارة التصنيفات',
     'btn-create-new-category'                 => 'إضافة تصنيف',
     'category-index-no-categories'            => 'لا توجد تصنيفات، ',
@@ -105,7 +107,7 @@ return [
     'category-create-color'                   => 'اللون',
     'category-edit-title'                     => 'إضافة تصنيف: :name',
 
-// tickets-admin/priority/____
+    // tickets-admin/priority/____
     'priority-index-title'                    => 'إدارة الأولويات',
     'btn-create-new-priority'                 => 'إضافة أولوية',
     'priority-index-no-priorities'            => 'ﻻتوجد أولويات، ',
@@ -116,7 +118,7 @@ return [
     'priority-create-color'                   => 'اللون',
     'priority-edit-title'                     => 'تعديل الأولوية: :name',
 
-// tickets-admin/status/____
+    // tickets-admin/status/____
     'status-index-title'                      => 'إدارة الحالات',
     'btn-create-new-status'                   => 'إضافة حالة',
     'status-index-no-statuses'                => 'لا توجد حالات،',
@@ -127,7 +129,7 @@ return [
     'status-create-color'                     => 'اللون',
     'status-edit-title'                       => 'تعديل الحالة: :name',
 
-// tickets-admin/configuration/____
+    // tickets-admin/configuration/____
     'config-index-title'                      => 'ضبط الإعدادات',
     'config-index-subtitle'                   => 'الإعدادات',
     'btn-create-new-config'                   => 'إضافة إعداد',

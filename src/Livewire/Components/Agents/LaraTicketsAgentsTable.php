@@ -17,12 +17,12 @@ class LaraTicketsAgentsTable extends BaseLivewire
 
     public function mount($dashboardData)
     {
-        $this->dashboardData=$dashboardData;
+        $this->dashboardData = $dashboardData;
     }
 
     public function query(): Builder
     {
-        return Agent::where('laratickets_agent','1')->orderBy('id', 'asc');
+        return Agent::where('laratickets_agent', '1')->orderBy('id', 'asc');
     }
     /**
      * @inheritDoc
@@ -33,20 +33,13 @@ class LaraTicketsAgentsTable extends BaseLivewire
         $columns = [
             Column::make(trans('laratickets::admin.table-id'), 'id')
                 ->sortable()
-                ->searchable()
-            ,
-            Column::make(trans('laratickets::admin.table-name'))
-                ->format(function(Agent $model) {
-                    return view('asaydev-lara-tickets::components.admins.fullname', ['column' => $model]);
-                })
-                ->sortable()
-            ,
+                ->searchable(),
+            Column::make(trans('laratickets::admin.table-name'), 'name')->sortable(),
             Column::make(trans('laratickets::admin.table-action'))
-                ->format(function(Agent $model) {
-                    return view('asaydev-lara-tickets::components.admins.actions', ['column' => $model]);
+                ->format(function ($value, $column, $row) {
+                    return '<a class="btn btn-danger" wire:click="delete(' . $row->id . ')" >' . trans('laratickets::admin.btn-remove') . '</a>';
                 })
-                ->sortable()
-            ,
+                ->asHtml(),
         ];
 
 
@@ -54,14 +47,14 @@ class LaraTicketsAgentsTable extends BaseLivewire
     }
 
 
-    public function delete($id){
+    public function delete($id)
+    {
         try {
-            Agent::where('id',$id)->update(['laratickets_agent'=>0]);
-            $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success,$this->dashboardData['active_nav_title'], trans('laratickets::lang.table-deleted-success'));
+            Agent::where('id', $id)->update(['laratickets_agent' => 0]);
+            $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success, $this->dashboardData['active_nav_title'], trans('laratickets::lang.table-deleted-success'));
             $this->emit('laratickets-flash-message', $msg);
-        }catch (\Exception $e){
-           //
+        } catch (\Exception $e) {
+            //
         }
     }
-
 }

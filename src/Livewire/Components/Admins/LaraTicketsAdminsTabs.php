@@ -10,14 +10,15 @@ class LaraTicketsAdminsTabs extends Component
 
     public $dashboardData;
 
-    protected $listeners=['setDashboardData'];
+    protected $listeners = ['setDashboardData'];
 
     public function mount($dashboardData)
     {
-       $this->setDashboardData($dashboardData);
+        $this->setDashboardData($dashboardData);
     }
 
-    public function setDashboardData($dashboardData){
+    public function setDashboardData($dashboardData)
+    {
         $this->dashboardData = $dashboardData;
     }
 
@@ -30,5 +31,4 @@ class LaraTicketsAdminsTabs extends Component
     {
         return view('asaydev-lara-tickets::components.admins.tabs');
     }
-
 }

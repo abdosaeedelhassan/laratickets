@@ -2,15 +2,18 @@
 
 return [
 
-
+    'add-new-reply' => 'Add new reply',
+    'content' => 'Content',
+    'reply' => 'Reply',
+    'edit' => 'Edit',
+    'select' => 'Select',
+    'close' => 'Close',
+    'delete' => 'Delete',
+    'select-reply' => 'Select reply',
+    'display' => 'Display',
     'table-saved-success' => 'Saved successfully',
-    'table-deleted-success' => 'Deleted successfully',
+    'table-deleted-success' => 'Successfully deleted',
     'table-edit-title' => 'Edit',
-
-    /*
-     *  Constants
-     */
-
     'nav-active-tickets' => 'Active Tickets',
     'nav-completed-tickets' => 'Completed Tickets',
 
@@ -26,7 +29,13 @@ return [
     'table-category' => 'Category',
 
     'user' => 'User',
-    'createdby'=>'Created by',
+    'createdby' => 'Created by',
+
+    'new' => 'New',
+    'opened' => 'Opened',
+    'closed' => 'Closed',
+    'created_at' => 'Created at',
+
 
     // Datatables
     'table-decimal' => '',
@@ -79,10 +88,10 @@ return [
      *  Page specific
      */
 
-// ____
+    // ____
     'index-title' => 'Helpdesk main page',
 
-// tickets/____
+    // tickets/____
     'index-my-tickets' => 'My Tickets',
     'btn-create-new-ticket' => 'Create new ticket',
     'index-complete-none' => 'There are no complete tickets',
@@ -105,34 +114,34 @@ return [
      *  Controllers
      */
 
-// AgentsController
+    // AgentsController
     'agents-are-added-to-agents' => 'Agents :names are added to agents',
     'administrators-are-added-to-administrators' => 'Administrators :names are added to administrators', //New
     'agents-joined-categories-ok' => 'Joined categories successfully',
     'agents-is-removed-from-team' => 'Removed agent\s :name from the agent team',
     'administrators-is-removed-from-team' => 'Removed administrator\s :name from the administrators team', // New
 
-// CategoriesController
+    // CategoriesController
     'category-name-has-been-created' => 'The category :name has been created!',
     'category-name-has-been-modified' => 'The category :name has been modified!',
     'category-name-has-been-deleted' => 'The category :name has been deleted!',
 
-// PrioritiesController
+    // PrioritiesController
     'priority-name-has-been-created' => 'The priority :name has been created!',
     'priority-name-has-been-modified' => 'The priority :name has been modified!',
     'priority-name-has-been-deleted' => 'The priority :name has been deleted!',
     'priority-all-tickets-here' => 'All priority related tickets here',
 
-// StatusesController
+    // StatusesController
     'status-name-has-been-created' => 'The status :name has been created!',
     'status-name-has-been-modified' => 'The status :name has been modified!',
     'status-name-has-been-deleted' => 'The status :name has been deleted!',
     'status-all-tickets-here' => 'All status related tickets here',
 
-// CommentsController
+    // CommentsController
     'comment-has-been-added-ok' => 'Comment has been added successfully',
 
-// NotificationsController
+    // NotificationsController
     'notify-new-comment-from' => 'New comment from ',
     'notify-on' => ' on ',
     'notify-status-to-complete' => ' status to Complete',
@@ -154,7 +163,6 @@ return [
     *  Middlewares
     */
 
-    //  IsAdminMiddleware IsAgentMiddleware ResAccessMiddleware
     'you-are-not-permitted-to-access' => 'You are not permitted to access this page!',
 
 ];

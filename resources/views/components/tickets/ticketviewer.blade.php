@@ -1,56 +1,60 @@
 <div>
-    <div class="card">
-        <div class="card-header">
-            <div class="row">
-                <div class="col-sm-7">
+    <div class="card" style="width: 100%">
+        <div class="card-header" style="width: 100%">
+            <div class="d-flex justify-centent-between align-items-center flex-wrap">
+                <div>
                     <h4 class="card-title mb-0">
                         {{trans('laratickets::lang.create-ticket-brief-issue')}}
                     </h4>
-                </div><!--col-->
-                <div class="col-sm-5 pull-left">
-                    @if($user->laratickets_isAdmin()|| $ticket->isAgent())
-                        @if(! $ticket->completed_at)
-                            <button wire:click="makeAsComplete({{$ticket->id}})" class="btn btn-success">
-                                {{trans('laratickets::lang.btn-mark-complete')}}
-                            </button>
-                        @elseif($ticket->completed_at)
-                            <button wire:click="reOpenTicket({{$ticket->id}})" class="btn btn-success">
-                                {{trans('laratickets::lang.reopen-ticket')}}
-                            </button>
-                        @endif
-                        <button wire:click="editTicket" class="btn btn-info">
-                            {{ trans('laratickets::lang.btn-edit')  }}
-                        </button>
+                </div>
+                <!--col-->
+                <div>
+                    @if(auth()->user()->hasPermissionTo(config('laratickets.permissions.laratickets_edit'))||auth()->user()->hasRole(config('laratickets.roles.laratickets_administrator')))
+                    @if(! $ticket->completed_at)
+                    <button wire:click="makeAsComplete({{$ticket->id}})" class="btn btn-success">
+                        {{trans('laratickets::lang.btn-mark-complete')}}
+                    </button>
+                    @elseif($ticket->completed_at)
+                    <button wire:click="reOpenTicket({{$ticket->id}})" class="btn btn-success">
+                        {{trans('laratickets::lang.reopen-ticket')}}
+                    </button>
                     @endif
-                    @if($user->laratickets_isAdmin())
-                        <button
-                            onclick="confirm('{{trans("laratickets::lang.show-ticket-modal-delete-message", ["subject" => $ticket->subject]) }}') || event.stopImmediatePropagation()"
-                            wire:click="destroyTicket" class="btn btn-danger">
-                            {{ trans('laratickets::lang.btn-delete') }}
-                        </button>
+                    <button wire:click="editTicket" class="btn btn-info">
+                        {{ trans('laratickets::lang.btn-edit')  }}
+                    </button>
                     @endif
-                </div><!--col-->
+                    @if(auth()->user()->hasPermissionTo(config('laratickets.permissions.laratickets_managing'))||auth()->user()->hasRole(config('laratickets.roles.laratickets_administrator')))
+                    <button
+                        onclick="confirm('{{trans("laratickets::lang.show-ticket-modal-delete-message", ["subject" => $ticket->subject]) }}') || event.stopImmediatePropagation()"
+                        wire:click="destroyTicket" class="btn btn-danger">
+                        {{ trans('laratickets::lang.btn-delete') }}
+                    </button>
+                    @endif
+                </div>
+                <!--col-->
             </div>
-        </div><!--row-->
+        </div>
+        <!--row-->
         <div class="card-body row">
             <div class="col-md-6">
+                @if($ticket->user)
                 <p>
-                    <strong>{{ trans('laratickets::lang.owner') }}</strong>{{ trans('laratickets::lang.colon') }}{{ $ticket->user_id == $user->id ? $user->name : $ticket->user->name }}
+                    <strong>{{ trans('laratickets::lang.owner') }}</strong>
+                    <a target="_blank"
+                        href="{{str_replace('{id}',$ticket->user->id,config('laratickets.user_profile_path'))}}">
+                        {{ trans('laratickets::lang.colon') }}{{ $ticket->user_id == $user->id ? $user->name : ($ticket->user?$ticket->user->name:"") }}
+                    </a>
                 </p>
+                @endif
                 <p>
                     <strong>{{ trans('laratickets::lang.status') }}</strong>{{ trans('laratickets::lang.colon') }}
-                    @if( $ticket->isComplete() && ! $default_close_status_id )
-                        <span style="color: blue">Complete</span>
-                    @else
-                        <span style="color: {{ $ticket->status->color }}">{{ $ticket->status->name }}</span>
-                    @endif
-
+                    <span>{{ \AsayDev\LaraTickets\Helpers\TicketsHelper::getTicketStatusLabel($ticket->status) }}</span>
                 </p>
                 <p>
                     <strong>{{ trans('laratickets::lang.priority') }}</strong>{{ trans('laratickets::lang.colon') }}
                     <span style="color: {{ $ticket->priority->color }}">
-                    {{ $ticket->priority->name }}
-                </span>
+                        {{ $ticket->priority->name }}
+                    </span>
                 </p>
             </div>
             <div class="col-md-6">
@@ -60,8 +64,8 @@
                 <p>
                     <strong>{{ trans('laratickets::lang.category') }}</strong>{{ trans('laratickets::lang.colon') }}
                     <span style="color: {{ $ticket->category->color }}">
-                    {{ $ticket->category->name }}
-                </span>
+                        {{ $ticket->category->name }}
+                    </span>
                 </p>
                 <p>
                     <strong>{{ trans('laratickets::lang.created') }}</strong>{{ trans('laratickets::lang.colon') }}{{ $ticket->created_at->diffForHumans() }}
@@ -75,31 +79,26 @@
 
     <div class="card mt-5">
         <div class="card-header">
-            <div class="row">
-                <label for="" class="col-md-4"><strong>{{trans('laratickets::lang.title') }}</strong></label>
-                <div class="col-md-4">
-                    {!! $ticket->subject !!}
+            <div class="d-flex flex-column w-100">
+                <div class="d-flex justify-content-between flex-wrap">
+                    <div>
+                        <strong>{{trans('laratickets::lang.title') }}</strong>:
+                        {!! $ticket->subject !!}
+                    </div>
+                    <div class="text-muted" style="text-align: {{app()->getLocale()=='ar'?'left':'right'}}">
+                        {!! $ticket->created_at->format('h:s Y-m-d') !!}
+                    </div>
                 </div>
-                <div class="col-md-4 text-muted" style="text-align: {{app()->getLocale()=='ar'?'left':'right'}}">
-                    {!! $ticket->created_at->format('h:s Y-m-d') !!}
+                <div class="mt-5">
+                    {!! $ticket->content !!}
                 </div>
             </div>
-            <div class="row">
-                <label for="" class="col-md-4"><strong>{{trans('laratickets::lang.agent-name') }}</strong></label>
-                <div class="col-md-8">
-                    {!! $ticket->agent->name !!}
-                </div>
-            </div>
-
-            {!! $ticket->content !!}
-
         </div>
     </div>
     <div class="card mt-5">
         <div class="card-header">
-                @livewire('lara-tickets-comment-form',['ticket_id'=>$ticket->id])
+            @livewire('lara-tickets-comment-form',['ticket_id'=>$ticket->id])
         </div>
     </div>
     <button wire:click="goback" class="btn btn-link">{{trans('laratickets::lang.btn-back')}}</button>
 </div>
-

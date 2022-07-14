@@ -7,38 +7,44 @@ real time tickets system for laravel framework, this package is transformation f
 - Laravel Livewire installed and configured in your project.
 - Laravel Alpine.js installed and configured in your project.
 - Laravel rappasoft/laravel-livewire-tables installed and configured in your project.
-- user model must have **isAdmin()** property .
+- Laravel spatie/laravel-permission installed and configured in your project.
 
 
-# Package Basics:
-- first user in database will be default laratickets admin, may change latter from package configuration
+## installation step:
+
+`composer require asaydev/laratickets`
+
+## Auto setup and configure
+
+you need only to execute next command.
+
+`php artisan laratickets:install`
 
 
-# installation step:
+## Manually setup
 
-composer require asaydev/laratickets
+### publishing config file:
 
-# publishing config file:
-php artisan vendor:publish --provider="AsayDev\LaraTickets\AsayDevLaraTicketsServiceProvider" --tag="laratickets_config"
+`php artisan vendor:publish --provider="AsayDev\LaraTickets\InftyLaraTicketsServiceProvider" --tag="config"`
 
-# publishing migrations files:
+### publishing migrations files:
 
-php artisan vendor:publish --tag=laratickets_migrations
+`php artisan vendor:publish --tag=laratickets_migrations`
 
-# publishing assets files:
+### publishing assets files:
 
-php artisan vendor:publish --tag=laratickets_assets
+`php artisan vendor:publish --tag=laratickets_assets`
 
-# Basic usage
+### Basic usage
 
 this package allow using tickets for spacific model
 
 @livewire('lara-tickets-dashboard',['model'=>'modeName','model_id'=>'modelID'])
 
-# ToDo
+### ToDo
 - adding mail notification on new ticket,update ticket, new comment
 
-# ToBe explain
+### ToBe explain
 - options array parm
     - can_create_ticket
     

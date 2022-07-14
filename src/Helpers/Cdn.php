@@ -11,7 +11,6 @@ namespace AsayDev\LaraTickets\Helpers;
 class Cdn
 {
     const CodeMirror = '5.48.4';
-    const Summernote = '0.8.12';
     const FontAwesome = '4.7.0';
     const FontAwesome5 = '5.10.1';
 

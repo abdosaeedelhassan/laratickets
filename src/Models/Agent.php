@@ -9,21 +9,8 @@ class Agent extends ParentUserModel
 {
     protected $table = 'users';
 
-    protected $appends=['full_name'];
+    protected $appends = ['full_name'];
 
-
-
-
-    /**
-     * list of all agents and returning collection.
-     *
-     * @param $query
-     * @param bool $paginate
-     *
-     * @return bool
-     *
-     * @internal param int $cat_id
-     */
     public function scopeAgents($query, $paginate = false)
     {
         if ($paginate) {
@@ -33,16 +20,6 @@ class Agent extends ParentUserModel
         }
     }
 
-    /**
-     * list of all admins and returning collection.
-     *
-     * @param $query
-     * @param bool $paginate
-     *
-     * @return bool
-     *
-     * @internal param int $cat_id
-     */
     public function scopeAdmins($query, $paginate = false)
     {
         /**
@@ -52,7 +29,7 @@ class Agent extends ParentUserModel
         if (!$adminAgent) {
             $adminAgent = \AsayDev\LaraTickets\Models\Agent::first();
             if ($adminAgent) {
-                \AsayDev\LaraTickets\Models\Agent::where('id',$adminAgent->id)->update(['laratickets_admin' => 1]);
+                \AsayDev\LaraTickets\Models\Agent::where('id', $adminAgent->id)->update(['laratickets_admin' => 1]);
             }
         }
 
@@ -63,16 +40,6 @@ class Agent extends ParentUserModel
         }
     }
 
-    /**
-     * list of all agents and returning collection.
-     *
-     * @param $query
-     * @param bool $paginate
-     *
-     * @return bool
-     *
-     * @internal param int $cat_id
-     */
     public function scopeUsers($query, $paginate = false)
     {
         if ($paginate) {
@@ -82,15 +49,6 @@ class Agent extends ParentUserModel
         }
     }
 
-    /**
-     * list of all agents and returning lists array of id and name.
-     *
-     * @param $query
-     *
-     * @return bool
-     *
-     * @internal param int $cat_id
-     */
     public function scopeAgentsLists($query)
     {
         if (version_compare(app()->version(), '5.2.0', '>=')) {
@@ -100,11 +58,6 @@ class Agent extends ParentUserModel
         }
     }
 
-    /**
-     * Check if user is agent.
-     *
-     * @return bool
-     */
     public static function isAgent($id = null)
     {
         if (isset($id)) {
@@ -124,23 +77,12 @@ class Agent extends ParentUserModel
         return false;
     }
 
-    /**
-     * Check if user is admin.
-     *
-     * @return bool
-     */
+
     public static function laratickets_isAdmin()
     {
-        return auth()->check() && auth()->user()->isAdmin();
+        return auth()->check() && auth()->user()->hasRole(config('laratickets.roles.laratickets_administrator'));
     }
 
-    /**
-     * Check if user is the assigned agent for a ticket.
-     *
-     * @param int $id ticket id
-     *
-     * @return bool
-     */
     public static function isAssignedAgent($id)
     {
         return auth()->check() &&
@@ -148,13 +90,6 @@ class Agent extends ParentUserModel
             Auth::user()->id == Ticket::find($id)->agent->id;
     }
 
-    /**
-     * Check if user is the owner for a ticket.
-     *
-     * @param int $id ticket id
-     *
-     * @return bool
-     */
     public static function isTicketOwner($id)
     {
         $ticket = Ticket::find($id);
@@ -162,19 +97,11 @@ class Agent extends ParentUserModel
             auth()->user()->id == $ticket->user->id;
     }
 
-    /**
-     * Get related categories.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function categories()
     {
         return $this->belongsToMany('AsayDev\LaraTickets\Models\Category', 'laratickets_categories_users', 'user_id', 'category_id');
     }
 
-    /**
-     * Get related agent tickets (To be deprecated).
-     */
     public function agentTickets($complete = false)
     {
         if ($complete) {
@@ -184,11 +111,6 @@ class Agent extends ParentUserModel
         }
     }
 
-    /**
-     * Get related user tickets (To be deprecated).
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function userTickets($complete = false)
     {
         if ($complete) {
@@ -231,49 +153,31 @@ class Agent extends ParentUserModel
         return $tickets;
     }
 
-    /**
-     * Get related agent total tickets.
-     */
     public function agentTotalTickets()
     {
         return $this->hasMany('AsayDev\LaraTickets\Models\Ticket', 'agent_id');
     }
 
-    /**
-     * Get related agent Completed tickets.
-     */
     public function agentCompleteTickets()
     {
         return $this->hasMany('AsayDev\LaraTickets\Models\Ticket', 'agent_id')->whereNotNull('completed_at');
     }
 
-    /**
-     * Get related agent tickets.
-     */
     public function agentOpenTickets()
     {
         return $this->hasMany('AsayDev\LaraTickets\Models\Ticket', 'agent_id')->whereNull('completed_at');
     }
 
-    /**
-     * Get related user total tickets.
-     */
     public function userTotalTickets()
     {
         return $this->hasMany('AsayDev\LaraTickets\Models\Ticket', 'user_id');
     }
 
-    /**
-     * Get related user Completed tickets.
-     */
     public function userCompleteTickets()
     {
         return $this->hasMany('AsayDev\LaraTickets\Models\Ticket', 'user_id')->whereNotNull('completed_at');
     }
 
-    /**
-     * Get related user tickets.
-     */
     public function userOpenTickets()
     {
         return $this->hasMany('AsayDev\LaraTickets\Models\Ticket', 'user_id')->whereNull('completed_at');

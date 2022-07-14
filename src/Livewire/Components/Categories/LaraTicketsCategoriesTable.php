@@ -21,7 +21,7 @@ class LaraTicketsCategoriesTable extends BaseLivewire
 
     public function mount($dashboardData)
     {
-        $this->dashboardData=$dashboardData;
+        $this->dashboardData = $dashboardData;
     }
 
     public function query(): Builder
@@ -37,22 +37,19 @@ class LaraTicketsCategoriesTable extends BaseLivewire
         $columns = [
             Column::make(trans('laratickets::admin.table-id'), 'id')
                 ->sortable()
-                ->searchable()
-            ,
-            Column::make(trans('laratickets::admin.table-name'))
-                ->format(function(Category $model) {
-                    return view('asaydev-lara-tickets::components.categories.name', ['column' => $model]);
+                ->searchable(),
+            Column::make(trans('laratickets::admin.table-name'), 'name')
+                ->format(function ($value, $column, $row) {
+                    return '<a class="btn btn-link" wire:click="viewCategory(' . $row->id . ')" >' . $row->name . '</a>';
                 })
-                ->sortable()
-            ,
-            Column::make(trans('laratickets::admin.category-create-color'),'color')
+                ->asHtml(),
+            Column::make(trans('laratickets::admin.category-create-color'), 'color')
                 ->sortable(),
             Column::make(trans('laratickets::admin.table-action'))
-                ->format(function(Category $model) {
-                    return view('asaydev-lara-tickets::components.admins.actions', ['column' => $model]);
+                ->format(function ($value, $column, $row) {
+                    return '<a class="btn btn-danger" wire:click="delete(' . $row->id . ')" >' . trans('laratickets::admin.btn-remove') . '</a>';
                 })
-                ->sortable()
-            ,
+                ->asHtml(),
         ];
 
 
@@ -60,22 +57,21 @@ class LaraTicketsCategoriesTable extends BaseLivewire
     }
 
 
-    public function delete($id){
+    public function delete($id)
+    {
         try {
-            Category::where('id',$id)->delete();
-            $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success,$this->dashboardData['active_nav_title'], trans('laratickets::lang.table-deleted-success'));
+            Category::where('id', $id)->delete();
+            $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success, $this->dashboardData['active_nav_title'], trans('laratickets::lang.table-deleted-success'));
             $this->emit('laratickets-flash-message', $msg);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             //
         }
     }
 
-    public function viewCategory($id){
-        $this->dashboardData['form']=['name'=>'categories','action'=>'edit','id'=>$id];
-        $this->dashboardData['active_nav_title']=trans('laratickets::admin.category-index-title').': '.trans('laratickets::lang.table-edit-title');
+    public function viewCategory($id)
+    {
+        $this->dashboardData['form'] = ['name' => 'categories', 'action' => 'edit', 'id' => $id];
+        $this->dashboardData['active_nav_title'] = trans('laratickets::admin.category-index-title') . ': ' . trans('laratickets::lang.table-edit-title');
         $this->emit('activeNvTab', $this->dashboardData);
     }
-
-
-
 }

@@ -7,30 +7,30 @@ use AsayDev\LaraTickets\Traits\ContentEllipse;
 
 class Configuration extends Model
 {
-    use ContentEllipse;
+  use ContentEllipse;
 
-    public $table = 'laratickets_settings';
+  public $table = 'laratickets_settings';
 
-    public $fillable = [
+  public $fillable = [
     'lang',
     'slug',
     'value',
     'default',
   ];
 
-    // Null lang column if no value is being stored.
+  // Null lang column if no value is being stored.
 
-    public function setLangAttribute($lang)
-    {
-        $this->attributes['lang'] = trim($lang) !== '' ? $lang : null;
-    }
+  public function setLangAttribute($lang)
+  {
+    $this->attributes['lang'] = trim($lang) !== '' ? $lang : null;
+  }
 
-    /**
-     * The attributes that should be casted to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
+  /**
+   * The attributes that should be casted to native types.
+   *
+   * @var array
+   */
+  protected $casts = [
     'id'         => 'integer',
     'lang'       => 'string',
     'slug'       => 'string',
@@ -38,7 +38,5 @@ class Configuration extends Model
     'default'    => 'string',
   ];
 
-    public static $rules = [
-
-  ];
+  public static $rules = [];
 }

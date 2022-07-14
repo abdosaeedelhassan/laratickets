@@ -18,8 +18,14 @@ class NotificationsController extends Controller
         $notification_owner = $comment->user;
         $template = 'laratickets::resources.mail.comment';
         $data = ['comment' => serialize($comment), 'ticket' => serialize($ticket)];
-        $this->sendNotification($template, $data, $ticket, $notification_owner,
-          trans('laratickets::lang.notify-new-comment-from').$notification_owner->name.trans('laratickets::lang.notify-on').$ticket->subject, 'comment');
+        $this->sendNotification(
+            $template,
+            $data,
+            $ticket,
+            $notification_owner,
+            trans('laratickets::lang.notify-new-comment-from') . $notification_owner->name . trans('laratickets::lang.notify-on') . $ticket->subject,
+            'comment'
+        );
     }
 
     public function ticketStatusUpdated(Ticket $ticket, Ticket $original_ticket)
@@ -33,11 +39,23 @@ class NotificationsController extends Controller
         ];
 
         if (strtotime($ticket->completed_at)) {
-            $this->sendNotification($template, $data, $ticket, $notification_owner,
-                $notification_owner->name.trans('laratickets::lang.notify-updated').$ticket->subject.trans('laratickets::lang.notify-status-to-complete'), 'status');
+            $this->sendNotification(
+                $template,
+                $data,
+                $ticket,
+                $notification_owner,
+                $notification_owner->name . trans('laratickets::lang.notify-updated') . $ticket->subject . trans('laratickets::lang.notify-status-to-complete'),
+                'status'
+            );
         } else {
-            $this->sendNotification($template, $data, $ticket, $notification_owner,
-                $notification_owner->name.trans('laratickets::lang.notify-updated').$ticket->subject.trans('laratickets::lang.notify-status-to').$ticket->status->name, 'status');
+            $this->sendNotification(
+                $template,
+                $data,
+                $ticket,
+                $notification_owner,
+                $notification_owner->name . trans('laratickets::lang.notify-updated') . $ticket->subject . trans('laratickets::lang.notify-status-to') . $ticket->status,
+                'status'
+            );
         }
     }
 
@@ -51,8 +69,14 @@ class NotificationsController extends Controller
             'original_ticket'    => serialize($original_ticket),
         ];
 
-        $this->sendNotification($template, $data, $ticket, $notification_owner,
-            $notification_owner->name.trans('laratickets::lang.notify-transferred').$ticket->subject.trans('laratickets::lang.notify-to-you'), 'agent');
+        $this->sendNotification(
+            $template,
+            $data,
+            $ticket,
+            $notification_owner,
+            $notification_owner->name . trans('laratickets::lang.notify-transferred') . $ticket->subject . trans('laratickets::lang.notify-to-you'),
+            'agent'
+        );
     }
 
     public function newTicketNotifyAgent(Ticket $ticket)
@@ -64,8 +88,14 @@ class NotificationsController extends Controller
             'notification_owner' => serialize($notification_owner),
         ];
 
-        $this->sendNotification($template, $data, $ticket, $notification_owner,
-            $notification_owner->name.trans('laratickets::lang.notify-created-ticket').$ticket->subject, 'agent');
+        $this->sendNotification(
+            $template,
+            $data,
+            $ticket,
+            $notification_owner,
+            $notification_owner->name . trans('laratickets::lang.notify-created-ticket') . $ticket->subject,
+            'agent'
+        );
     }
 
     /**
@@ -105,7 +135,7 @@ class NotificationsController extends Controller
             } else {
                 Mail::to($to)->send($mail);
             }
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             //
         }
     }

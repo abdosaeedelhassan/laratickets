@@ -23,8 +23,8 @@ class LaraTicketsAdminsForm extends Component
 
     public function render()
     {
-        return view('asaydev-lara-tickets::components.admins.form',[
-            'users'=>Agent::where('laratickets_admin',0)->where('laratickets_agent', '1')->paginate(10)
+        return view('asaydev-lara-tickets::components.admins.form', [
+            'users' => Agent::where('laratickets_admin', 0)->where('laratickets_agent', '1')->paginate(10)
         ]);
     }
 
@@ -32,22 +32,21 @@ class LaraTicketsAdminsForm extends Component
     {
 
         try {
-            $this->selectedUsers = array_filter( $this->selectedUsers, function($e) {
+            $this->selectedUsers = array_filter($this->selectedUsers, function ($e) {
                 return ($e !== false);
             });
-            Agent::whereIn('id',$this->selectedUsers)->update(['laratickets_admin'=>1]);
-            $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success,$this->dashboardData['active_nav_title'], trans('laratickets::lang.table-saved-success'));
+            Agent::whereIn('id', $this->selectedUsers)->update(['laratickets_admin' => 1]);
+            $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success, $this->dashboardData['active_nav_title'], trans('laratickets::lang.table-saved-success'));
             $this->emit('laratickets-flash-message', $msg);
             $this->goback();
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             //
         }
     }
 
     public function goback()
     {
-        $this->dashboardData['form']=['name'=>'','action'=>''];
+        $this->dashboardData['form'] = ['name' => '', 'action' => ''];
         $this->emit('activeNvTab', $this->dashboardData);
     }
-
 }

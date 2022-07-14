@@ -18,7 +18,7 @@
 	{!! trans('ticketit::email/status.data', [
 	    'name'        =>  $notification_owner->name,
 	    'subject'     =>  $ticket->subject,
-	    'old_status'  =>  $original_ticket->status->name,
-	    'new_status'  =>  $ticket->status->name
+	    'old_status'  =>  $original_ticket->status,
+	    'new_status'  =>  $ticket->status
 	]) !!}
 @stop

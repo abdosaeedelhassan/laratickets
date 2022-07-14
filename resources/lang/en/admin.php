@@ -2,9 +2,10 @@
 
 return [
 
- /*
+  /*
   *  Constants
   */
+  'nav-managing'                  => 'Managing',
   'nav-settings'                  => 'Settings',
   'nav-agents'                    => 'Agents',
   'nav-dashboard'                 => 'Dashboard',
@@ -12,8 +13,8 @@ return [
   'nav-priorities'                => 'Priorities',
   'nav-statuses'                  => 'Statuses',
   'nav-configuration'             => 'Configuration',
-  'nav-administrator'             => 'Administrator',  //new
-
+  'nav-administrator'             => 'Administrator',
+  'nav-ticket-replies'            => 'Tickets replies',
   'table-hash'                    => '#',
   'table-id'                      => 'ID',
   'table-name'                    => 'Name',
@@ -40,13 +41,13 @@ return [
 
   'colon'                         => ': ',
 
- /*
+  /*
   *  Page specific
   */
 
-// tickets-admin/____
+  // tickets-admin/____
   'index-title'                         => 'Tickets System Dashboard',
-  'index-empty-records'                 => 'No tickets yet',
+  'index-empty-records'                 => 'No tickets found',
   'index-total-tickets'                 => 'Total tickets',
   'index-open-tickets'                  => 'Open tickets',
   'index-closed-tickets'                => 'Closed tickets',
@@ -74,7 +75,7 @@ return [
   'index-categories-chart'              => 'Tickets distribution per category',
   'index-agents-chart'                  => 'Tickets distribution per Agent',
 
-// tickets-admin/agent/____
+  // tickets-admin/agent/____
   'agent-index-title'             => 'Agent Management',
   'btn-create-new-agent'          => 'Create new agent',
   'agent-index-no-agents'         => 'There are no agents, ',
@@ -84,7 +85,7 @@ return [
   'agent-create-no-users'         => 'There are no user accounts, create user accounts first.',
   'agent-create-select-user'      => 'Select user accounts to be added as agents',
 
-// tickets-admin/administrators/____
+  // tickets-admin/administrators/____
   'administrator-index-title'                   => 'Administrator Management',  //new
   'btn-create-new-administrator'                => 'Create new administrator',  //new
   'administrator-index-no-administrators'       => 'There are no administrators, ',  //new
@@ -94,7 +95,7 @@ return [
   'administrator-create-no-users'               => 'There are no user accounts, create user accounts first.',  //new
   'administrator-create-select-user'            => 'Select user accounts to be added as administrators',  //new
 
-// tickets-admin/category/____
+  // tickets-admin/category/____
   'category-index-title'          => 'Categories Management',
   'btn-create-new-category'       => 'Create new category',
   'category-index-no-categories'  => 'There are no categories, ',
@@ -105,7 +106,7 @@ return [
   'category-create-color'         => 'Color',
   'category-edit-title'           => 'Edit Category: :name',
 
-// tickets-admin/priority/____
+  // tickets-admin/priority/____
   'priority-index-title'          => 'Priorities Management',
   'btn-create-new-priority'       => 'Create new priority',
   'priority-index-no-priorities'  => 'There are no priorities, ',
@@ -116,7 +117,7 @@ return [
   'priority-create-color'         => 'Color',
   'priority-edit-title'           => 'Edit Priority: :name',
 
-// tickets-admin/status/____
+  // tickets-admin/status/____
   'status-index-title'            => 'Statuses Management',
   'btn-create-new-status'         => 'Create new status',
   'status-index-no-statuses'      => 'There are no statues,',
@@ -127,7 +128,7 @@ return [
   'status-create-color'           => 'Color',
   'status-edit-title'             => 'Edit Status: :name',
 
-// tickets-admin/configuration/____
+  // tickets-admin/configuration/____
   'config-index-title'            => 'Configuration Settings',
   'config-index-subtitle'         => 'Settings',
   'btn-create-new-config'         => 'Add new setting',

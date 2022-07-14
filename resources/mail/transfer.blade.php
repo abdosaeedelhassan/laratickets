@@ -18,7 +18,7 @@
 	{!! trans('ticketit::email/transfer.data', [
 	    'name'          =>  $notification_owner->name,
 	    'subject'       =>  $ticket->subject,
-	    'status'        =>  $ticket->status->name,
+	    'status'        =>  $ticket->status,
 	    'agent'         =>  $original_ticket->agent->name,
 	    'old_category'  =>  $original_ticket->category->name,
 	    'new_category'  =>  $ticket->category->name

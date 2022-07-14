@@ -2,15 +2,20 @@
 
 return [
 
-    /*
-     *  Constants
-     */
+
+    'add-new-reply' => 'إضافة رد جديد',
+    'content' => 'المحتوي',
+    'reply' => 'الرد',
+    'edit' => 'تعديل',
+    'select' => 'إختيار',
+    'close' => 'إغلاق',
+    'delete' => 'حذف',
+    'select-reply' => 'إختيار رد',
+    'display' => 'إستعراض',
 
     'table-saved-success' => 'تم الحفظ بنجاح',
     'table-deleted-success' => 'تم الحذف بنجاح',
     'table-edit-title' => 'تعديل',
-
-
     'nav-active-tickets' => 'التذاكر النشطة',
     'nav-completed-tickets' => 'التذاكر المغلقة',
 
@@ -55,6 +60,12 @@ return [
 
     'createdby' => 'أنشئ بواسطة',
 
+    'new' => 'جديدة',
+    'opened' => 'مفتوحة',
+    'closed' => 'مغلغة',
+    'created_at' => 'أنشئ في',
+
+
     'user' => 'مستخدم',
     'agent' => 'وكيل',
     'category' => 'تصنيف',
@@ -65,7 +76,7 @@ return [
     'flash-x' => '×', // &times;
     'last-update' => 'آخر تحديث',
     'no-replies' => 'لا توجد ردود.',
-    'owner' => 'المالك',
+    'owner' => 'أنشأت بواسطة',
     'priority' => 'الأولوية',
     'reopen-ticket' => 'إعادة فتح التذكرة',
     'reply' => 'رد',
@@ -78,10 +89,10 @@ return [
      *  Page specific
      */
 
-// ____
+    // ____
     'index-title' => 'الصفحة الرئيسية',
 
-// tickets/____
+    // tickets/____
     'index-my-tickets' => 'تذاكري',
     'btn-create-new-ticket' => 'تذكرة جديدة',
     'index-complete-none' => 'لا توجد تذاكر منتهية',
@@ -104,34 +115,34 @@ return [
      *  Controllers
      */
 
-// AgentsController
+    // AgentsController
     'agents-are-added-to-agents' => ':names تمت إضافتهم كوكلاء',
     'administrators-are-added-to-administrators' => ':names تمت إضافتهم كمدراء', //New
     'agents-joined-categories-ok' => 'تم ضم الفئات بنجاح',
     'agents-is-removed-from-team' => 'حذف الوكيل :name من فريق الوكلاء',
     'administrators-is-removed-from-team' => 'حذف المدير :name من فريق المدراء', // New
 
-// CategoriesController
+    // CategoriesController
     'category-name-has-been-created' => 'تم إضافة التصنيف :name!',
     'category-name-has-been-modified' => 'تم تعديل التصنيف :name!',
     'category-name-has-been-deleted' => 'تم حذف التصنيف :name!',
 
-// PrioritiesController
+    // PrioritiesController
     'priority-name-has-been-created' => 'تم إضافة الحالة :name!',
     'priority-name-has-been-modified' => 'تم تعديل الحالة :name!',
     'priority-name-has-been-deleted' => 'تم حذف الحالة :name!',
     'priority-all-tickets-here' => 'جميع الأولويات المتعلقة بالتذاكر',
 
-// StatusesController
+    // StatusesController
     'status-name-has-been-created' => 'تم إضافة الحالة :name!',
     'status-name-has-been-modified' => 'تم تعديل الحالة :name!',
     'status-name-has-been-deleted' => 'تم حذف الحالة :name!',
     'status-all-tickets-here' => 'جميع الحالات المتعلقة بالتذاكر',
 
-// CommentsController
-    'comment-has-been-added-ok' => 'Comment has been added successfully',
+    // CommentsController
+    'comment-has-been-added-ok' => 'تم إضافة التعليق بنجاح',
 
-// NotificationsController
+    // NotificationsController
     'notify-new-comment-from' => 'تعليق جديد من ',
     'notify-on' => ' في ',
     'notify-status-to-complete' => ' الحالة كمنتهي',
@@ -152,8 +163,6 @@ return [
     /*
     *  Middlewares
     */
-
-    //  IsAdminMiddleware IsAgentMiddleware ResAccessMiddleware
     'you-are-not-permitted-to-access' => 'ليس لديك صلاحية الدخول لهذه الصفحة!',
 
 ];

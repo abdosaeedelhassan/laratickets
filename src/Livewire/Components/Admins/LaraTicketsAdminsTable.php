@@ -13,8 +13,9 @@ class LaraTicketsAdminsTable extends BaseLivewire
 {
 
 
-    public function mount($dashboardData){
-        $this->dashboardData=$dashboardData;
+    public function mount($dashboardData)
+    {
+        $this->dashboardData = $dashboardData;
     }
 
     public function query(): Builder
@@ -30,20 +31,13 @@ class LaraTicketsAdminsTable extends BaseLivewire
         $columns = [
             Column::make(trans('laratickets::admin.table-id'), 'id')
                 ->sortable()
-                ->searchable()
-            ,
-            Column::make(trans('laratickets::admin.table-name'))
-                ->format(function(Agent $model) {
-                    return view('asaydev-lara-tickets::components.admins.fullname', ['column' => $model]);
-                })
-                ->sortable()
-            ,
+                ->searchable(),
+            Column::make(trans('laratickets::admin.table-name'), 'name')->sortable(),
             Column::make(trans('laratickets::admin.table-action'))
-                ->format(function(Agent $model) {
-                    return view('asaydev-lara-tickets::components.admins.actions', ['column' => $model]);
+                ->format(function ($value, $column, $row) {
+                    return view('asaydev-lara-tickets::components.admins.actions', ['column' => $row]);
                 })
-                ->sortable()
-            ,
+                ->sortable(),
         ];
 
 
@@ -51,15 +45,14 @@ class LaraTicketsAdminsTable extends BaseLivewire
     }
 
 
-    public function delete($id){
+    public function delete($id)
+    {
         try {
-            Agent::where('id',$id)->update(['laratickets_admin'=>0]);
-            $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success,trans('laratickets::admin.administrator-index-title'), trans('laratickets::lang.table-deleted-success'));
+            Agent::where('id', $id)->update(['laratickets_admin' => 0]);
+            $msg = SlimNotifierJs::prepereNotifyData(SlimNotifierJs::$success, trans('laratickets::admin.administrator-index-title'), trans('laratickets::lang.table-deleted-success'));
             $this->emit('laratickets-flash-message', $msg);
-        }catch (\Exception $e){
-           //
+        } catch (\Exception $e) {
+            //
         }
     }
-
-
 }

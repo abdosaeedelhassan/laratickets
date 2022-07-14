@@ -4,21 +4,21 @@ real time tickets system for laravel framework, this package is transformation f
 **Important note:** this package is under development and not completed yet
 
 # Requirements:
-- Laravel Livewire installed and configured in your project.
-- Laravel Alpine.js installed and configured in your project.
-- Laravel rappasoft/laravel-livewire-tables installed and configured in your project.
-- Laravel spatie/laravel-permission installed and configured in your project.
+- Laravel `Livewire` installed and configured in your project.
+- Laravel `Alpine.js` installed and configured in your project.
+- Laravel `rappasoft/laravel-livewire-tables` installed and configured in your project.
+- Laravel `spatie/laravel-permission` installed and configured in your project.
 
 
 ## installation step:
 
 `composer require asaydev/laratickets`
 
-## Auto setup and configure
+## Setup roles and permissions
 
-you need only to execute next command.
+when next command executed will ask you for administartor user id to setup there default role.
 
-`php artisan laratickets:install`
+`php artisan laratickets:setup`
 
 
 ## Manually setup
